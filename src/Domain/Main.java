@@ -1,6 +1,5 @@
 package Domain;
 
-
 /*
     PROYECT NAME: 
     C22910 ALEXANDER FERNANDEZ D.
