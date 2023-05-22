@@ -7,12 +7,17 @@ public class User {
     
     private String[] thoughts; //circularDoublyLinkedList
     
-    private String[] posts;
+    private String[] posts;//pila
     
-    private PasswordAuthentication pa;
+    private String friends;//
+    
+    private String friendshipRequests;//cola
+    
+    
+    private PasswordAuthentication passwordAuthentication;
 
     public User(String username, char[] password) {
-        this.pa = new PasswordAuthentication(username, password);
+        this.passwordAuthentication = new PasswordAuthentication(username, password);
     }
     
     
