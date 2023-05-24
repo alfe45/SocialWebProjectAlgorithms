@@ -1,6 +1,8 @@
 package Domain;
 
 import GUI.JFWindow;
+import java.io.IOException;
+import org.jdom.JDOMException;
 
 /*
     PROYECT NAME: 
@@ -11,7 +13,7 @@ import GUI.JFWindow;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JDOMException, IOException {
         JFWindow jFWindow = new JFWindow();
         jFWindow.setVisible(true);
     }//main

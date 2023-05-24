@@ -1,13 +1,20 @@
 
 package GUI;
 
+import Business.UserBusiness;
+import Domain.UserSesion;
+import java.io.IOException;
+import org.jdom.JDOMException;
+
 public class JFWindow extends javax.swing.JFrame {
 
-    
-    private int menu;
+    public static UserBusiness userBusiness;
+    protected static UserSesion userSesion;
 
-    public JFWindow() {
+    public JFWindow() throws JDOMException, IOException, CloneNotSupportedException {
         initComponents();
+        JFWindow.userBusiness = new UserBusiness();
+        JFWindow.userSesion = new UserSesion();
         this.setSize(800,600);
         this.add(new JPLogin());
     }
