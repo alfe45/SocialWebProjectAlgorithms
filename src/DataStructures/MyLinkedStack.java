@@ -1,7 +1,7 @@
 
 package DataStructures;
 
-public class MyLinkedStack{
+public class MyLinkedStack implements Cloneable{
 
     public Node top;
     public int count;
@@ -70,5 +70,10 @@ public class MyLinkedStack{
         }
        
     }//class
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }//clone
     
 }//class

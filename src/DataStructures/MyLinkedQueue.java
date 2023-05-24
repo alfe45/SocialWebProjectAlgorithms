@@ -1,7 +1,7 @@
 
 package DataStructures;
 
-public class MyLinkedQueue{
+public class MyLinkedQueue implements Cloneable{
 
     private Node start;
     private Node end;
@@ -89,5 +89,10 @@ public class MyLinkedQueue{
         }
     
     }//class
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }//clone
     
 }//class

@@ -4,28 +4,18 @@ import java.net.PasswordAuthentication;
 
 public class User {
 
-    private String[] thoughts; //circularDoublyLinkedList
-
-    private String[] posts;//pila
-
-    private String friends;//
-
-    private String friendshipRequests;//cola
-
-    private String username;
-
+    private Profile profile;
     private PasswordAuthentication passwordAuthentication;
 
-    public User(String username, char[] password) {
-        this.passwordAuthentication = new PasswordAuthentication(username, password);
+    public User() {
     }
 
-    public String getUsername() {
-        return username;
+    public Profile getProfile() {
+        return profile;
     }
-
-    public void setUsername(String username) {
-        this.username = username;
+    
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 
     public PasswordAuthentication getPasswordAuthentication() {
@@ -36,4 +26,12 @@ public class User {
         this.passwordAuthentication = passwordAuthentication;
     }
 
+    public void register(String username, char[] password){
+        this.passwordAuthentication = new PasswordAuthentication(username, password);
+    }//register
+    
+    public void createNewProfile(String name){
+        this.profile = new Profile(name);
+    }//createProfile
+    
 }//class

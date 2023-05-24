@@ -1,7 +1,7 @@
 
 package DataStructures;
 
-public class MyArrayQueue{
+public class MyArrayQueue implements Cloneable{
     
     private Object queue[];
     private int start;
@@ -85,5 +85,10 @@ public class MyArrayQueue{
         }
     
     }//class
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }//clone
     
 }//class
