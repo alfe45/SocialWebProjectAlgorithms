@@ -1,7 +1,7 @@
 
 package DataStructures;
 
-public class MyArrayStack{
+public class MyArrayStack implements Cloneable{
     
     private Object stack[];
     private int top;
@@ -66,5 +66,10 @@ public class MyArrayStack{
         }
        
     }//class
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }//clone
     
 }//class

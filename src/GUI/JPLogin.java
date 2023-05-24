@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Color;
+import java.net.PasswordAuthentication;
 import javax.swing.JOptionPane;
 
 public class JPLogin extends javax.swing.JPanel {
@@ -342,15 +343,23 @@ public class JPLogin extends javax.swing.JPanel {
 
     private void jtfUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfUsernameActionPerformed
 
-
     }//GEN-LAST:event_jtfUsernameActionPerformed
 
     private void jbtnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLogInActionPerformed
-        if (this.jtfUsername.getText().equals("") || this.jPasswordFieldLogin.getPassword().length==0) {
-            JOptionPane.showMessageDialog(this, "Fill in the blanks");
-//            return;
-        }
-
+        String textJtfUsername = this.jtfUsername.getText();
+        char[] textJtfPassword = this.jPasswordFieldLogin.getPassword();
+        PasswordAuthentication login = new PasswordAuthentication(textJtfUsername,textJtfPassword);
+        if (JFWindow.userBusiness.login(login)) {
+            JFWindow.userSesion.setLoggedUser(JFWindow.userBusiness.loadUser(textJtfUsername));
+            System.out.println("Current logged user: "+ JFWindow.userSesion.getLoggedUser().getProfile().getName());
+//            
+//            System.out.println("Inicio de sesion completado.\nUser: "
+//                    +JFWindow.userSesion.getLoggedUser().getPasswordAuthentication().getUserName()
+//                        +"\nPassword: "+String.copyValueOf(JFWindow.userSesion.getLoggedUser().getPasswordAuthentication().getPassword()));
+        }else{
+            System.out.println("Datos incorrectos o usuario no encontrado.");
+        }//if
+        
     }//GEN-LAST:event_jbtnLogInActionPerformed
 
     private void jtfUsernameSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfUsernameSignUpActionPerformed
@@ -360,8 +369,7 @@ public class JPLogin extends javax.swing.JPanel {
     private void jbtnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSignUpActionPerformed
         if (this.jtfUsernameSignUp.getText().equals("") || this.jPasswordFieldSignUp.getPassword().length==0) {
             JOptionPane.showMessageDialog(this, "Fill in the blanks");
-//            return;
-        }
+        }//if
     }//GEN-LAST:event_jbtnSignUpActionPerformed
 
     private void jbtnSignUpAuxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSignUpAuxActionPerformed
@@ -409,12 +417,10 @@ public class JPLogin extends javax.swing.JPanel {
     }//GEN-LAST:event_jPasswordFieldLoginMousePressed
 
     private void jpLogInKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpLogInKeyPressed
-        // TODO add your handling code here:
- 
+
     }//GEN-LAST:event_jpLogInKeyPressed
 
     private void jpLogInMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpLogInMousePressed
-        // TODO add your handling code here:
         this.jpLogIn.requestFocus();
 
         if (this.jtfUsername.getText().length()==0) {
@@ -454,7 +460,7 @@ public class JPLogin extends javax.swing.JPanel {
         }//if
     }//GEN-LAST:event_jPasswordFieldSignUpMousePressed
 
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
