@@ -8,6 +8,8 @@ public class JFWindow extends javax.swing.JFrame {
 
     public JFWindow() {
         initComponents();
+        this.setSize(800,600);
+        this.add(new JPLogin());
     }
 
     /**
