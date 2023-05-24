@@ -1,5 +1,6 @@
 package Domain;
 
+import GUI.JFWindow;
 
 /*
     PROYECT NAME: 
@@ -11,6 +12,8 @@ package Domain;
 public class Main {
 
     public static void main(String[] args) {
+            JFWindow jFWindow = new JFWindow();
+  
             
     }//main
     
