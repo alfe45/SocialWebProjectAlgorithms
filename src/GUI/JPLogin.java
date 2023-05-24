@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 public class JPLogin extends javax.swing.JPanel {
@@ -9,8 +10,15 @@ public class JPLogin extends javax.swing.JPanel {
         initComponents();
         this.jpSignUp.setVisible(false);
         this.jLabel3.setVisible(false);
-       
 
+        this.jPasswordFieldLogin.setEchoChar((char)0);
+        this.jPasswordFieldSignUp.setEchoChar((char)0);
+        
+        this.jtfUsername.setForeground(Color.GRAY);
+        this.jPasswordFieldLogin.setForeground(Color.GRAY);
+        
+        this.jtfUsernameSignUp.setForeground(Color.GRAY);
+        this.jPasswordFieldSignUp.setForeground(Color.GRAY);
     }
 
     @SuppressWarnings("unchecked")
@@ -19,16 +27,15 @@ public class JPLogin extends javax.swing.JPanel {
 
         jpLogIn = new javax.swing.JPanel();
         jtfUsername = new javax.swing.JTextField();
-        jtfPassword = new javax.swing.JTextField();
         jbtnLogIn = new javax.swing.JButton();
         jlblTitle = new javax.swing.JLabel();
         jlbQuestion = new javax.swing.JLabel();
         jbtnSignUpAux = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jPasswordFieldLogin = new javax.swing.JPasswordField();
         jpSignUp = new javax.swing.JPanel();
         jtfUsernameSignUp = new javax.swing.JTextField();
-        jtfPasswordSignUp = new javax.swing.JTextField();
         jbtnSignUp = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -36,6 +43,7 @@ public class JPLogin extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jbtnBackLogIn = new javax.swing.JButton();
+        jPasswordFieldSignUp = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -45,6 +53,16 @@ public class JPLogin extends javax.swing.JPanel {
         setForeground(new java.awt.Color(153, 153, 153));
 
         jpLogIn.setBackground(new java.awt.Color(204, 255, 255));
+        jpLogIn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jpLogInMousePressed(evt);
+            }
+        });
+        jpLogIn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jpLogInKeyPressed(evt);
+            }
+        });
 
         jtfUsername.setBackground(new java.awt.Color(255, 255, 255));
         jtfUsername.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -64,22 +82,9 @@ public class JPLogin extends javax.swing.JPanel {
             }
         });
 
-        jtfPassword.setBackground(new java.awt.Color(255, 255, 255));
-        jtfPassword.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jtfPassword.setForeground(new java.awt.Color(0, 0, 0));
-        jtfPassword.setText("Password");
-        jtfPassword.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtfPasswordMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jtfPasswordMousePressed(evt);
-            }
-        });
-
         jbtnLogIn.setBackground(new java.awt.Color(0, 153, 255));
         jbtnLogIn.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnLogIn.setText("Log In");
+        jbtnLogIn.setText("Login");
         jbtnLogIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnLogInActionPerformed(evt);
@@ -109,6 +114,13 @@ public class JPLogin extends javax.swing.JPanel {
         jLabel9.setForeground(new java.awt.Color(204, 204, 204));
         jLabel9.setText("------------------------------------------------------");
 
+        jPasswordFieldLogin.setText("Password");
+        jPasswordFieldLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPasswordFieldLoginMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpLogInLayout = new javax.swing.GroupLayout(jpLogIn);
         jpLogIn.setLayout(jpLogInLayout);
         jpLogInLayout.setHorizontalGroup(
@@ -131,10 +143,10 @@ public class JPLogin extends javax.swing.JPanel {
                             .addComponent(jLabel9)
                             .addGroup(jpLogInLayout.createSequentialGroup()
                                 .addGap(6, 6, 6)
-                                .addGroup(jpLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jbtnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addGroup(jpLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jbtnLogIn, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                                    .addComponent(jtfUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                                    .addComponent(jPasswordFieldLogin))))))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
         jpLogInLayout.setVerticalGroup(
@@ -145,9 +157,9 @@ public class JPLogin extends javax.swing.JPanel {
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlblTitle))
                 .addGap(30, 30, 30)
-                .addComponent(jtfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPasswordFieldLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtnLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
@@ -156,10 +168,15 @@ public class JPLogin extends javax.swing.JPanel {
                 .addGroup(jpLogInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlbQuestion)
                     .addComponent(jbtnSignUpAux))
-                .addContainerGap(166, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         jpSignUp.setBackground(new java.awt.Color(255, 204, 204));
+        jpSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jpSignUpMousePressed(evt);
+            }
+        });
 
         jtfUsernameSignUp.setBackground(new java.awt.Color(255, 255, 255));
         jtfUsernameSignUp.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
@@ -176,19 +193,6 @@ public class JPLogin extends javax.swing.JPanel {
         jtfUsernameSignUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfUsernameSignUpActionPerformed(evt);
-            }
-        });
-
-        jtfPasswordSignUp.setBackground(new java.awt.Color(255, 255, 255));
-        jtfPasswordSignUp.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
-        jtfPasswordSignUp.setForeground(new java.awt.Color(0, 0, 0));
-        jtfPasswordSignUp.setText("Password");
-        jtfPasswordSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtfPasswordSignUpMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jtfPasswordSignUpMousePressed(evt);
             }
         });
 
@@ -222,10 +226,17 @@ public class JPLogin extends javax.swing.JPanel {
 
         jbtnBackLogIn.setBackground(new java.awt.Color(255, 255, 255));
         jbtnBackLogIn.setForeground(new java.awt.Color(0, 0, 0));
-        jbtnBackLogIn.setText("Back to LogIn");
+        jbtnBackLogIn.setText("Back to Login");
         jbtnBackLogIn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnBackLogInActionPerformed(evt);
+            }
+        });
+
+        jPasswordFieldSignUp.setText("Password");
+        jPasswordFieldSignUp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPasswordFieldSignUpMousePressed(evt);
             }
         });
 
@@ -244,15 +255,15 @@ public class JPLogin extends javax.swing.JPanel {
                         .addGap(40, 40, 40)
                         .addGroup(jpSignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addGroup(jpSignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jtfPasswordSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jtfUsernameSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jpSignUpLayout.createSequentialGroup()
                                 .addGap(46, 46, 46)
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jpSignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jPasswordFieldSignUp, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                                .addComponent(jtfUsernameSignUp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))))
                     .addGroup(jpSignUpLayout.createSequentialGroup()
                         .addGap(79, 79, 79)
                         .addComponent(jbtnBackLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -270,11 +281,11 @@ public class JPLogin extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jLabel8)
                         .addGap(31, 31, 31)))
-                .addComponent(jtfUsernameSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtfUsernameSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jtfPasswordSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPasswordFieldSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -335,7 +346,7 @@ public class JPLogin extends javax.swing.JPanel {
     }//GEN-LAST:event_jtfUsernameActionPerformed
 
     private void jbtnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLogInActionPerformed
-        if (this.jtfUsername.getText().equals("") || this.jtfPassword.getText().equals("")) {
+        if (this.jtfUsername.getText().equals("") || this.jPasswordFieldLogin.getPassword().length==0) {
             JOptionPane.showMessageDialog(this, "Fill in the blanks");
 //            return;
         }
@@ -347,7 +358,7 @@ public class JPLogin extends javax.swing.JPanel {
     }//GEN-LAST:event_jtfUsernameSignUpActionPerformed
 
     private void jbtnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSignUpActionPerformed
-        if (this.jtfUsernameSignUp.getText().equals("") || this.jtfPasswordSignUp.getText().equals("")) {
+        if (this.jtfUsernameSignUp.getText().equals("") || this.jPasswordFieldSignUp.getPassword().length==0) {
             JOptionPane.showMessageDialog(this, "Fill in the blanks");
 //            return;
         }
@@ -358,49 +369,29 @@ public class JPLogin extends javax.swing.JPanel {
         this.jLabel4.setVisible(false);
         this.jpSignUp.setVisible(true);
         this.jLabel3.setVisible(true);
-
-
     }//GEN-LAST:event_jbtnSignUpAuxActionPerformed
 
     private void jtfUsernameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfUsernameMouseClicked
 
     }//GEN-LAST:event_jtfUsernameMouseClicked
 
-    private void jtfPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfPasswordMouseClicked
-
-    }//GEN-LAST:event_jtfPasswordMouseClicked
-
     private void jtfUsernameSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfUsernameSignUpMouseClicked
 
     }//GEN-LAST:event_jtfUsernameSignUpMouseClicked
 
-    private void jtfPasswordSignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfPasswordSignUpMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfPasswordSignUpMouseClicked
-
     private void jtfUsernameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfUsernameMousePressed
         if (this.jtfUsername.getText().equalsIgnoreCase("username")) {
             this.jtfUsername.setText("");
-        }
+            this.jtfUsername.setForeground(Color.blue);
+        }//if
     }//GEN-LAST:event_jtfUsernameMousePressed
 
-    private void jtfPasswordMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfPasswordMousePressed
-        if (this.jtfPassword.getText().equalsIgnoreCase("password")) {
-            this.jtfPassword.setText("");
-        }
-    }//GEN-LAST:event_jtfPasswordMousePressed
-
     private void jtfUsernameSignUpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfUsernameSignUpMousePressed
-        if (this.jtfUsernameSignUp.getText().equalsIgnoreCase("password")) {
+        if (this.jtfUsernameSignUp.getText().equalsIgnoreCase("username")) {
             this.jtfUsernameSignUp.setText("");
-        }
+            this.jtfUsernameSignUp.setForeground(Color.blue);
+        }//if
     }//GEN-LAST:event_jtfUsernameSignUpMousePressed
-
-    private void jtfPasswordSignUpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfPasswordSignUpMousePressed
-        if (this.jtfPasswordSignUp.getText().equalsIgnoreCase("password")) {
-            this.jtfPasswordSignUp.setText("");
-        }
-    }//GEN-LAST:event_jtfPasswordSignUpMousePressed
 
     private void jbtnBackLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBackLogInActionPerformed
         this.jpLogIn.setVisible(true);
@@ -408,6 +399,60 @@ public class JPLogin extends javax.swing.JPanel {
         this.jpSignUp.setVisible(false);
         this.jLabel3.setVisible(false);
     }//GEN-LAST:event_jbtnBackLogInActionPerformed
+
+    private void jPasswordFieldLoginMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordFieldLoginMousePressed
+        if (!jPasswordFieldLogin.echoCharIsSet()) {
+            this.jPasswordFieldLogin.setForeground(Color.blue);
+            this.jPasswordFieldLogin.setText("");
+            this.jPasswordFieldLogin.setEchoChar('*');
+        }//if
+    }//GEN-LAST:event_jPasswordFieldLoginMousePressed
+
+    private void jpLogInKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jpLogInKeyPressed
+        // TODO add your handling code here:
+ 
+    }//GEN-LAST:event_jpLogInKeyPressed
+
+    private void jpLogInMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpLogInMousePressed
+        // TODO add your handling code here:
+        this.jpLogIn.requestFocus();
+
+        if (this.jtfUsername.getText().length()==0) {
+            this.jtfUsername.setText("Username");
+            this.jtfUsername.setForeground(Color.GRAY);
+        }//if
+        
+        if (this.jPasswordFieldLogin.getPassword().length==0) {
+            this.jPasswordFieldLogin.setEchoChar((char)0);
+            this.jPasswordFieldLogin.setText("Password");
+            this.jPasswordFieldLogin.setForeground(Color.GRAY);
+        }//if
+    }//GEN-LAST:event_jpLogInMousePressed
+
+    private void jpSignUpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpSignUpMousePressed
+        // TODO add your handling code here:
+        this.jpSignUp.requestFocus();
+        
+        if (this.jtfUsernameSignUp.getText().length()==0) {
+            this.jtfUsernameSignUp.setText("Username");
+            this.jtfUsernameSignUp.setForeground(Color.GRAY);
+        }//if
+        
+        if (this.jPasswordFieldSignUp.getPassword().length==0) {
+            this.jPasswordFieldSignUp.setEchoChar((char)0);
+            this.jPasswordFieldSignUp.setText("Password");
+            this.jPasswordFieldSignUp.setForeground(Color.GRAY);
+        }//if  
+        
+    }//GEN-LAST:event_jpSignUpMousePressed
+
+    private void jPasswordFieldSignUpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordFieldSignUpMousePressed
+        if (!jPasswordFieldSignUp.echoCharIsSet()) {
+            this.jPasswordFieldSignUp.setForeground(Color.blue);
+            this.jPasswordFieldSignUp.setText("");
+            this.jPasswordFieldSignUp.setEchoChar('*');
+        }//if
+    }//GEN-LAST:event_jPasswordFieldSignUpMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -421,6 +466,8 @@ public class JPLogin extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPasswordField jPasswordFieldLogin;
+    private javax.swing.JPasswordField jPasswordFieldSignUp;
     private javax.swing.JButton jbtnBackLogIn;
     private javax.swing.JButton jbtnLogIn;
     private javax.swing.JButton jbtnSignUp;
@@ -429,8 +476,6 @@ public class JPLogin extends javax.swing.JPanel {
     private javax.swing.JLabel jlblTitle;
     private javax.swing.JPanel jpLogIn;
     private javax.swing.JPanel jpSignUp;
-    private javax.swing.JTextField jtfPassword;
-    private javax.swing.JTextField jtfPasswordSignUp;
     private javax.swing.JTextField jtfUsername;
     private javax.swing.JTextField jtfUsernameSignUp;
     // End of variables declaration//GEN-END:variables
