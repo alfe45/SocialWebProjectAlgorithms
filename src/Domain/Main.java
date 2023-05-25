@@ -1,5 +1,7 @@
 package Domain;
 
+import DataStructures.MyCicularDoublyLinkedList;
+import GUI.JFBotones;
 import GUI.JFWindow;
 import java.io.IOException;
 import org.jdom.JDOMException;
@@ -13,9 +15,12 @@ import org.jdom.JDOMException;
  */
 public class Main {
 
-    public static void main(String[] args) throws JDOMException, IOException {
+    public static void main(String[] args) throws JDOMException, IOException, CloneNotSupportedException {
         JFWindow jFWindow = new JFWindow();
         jFWindow.setVisible(true);
+        
+        JFBotones jFBotones = new JFBotones();
+        jFBotones.setVisible(true);
     }//main
 
 }//class
