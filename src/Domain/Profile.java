@@ -16,14 +16,12 @@ public class Profile {
     
     private MyLinkedStack posts;
 
-    private MyCicularDoublyLinkedList thoughts;
 
     public Profile(String name) {
         this.name = name;
         this.friends = new MyDoubleLinkedList();
         this.requests = new MyLinkedQueue();
         this.posts = new MyLinkedStack();
-        this.thoughts = new MyCicularDoublyLinkedList();
     }
 
     public String getName() {
@@ -57,14 +55,4 @@ public class Profile {
     public void setPosts(MyLinkedStack posts) {
         this.posts = posts;
     }
-
-    public MyCicularDoublyLinkedList getThoughts() {
-        return thoughts;
-    }
-
-    public void setThoughts(MyCicularDoublyLinkedList thoughts) {
-        this.thoughts = thoughts;
-    }
-    
-    
 }//class
