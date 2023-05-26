@@ -124,7 +124,7 @@ public class JFBotones extends javax.swing.JFrame {
         }else{
             this.i -= 1;
         }
-        this.jtxArea.setText(i+"");
+        this.jtxArea.setText(i+">");
     }//GEN-LAST:event_jbtnPreviousActionPerformed
 
     private void jbtnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNextActionPerformed
@@ -134,7 +134,7 @@ public class JFBotones extends javax.swing.JFrame {
         }else{
             this.i++;
         }
-        this.jtxArea.setText(i+"");
+        this.jtxArea.setText(i+">");
     }//GEN-LAST:event_jbtnNextActionPerformed
 
     private void jbtnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpActionPerformed
@@ -144,7 +144,7 @@ public class JFBotones extends javax.swing.JFrame {
         }else{
             this.e++;
         }
-        this.jtxArea.setText(e+"");
+        this.jtxArea.setText(e+"v");
     }//GEN-LAST:event_jbtnUpActionPerformed
 
     private void jbtnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDownActionPerformed
@@ -154,7 +154,7 @@ public class JFBotones extends javax.swing.JFrame {
         }else{
             this.e--;
         }
-        this.jtxArea.setText(e+"");
+        this.jtxArea.setText(e+"v");
        
     }//GEN-LAST:event_jbtnDownActionPerformed
 

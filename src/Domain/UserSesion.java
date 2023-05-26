@@ -9,12 +9,13 @@ public class UserSesion {
     private User loggedUser;
 
     public UserSesion() throws IOException, CloneNotSupportedException {
-//        this.loggedUser = null;
 
+        //esta es una instancia de prueba de un usuario. no tocar
         loggedUser = new User();
         
         loggedUser.register("Alex", "12345678".toCharArray());
         loggedUser.createNewProfile("Alex");
+
         JFWindow.userBusiness.saveUser(loggedUser);
         
     }

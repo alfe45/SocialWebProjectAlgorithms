@@ -1,14 +1,22 @@
 package GUI;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.net.PasswordAuthentication;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class JPLogin extends javax.swing.JPanel {
 
-    public JPLogin() {
+    private JFWindow window;
+    
+    public JPLogin(JFWindow window) {
                 
         initComponents();
+        
+        this.window = window;
+        
         this.jpSignUp.setVisible(false);
         this.jLabel3.setVisible(false);
 
@@ -20,6 +28,8 @@ public class JPLogin extends javax.swing.JPanel {
         
         this.jtfUsernameSignUp.setForeground(Color.GRAY);
         this.jPasswordFieldSignUp.setForeground(Color.GRAY);
+        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -348,14 +358,28 @@ public class JPLogin extends javax.swing.JPanel {
     private void jbtnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLogInActionPerformed
         String textJtfUsername = this.jtfUsername.getText();
         char[] textJtfPassword = this.jPasswordFieldLogin.getPassword();
-        PasswordAuthentication login = new PasswordAuthentication(textJtfUsername,textJtfPassword);
+        PasswordAuthentication login = new PasswordAuthentication(textJtfUsername,textJtfPassword);     
         if (JFWindow.userBusiness.login(login)) {
-            JFWindow.userSesion.setLoggedUser(JFWindow.userBusiness.loadUser(textJtfUsername));
+            
+            JFWindow.userSesion.setLoggedUser(JFWindow.userBusiness.loadUser("Alex"));
             System.out.println("Current logged user: "+ JFWindow.userSesion.getLoggedUser().getProfile().getName());
-//            
-//            System.out.println("Inicio de sesion completado.\nUser: "
-//                    +JFWindow.userSesion.getLoggedUser().getPasswordAuthentication().getUserName()
-//                        +"\nPassword: "+String.copyValueOf(JFWindow.userSesion.getLoggedUser().getPasswordAuthentication().getPassword()));
+            this.window.remove(this);
+           
+             //esta linea se debe eliminar luego porque carga todos los posts
+            JFWindow.userSesion.getLoggedUser().getProfile().setPosts(JFWindow.userBusiness.loadAllPost());
+            //.
+            
+            
+            try {
+                this.window.add(new JPMenu(this.window));
+            } catch (IOException ex) {
+                Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.window.repaint();
+
+            System.out.println("Inicio de sesion completado.\nUser: "
+                    +JFWindow.userSesion.getLoggedUser().getPasswordAuthentication().getUserName()
+                        +"\nPassword: "+String.copyValueOf(JFWindow.userSesion.getLoggedUser().getPasswordAuthentication().getPassword()));
         }else{
             System.out.println("Datos incorrectos o usuario no encontrado.");
         }//if

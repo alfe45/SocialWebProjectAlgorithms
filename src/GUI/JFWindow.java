@@ -4,6 +4,7 @@ package GUI;
 import Business.UserBusiness;
 import Domain.UserSesion;
 import java.io.IOException;
+
 import org.jdom.JDOMException;
 
 public class JFWindow extends javax.swing.JFrame {
@@ -16,7 +17,9 @@ public class JFWindow extends javax.swing.JFrame {
         JFWindow.userBusiness = new UserBusiness();
         JFWindow.userSesion = new UserSesion();
         this.setSize(800,600);
-        this.add(new JPLogin());
+        this.add(new JPLogin(this));
+        
+//        this.pack();
     }
 
     /**
@@ -29,6 +32,7 @@ public class JFWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -5,9 +5,10 @@ public class Thought {
     
     private String text;
 
-    public Thought() {
+    public Thought(String text) {
+        this.text = text;
     }
-    
+   
     public String getText() {
         return text;
     }

@@ -2,7 +2,7 @@
 package Business;
 
 import Data.UserData;
-import Domain.Profile;
+import DataStructures.MyLinkedStack;
 import Domain.User;
 import java.io.IOException;
 import java.net.PasswordAuthentication;
@@ -22,11 +22,16 @@ public class UserBusiness {
     }//login
     
     public boolean saveUser(User user) throws IOException, CloneNotSupportedException{
-        if (user.getProfile().equals(null))return false;
+        if (user.getProfile() == null)return false;
         return this.userData.saveUser(user);
     }//saveUser
     
     public User loadUser(String username){
         return this.userData.loadUser(username);
     }//loadUser
+    
+    public MyLinkedStack loadAllPost(){
+        return this.userData.loadAllPost();
+    }//loadAllPost
+    
 }//class

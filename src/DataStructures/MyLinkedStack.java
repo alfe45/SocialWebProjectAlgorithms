@@ -43,6 +43,7 @@ public class MyLinkedStack implements Cloneable{
         if (isEmpty())throw new ExceptionStack("Stack is empty");
         Node aux = top;
         top = top.next;
+        count--;
         return aux.element;
     }//pop
     
