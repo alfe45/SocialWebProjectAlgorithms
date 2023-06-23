@@ -3,6 +3,7 @@ package Business;
 
 import Data.UserData;
 import DataStructures.MyLinkedStack;
+import Domain.Profile;
 import Domain.User;
 import java.io.IOException;
 import java.net.PasswordAuthentication;
@@ -17,21 +18,33 @@ public class UserBusiness {
     }
     
     public boolean login(PasswordAuthentication passwordAuthentication){
-        if ((passwordAuthentication.getUserName().equals("")||passwordAuthentication.getPassword().length==0))return false;
+        if ((passwordAuthentication.getUserName().equals("")
+                ||passwordAuthentication.getPassword().length==0))return false;
         return this.userData.login(passwordAuthentication);
     }//login
     
     public boolean saveUser(User user) throws IOException, CloneNotSupportedException{
-        if (user.getProfile() == null)return false;
         return this.userData.saveUser(user);
     }//saveUser
     
-    public User loadUser(String username){
-        return this.userData.loadUser(username);
-    }//loadUser
+    public boolean saveNewUser(User user) throws IOException, CloneNotSupportedException{
+        return this.userData.saveNewUser(user);
+    }//saveNewUser
+    
+    public Profile loadProfile(String username){
+        return this.userData.loadProfile(username);
+    }//loadProfile
     
     public MyLinkedStack loadAllPost(){
         return this.userData.loadAllPost();
     }//loadAllPost
+    
+//    public MyLinkedStack loadUserPosts(String username){
+//        return this.userData.loadUserPosts();
+//    }//loadUserPosts
+
+    public boolean searchProfile(String username) {
+        return this.userData.searchProfile(username);
+    }//searchProfile
     
 }//class

@@ -30,8 +30,4 @@ public class User {
         this.passwordAuthentication = new PasswordAuthentication(username, password);
     }//register
     
-    public void createNewProfile(String name){
-        this.profile = new Profile(name);
-    }//createProfile
-    
 }//class

@@ -2,29 +2,24 @@ package GUI;
 
 import DataStructures.MyLinkedStack;
 import Domain.Post;
+
+import java.awt.Color;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JTabbedPane;
 
 public class JPMenu extends javax.swing.JPanel {
 
     private JFWindow window;
-    private MyLinkedStack allposts;
-    private MyLinkedStack allpostsTemp;
-    private Post currentInView;
-
     private int indexPost;
     private int indexThought;
 
     public JPMenu(JFWindow window) throws IOException {
         initComponents();
-
         init(window);
-
     }
 
     /**
@@ -50,8 +45,18 @@ public class JPMenu extends javax.swing.JPanel {
         jPanelRequests = new javax.swing.JPanel();
         jTabbedPaneRequests = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListMyRequests = new javax.swing.JList<>();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jTextFieldSearch = new javax.swing.JTextField();
+        JButtonSearch = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabelUsernameFound = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabelResult = new javax.swing.JLabel();
         jPanelProfile = new javax.swing.JPanel();
         jLabelUsername = new javax.swing.JLabel();
         jLabelPic = new javax.swing.JLabel();
@@ -173,15 +178,32 @@ public class JPMenu extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
 
+        jListMyRequests.setBackground(new java.awt.Color(204, 255, 204));
+        jListMyRequests.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jListMyRequests.setForeground(new java.awt.Color(0, 0, 0));
+        jListMyRequests.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jListMyRequests.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jListMyRequests);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(389, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 487, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPaneRequests.addTab("FRIEND REQUESTS", jPanel1);
@@ -205,15 +227,93 @@ public class JPMenu extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
+        JButtonSearch.setText("Search");
+        JButtonSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JButtonSearchActionPerformed(evt);
+            }
+        });
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 255));
+
+        jButton1.setBackground(new java.awt.Color(255, 204, 255));
+        jButton1.setText("Add Friend");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(255, 204, 255));
+        jButton2.setText("View Profile");
+
+        jLabelUsernameFound.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelUsernameFound.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
+        jLabelUsernameFound.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelUsernameFound.setText("<NAME>");
+
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel2.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("POSTS: "+ JFWindow.socialWebCore.getCurrentSelectedProfile().getPosts().getSize());
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelUsernameFound, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 381, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelUsernameFound)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jButton2))
+                .addGap(332, 332, 332))
+        );
+
+        jLabelResult.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelResult.setForeground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 664, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(JButtonSearch)
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabelResult, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 487, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JButtonSearch)
+                    .addComponent(jLabelResult, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPaneRequests.addTab("SEARCH", jPanel3);
@@ -242,7 +342,7 @@ public class JPMenu extends javax.swing.JPanel {
 
         jLabelUsername.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabelUsername.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelUsername.setText(JFWindow.userSesion.getLoggedUser().getProfile().getName().toUpperCase());
+        jLabelUsername.setText(JFWindow.socialWebCore.getLoggedUser().getProfile().getName().toUpperCase());
         jPanelProfile.add(jLabelUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 145, -1, -1));
 
         jLabelPic.setBackground(new java.awt.Color(255, 255, 255));
@@ -255,8 +355,10 @@ public class JPMenu extends javax.swing.JPanel {
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("POSTS: "+ JFWindow.userSesion.getLoggedUser().getProfile().getPosts().getSize());
+        jLabel1.setText("POSTS: "+ JFWindow.socialWebCore.getLoggedUser().getProfile().getPosts().getSize());
         jPanelProfile.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 182, -1, -1));
+
+        jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -297,107 +399,156 @@ public class JPMenu extends javax.swing.JPanel {
         add(jLabelTitle, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonNextThoughtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextThoughtActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if (this.indexThought == 10) {
-            this.indexThought = 1;
-            change(this.indexThought);
-        } else {
-            change(++this.indexThought);
-        }
-    }//GEN-LAST:event_jButtonNextThoughtActionPerformed
+        JFWindow.socialWebCore.getLoggedUser().getProfile().sendFriendRequest(
+            JFWindow.socialWebCore.getCurrentSelectedProfile());
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButtonPreviousThoughtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPreviousThoughtActionPerformed
+    private void JButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonSearchActionPerformed
         // TODO add your handling code here:
-        if (this.indexThought == 1) {
-            this.indexThought = 10;
-            change(this.indexThought);
-        } else {
-            change(--this.indexThought);
-        }
 
-    }//GEN-LAST:event_jButtonPreviousThoughtActionPerformed
+        if (jTextFieldSearch.getText().equals("")) {
+            this.jLabelResult.setForeground(Color.RED);
+            this.jLabelResult.setText("*Invalid input!");
+        } else {
+            if (JFWindow.socialWebCore.getUserBusiness().searchProfile(jTextFieldSearch.getText())) {
+                this.jLabelResult.setForeground(Color.GREEN);
+                this.jLabelResult.setText("User found!");
+
+                JFWindow.socialWebCore.setCurrentSelectedProfile(
+                    JFWindow.socialWebCore.getUserBusiness().loadProfile(
+                        jTextFieldSearch.getText()));
+                if (!JFWindow.socialWebCore.getCurrentSelectedProfile().getName().equals(
+                    JFWindow.socialWebCore.getLoggedUser().getProfile().getName())) {
+                this.jLabelUsernameFound.setText(JFWindow.socialWebCore.getCurrentSelectedProfile().getName());
+            } else {
+                this.jLabelResult.setForeground(Color.RED);
+                this.jLabelResult.setText("You can't search your profile!");
+                //                    JFWindow.socialWebCore.setCurrentSelectedProfile(null);
+            }//if
+
+        } else {
+            this.jLabelResult.setForeground(Color.ORANGE);
+            this.jLabelResult.setText("*User not found! Search again");
+        }//if
+
+        }//if
+    }//GEN-LAST:event_JButtonSearchActionPerformed
 
     private void jButtonNextPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextPostActionPerformed
         // TODO add your handling code here:
-        if (!allpostsTemp.isEmpty()) {
-            this.currentInView = (Post) allpostsTemp.pop();
-            this.indexPost++;
-            this.indexThought = 1;
-            change(this.indexThought);
-        } else {
-            this.jTextArea1.setText("END REACHED, REFRESH!");
-            this.jButtonNextPost.setEnabled(false);
-            this.jLabelPostNumber.setText("POST #: " + this.indexPost);
-        }
-
+        //        if (!allpostsTemp.isEmpty()) {
+            //            this.currentInView = (Post) allpostsTemp.pop();
+            //            this.indexPost++;
+            //            this.indexThought = 1;
+            //            change(this.indexThought);
+            //        } else {
+            //            this.jTextArea1.setText("END REACHED, REFRESH!");
+            //            this.jButtonNextPost.setEnabled(false);
+            //            this.jLabelPostNumber.setText("POST #: " + this.indexPost);
+            //        }
     }//GEN-LAST:event_jButtonNextPostActionPerformed
 
     private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
         // TODO add your handling code here:
-        this.allposts = JFWindow.userBusiness.loadAllPost();
-        try {
-            this.allpostsTemp = (MyLinkedStack) allposts.clone();
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.indexPost = 1;
-        this.indexThought = 1;
-        this.currentInView = (Post) allpostsTemp.pop();
+        //        this.allposts = JFWindow..loadAllPost();
+        //        try {
+            //            this.allpostsTemp = (MyLinkedStack) allposts.clone();
+            //        } catch (CloneNotSupportedException ex) {
+            //            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+            //        }
+        //
+        //        this.indexPost = 1;
+        //        this.indexThought = 1;
+        //        this.currentInView = (Post) allpostsTemp.pop();
         this.jButtonNextPost.setEnabled(true);
         change(this.indexThought);
     }//GEN-LAST:event_jButtonRefreshActionPerformed
 
+    private void jButtonPreviousThoughtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPreviousThoughtActionPerformed
+        // TODO add your handling code here:
+        //        if (this.indexThought == 1) {
+            //            this.indexThought = 10;
+            //            change(this.indexThought);
+            //        } else {
+            //            change(--this.indexThought);
+            //        }
+    }//GEN-LAST:event_jButtonPreviousThoughtActionPerformed
+
+    private void jButtonNextThoughtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextThoughtActionPerformed
+        // TODO add your handling code here:
+        //        if (this.indexThought == 10) {
+            //            this.indexThought = 1;
+            //            change(this.indexThought);
+            //        } else {
+            //            change(++this.indexThought);
+            //        }
+    }//GEN-LAST:event_jButtonNextThoughtActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JButtonSearch;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonNextPost;
     private javax.swing.JButton jButtonNextThought;
     private javax.swing.JButton jButtonPreviousThought;
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelDate;
     private javax.swing.JLabel jLabelPic;
     private javax.swing.JLabel jLabelPostFrom;
     private javax.swing.JLabel jLabelPostNumber;
+    private javax.swing.JLabel jLabelResult;
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JLabel jLabelUsername;
+    private javax.swing.JLabel jLabelUsernameFound;
+    private javax.swing.JList<String> jListMyRequests;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelFriends;
     private javax.swing.JPanel jPanelHome;
     private javax.swing.JPanel jPanelProfile;
     private javax.swing.JPanel jPanelRequests;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTabbedPane jTabbedPaneRequests;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextFieldSearch;
     // End of variables declaration//GEN-END:variables
 
     private void change(int indexThought) {
-        this.jTextArea1.setText(currentInView.getThought(indexThought));
-        this.jLabelDate.setText("DATE: "+currentInView.getDate().toString() + "p"+this.indexPost);
-        this.jLabelPostNumber.setText("POST #: " + this.indexPost);
+//        this.jTextArea1.setText(currentInView.getThought(indexThought));
+//        this.jLabelDate.setText("DATE: " + currentInView.getDate().toString() + "p" + this.indexPost);
+//        this.jLabelPostNumber.setText("POST #: " + this.indexPost);
     }
 
     private void init(JFWindow window) throws IOException {
         this.window = window;
-        this.allposts = JFWindow.userBusiness.loadAllPost();
         this.indexPost = 1;
         this.indexThought = 1;
         this.setSize(800, 600);
         this.doLayout();
-        
-        Image img = ((Image)ImageIO.read(getClass().getResourceAsStream("/Assets/refresh.png")).getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
-        this.jButtonRefresh.setIcon(new ImageIcon(img));
-        try {
-            this.allpostsTemp = (MyLinkedStack) allposts.clone();
-            currentInView = (Post) allpostsTemp.pop();
-        } catch (CloneNotSupportedException ex) {
-            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        this.jPanel1.doLayout();
+        this.jPanel2.doLayout();
+        this.jPanel3.doLayout();
+        this.jPanel4.doLayout();
+//
+//        Image img = ((Image) ImageIO.read(getClass().getResourceAsStream("/Assets/refresh.png")).getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
+//        this.jButtonRefresh.setIcon(new ImageIcon(img));
+//        try {
+//            this.allpostsTemp = (MyLinkedStack) allposts.clone();
+//            currentInView = (Post) allpostsTemp.pop();
+//        } catch (CloneNotSupportedException ex) {
+//            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         change(indexThought);
     }//init
 }

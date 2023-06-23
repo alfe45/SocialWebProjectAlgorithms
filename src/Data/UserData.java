@@ -1,10 +1,12 @@
 package Data;
 
-import DataStructures.MyCicularDoublyLinkedList;
 import DataStructures.MyLinkedQueue;
 import DataStructures.MyLinkedStack;
 import Domain.Post;
 import Domain.Profile;
+import Domain.Request;
+import Domain.Thought;
+
 import Domain.User;
 import Utility.ElementsXML;
 import Utility.FileRutes;
@@ -13,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.PasswordAuthentication;
+import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -40,93 +43,138 @@ public class UserData {
         }//if
     }
 
+    private void saveXML() throws FileNotFoundException, IOException {
+        XMLOutputter xmlOutputter = new XMLOutputter();
+        xmlOutputter.output(this.jdomDocument, new PrintWriter(this.rute));
+    }//saveXML
+
     public boolean login(PasswordAuthentication passwordAuthentication) {
-        User user = loadUser(passwordAuthentication.getUserName());
-        if (user == null) {
+        Element eUser = this.root.getChild(passwordAuthentication.getUserName());
+        if (eUser != null) {
+            String passwordFound = eUser.getAttribute(ElementsXML.PASSWORD).getValue();
+            return passwordFound.equals(String.copyValueOf(passwordAuthentication.getPassword()));
+        } else {
+            System.out.println("User not found! Login failed!");
             return false;
-        }
-        String passwordFound = String.copyValueOf(user.getPasswordAuthentication().getPassword());
-        String passwordIn = String.copyValueOf(passwordAuthentication.getPassword());
-
-        System.out.println("UserFound: "
-                + user.getPasswordAuthentication().getUserName() + " Pass: " + passwordFound);
-
-        return passwordFound.equals(passwordIn);
+        }//if
     }//login
 
+    public boolean saveNewUser(User user) throws IOException, CloneNotSupportedException {
+        if (root.getChild(user.getPasswordAuthentication().getUserName()) != null) {
+            System.out.println("User already exists!");
+            return false;
+        } else {
+            return saveUser(user);
+        }//if
+    }//saveNewUser
+
     public boolean saveUser(User user) throws IOException, CloneNotSupportedException {
+        //deletes the user to override
+        this.root.removeChild(user.getProfile().getName());
 
         Element eUser = new Element(user.getProfile().getName());
-        eUser.setAttribute(ElementsXML.USERNAME, user.getPasswordAuthentication().getUserName());
         eUser.setAttribute(ElementsXML.PASSWORD, String.copyValueOf(user.getPasswordAuthentication().getPassword()));
-
+        
         Element eFriends = new Element(ElementsXML.FRIENDS);
-        for (int i = 1; i < user.getProfile().getFriends().getSize(); i++) {
-            User temp = (User) user.getProfile().getFriends().getByPosition(i);
+        for (int i = 1; i <= user.getProfile().getFriends().getSize(); i++) {
+            String temp = (String) user.getProfile().getFriends().getByPosition(i);
             Element eCurrentFriend = new Element(ElementsXML.FRIEND);
-            eCurrentFriend.setAttribute(ElementsXML.FRIEND_USERNAME, temp.getPasswordAuthentication().getUserName());
+            eCurrentFriend.setAttribute(ElementsXML.USERNAME, temp);
             eFriends.addContent(eCurrentFriend);
+            System.out.println("i:" +i);
         }//for
         eUser.addContent(eFriends);
 
         Element eRequests = new Element(ElementsXML.REQUESTS);
-        for (int i = 1; i < user.getProfile().getRequests().getSize(); i++) {
-            MyLinkedQueue tempQueue = (MyLinkedQueue) user.getProfile().getRequests().clone();
-            String temp = (String) tempQueue.delete();
+        MyLinkedQueue tempRequestsQueue = (MyLinkedQueue) user.getProfile().getRequests().clone();
+        while (!tempRequestsQueue.isEmpty()) {
+            Request temp = (Request) tempRequestsQueue.delete();
             Element eCurrentRequest = new Element(ElementsXML.REQUEST);
-            eCurrentRequest.setAttribute(ElementsXML.REQUESTF_FROM, temp);
+            eCurrentRequest.setAttribute(ElementsXML.REQUEST_FROM, temp.getSentBy());
+            eCurrentRequest.setAttribute(ElementsXML.DATE, temp.getDate());
             eRequests.addContent(eCurrentRequest);
-        }//for
+        }//while
         eUser.addContent(eRequests);
+
+        Element ePosts = new Element(ElementsXML.POSTS);
+        MyLinkedStack tempPostsStack = (MyLinkedStack) user.getProfile().getPosts().clone();
+        while (!tempPostsStack.isEmpty()) {
+            Post temp = (Post) tempPostsStack.pop();
+            Element eCurrentPost = new Element(ElementsXML.POST);
+            for (int i = 1; i <= temp.getThoughts().getSize(); i++) {
+                String tempThought = temp.getThought(i);
+                Element eCurrentThought = new Element(ElementsXML.THOUGHT);
+                eCurrentThought.setAttribute(ElementsXML.TEXT, tempThought);
+                eCurrentPost.addContent(eCurrentThought);
+            }//for
+            ePosts.addContent(eCurrentPost);
+        }//while
+        eUser.addContent(ePosts);
 
         this.root.addContent(eUser);
         saveXML();
         return true;
     }//saveUser
 
-    public User loadUser(String username) {
-        Element rootChild = this.root.getChild(username);
-        if (rootChild == null) {
+    public Profile loadProfile(String username) {
+        Element eUser = this.root.getChild(username);
+        if (eUser == null) {
             return null;
-        }
+        }//if
 
-        User user = new User();
-        String name = rootChild.getAttributeValue(ElementsXML.USERNAME);
-        String pass = rootChild.getAttributeValue(ElementsXML.PASSWORD);
+        String password = eUser.getAttributeValue(ElementsXML.PASSWORD);
+        Profile profile = new Profile(username);
+        System.out.println("aaaaa");
+        //loads friends
+        Element eFriends = eUser.getChild(ElementsXML.FRIENDS);
+        List<Element> friendsList = eFriends.getChildren();
+        
+        for (int i = 0; i < friendsList.size(); i++) {
+            profile.getFriends().addEnd(
+                    friendsList.get(i).getAttribute(ElementsXML.USERNAME).getValue());
+        }//for
 
-        Profile profile = new Profile(name);
-//        profile.setName(username);
-//        profile.setFriends(friends);
-//        profile.setRequests(requests);
-//        profile.setPosts(posts);
-//        
-//        
-//        ArrayList<Estudiante> friends = new ArrayList<>();
-//        List elementListEstudiantes = this.root.getChildren();
-//        for (Object objectActual:elementListEstudiantes) {
-//            Element eActual  = (Element) objectActual;
-//            Estudiante e = new Estudiante(eActual.getAttributeValue("Carnet"),
-//                    eActual.getChild("Nombre").getValue(),
-//                    Integer.parseInt(eActual.getChild("Nota").getValue()));
-//            estudiantes.add(e);
-//        }//for
+        //loads requests
+        Element eRequests = eUser.getChild(ElementsXML.REQUESTS);
+        List<Element> requestsList = eRequests.getChildren();
+        for (int i = 0; i < requestsList.size(); i++) {
+            Element eCurrent = requestsList.get(i);
+            profile.getRequests().insert(new Request(rute, eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue()
+                            , profile.getName()));
+        }//for
 
-        user.setPasswordAuthentication(new PasswordAuthentication(name, pass.toCharArray()));
-        user.setProfile(profile);
+        //loads posts
+        Element ePosts = eUser.getChild(ElementsXML.REQUESTS);
+        List<Element> postsList = ePosts.getChildren();
+        for (int i = 0; i < postsList.size(); i++) {
+            Element eCurrentPost = postsList.get(i);
+            Post temp = new Post();
+            List<Element> thoughtsList = eCurrentPost.getChildren();
+            for (int j = 0; j < thoughtsList.size(); j++) {
+                Element eCurrentThought = thoughtsList.get(j);
+                temp.getThoughts().addEnd(new Thought(eCurrentThought.getAttributeValue(ElementsXML.THOUGHT)));
+            }//for j
+            profile.getPosts().push(temp);
+        }//for
+        
+        return profile;
+    }//loadProfile
 
-        return user;
-    }//loadUser
-
-    private void saveXML() throws FileNotFoundException, IOException {
-        XMLOutputter xmlOutputter = new XMLOutputter();
-        xmlOutputter.output(this.jdomDocument, new PrintWriter(this.rute));
-    }//saveXML
+    public boolean searchProfile(String username) {
+        Element eProfile = this.root.getChild(username);
+        if (eProfile != null) {
+            System.out.println("Search result: Profile found!");
+            return true;
+        } else {
+            System.out.println("Search result: Profile not found!");
+            return false;
+        }//if
+    }//searchProfile
 
     public MyLinkedStack loadAllPost() {
         MyLinkedStack allPosts = new MyLinkedStack();
 
         //aqui se cargarán todos los posts de todos los usuarios desde el .xml
-        
         //posts for testing
         Post post1 = new Post();
         post1.addThought("Post 1 Thought 01");
@@ -139,7 +187,7 @@ public class UserData {
         post1.addThought("Post 1 Thought 08");
         post1.addThought("Post 1 Thought 09");
         post1.addThought("Post 1 Thought 10");
-        
+
         Post post2 = new Post();
         post2.addThought("Post 2 Thought 01");
         post2.addThought("Post 2 Thought 02");
@@ -151,7 +199,7 @@ public class UserData {
         post2.addThought("Post 2 Thought 08");
         post2.addThought("Post 2 Thought 09");
         post2.addThought("Post 2 Thought 10");
-        
+
         Post post3 = new Post();
         post3.addThought("Post 3 Thought 01");
         post3.addThought("Post 3 Thought 02");
@@ -163,15 +211,13 @@ public class UserData {
         post3.addThought("Post 3 Thought 08");
         post3.addThought("Post 3 Thought 09");
         post3.addThought("Post 3 Thought 10");
-        
+
         allPosts.push(post3);
         allPosts.push(post2);
         allPosts.push(post1);
-        
-        
+
         return allPosts;
-        
-        
+
 //                System.out.println("Name loadAllPosts: " + JFWindow.userSesion.getLoggedUser().getProfile().getName());
 //        JFWindow.userSesion.getLoggedUser().getProfile().setPosts(allposts);
 //        int userPostsCounter = JFWindow.userSesion.getLoggedUser().getProfile().getPosts().getSize();
@@ -183,7 +229,7 @@ public class UserData {
 //            this.allposts.push(userPostsCopy.top);
 //        }//for
 //        
-        
     }//loadAllPost
+//
 
 }//class

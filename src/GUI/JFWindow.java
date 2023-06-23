@@ -2,24 +2,22 @@
 package GUI;
 
 import Business.UserBusiness;
-import Domain.UserSesion;
+import Domain.SocialWebCore;
 import java.io.IOException;
 
 import org.jdom.JDOMException;
 
 public class JFWindow extends javax.swing.JFrame {
 
-    public static UserBusiness userBusiness;
-    protected static UserSesion userSesion;
+    protected static SocialWebCore socialWebCore;
 
     public JFWindow() throws JDOMException, IOException, CloneNotSupportedException {
         initComponents();
-        JFWindow.userBusiness = new UserBusiness();
-        JFWindow.userSesion = new UserSesion();
+
+        JFWindow.socialWebCore = new SocialWebCore();
         this.setSize(800,600);
         this.add(new JPLogin(this));
-        
-//        this.pack();
+
     }
 
     /**
