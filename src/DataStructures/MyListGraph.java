@@ -4,8 +4,8 @@ public class MyListGraph {
 
     private Vertex[] vertexes; //arreglo de vertices
     private int count;
-    private MyLinkedStack stack;//para el recorrido dfs
-    private MyLinkedQueue queue;//para el recorrido bfs
+    private MyLinkedStack stack;//para el recorrido dfs - profundidad 
+    private MyLinkedQueue queue;//para el recorrido bfs - anchura
 
     public MyListGraph(int n) {
         if (n <= 0) {
@@ -35,12 +35,12 @@ public class MyListGraph {
         return count;
     }//getSize
 
-    public boolean existVertex(Object elemento) throws ExceptionGraph {
+    public boolean existVertex(Object element) throws ExceptionGraph {
         if (isEmpty()) {
             throw new ExceptionGraph("el grafo no existe");
         }//if
         for (int i = 0; i < count; i++) {
-            if (vertexes[i].element.equals(elemento)) {
+            if (vertexes[i].element.equals(element)) {
                 return true;//encontro el elemento
             }//if
         }//for
@@ -57,16 +57,16 @@ public class MyListGraph {
         return false;
     }//existEdge
 
-    public void addVertex(Object elemento) throws ExceptionGraph {
+    public void addVertex(Object element) throws ExceptionGraph {
         if (count >= vertexes.length) {
             throw new ExceptionGraph("el grafo esta lleno");
         }//if
-        vertexes[count++] = new Vertex(elemento);
+        vertexes[count++] = new Vertex(element);
     }//addVertex
 
     public void addEdge(Object v1, Object v2) throws ExceptionGraph {
         if (!existVertex(v1) || !existVertex(v2)) {
-            throw new ExceptionGraph("alguno o ninguno de los vetices existe");
+            throw new ExceptionGraph("Alguno o ninguno de los vertices existe");
         }//if
         vertexes[getPosition(v1)].listEdge.addEnd(v2);
         vertexes[getPosition(v2)].listEdge.addEnd(v1);
@@ -74,7 +74,7 @@ public class MyListGraph {
 
     public void addWeight(Object v1, Object v2, Object weight) throws ExceptionGraph {
         if (!existVertex(v1) || !existVertex(v2)) {
-            throw new ExceptionGraph("alguno o ninguno de los vetices existe");
+            throw new ExceptionGraph("Alguno o ninguno de los vertices existe");
         }//if
         vertexes[getPosition(v1)].listEdge.addEnd(v2);
         vertexes[getPosition(v2)].listEdge.addEnd(v1);
@@ -90,8 +90,7 @@ public class MyListGraph {
 
         while (!stack.isEmpty()) {
             int v = VerticeAdyacenteNoVisitado(Integer.parseInt(stack.top().toString()));
-            if (v == -1) //if,
-            {
+            if (v == -1) {
                 stack.pop();
             } else { // if
                 vertexes[v].visited = true;
@@ -99,11 +98,10 @@ public class MyListGraph {
                 stack.push(v);
             }//else
         }//while
-        for (int j = 0; j < count; j++) // reset flags
-        {
+        // reset flags
+        for (int j = 0; j < count; j++) {
             vertexes[j].visited = false;
-        }
-
+        }//for
         resetVisited();
         return info;
     }//dfs
@@ -121,12 +119,11 @@ public class MyListGraph {
                 vertexes[v2].visited = true;
                 info += showVextex(v2) + " ";
                 queue.insert(v2);
-            } //while
-        } //while
+            }//while
+        }//while
         for (int j = 0; j < count; j++) {
             vertexes[j].visited = false;
-        }
-
+        }//for
         resetVisited();
         return info;
     }//bfs
@@ -139,20 +136,6 @@ public class MyListGraph {
         }//for
         return -1;//significa que el vertice no existe
     }//getElement
-
-    public String toString() {
-
-        String salida = "";
-
-        for (int i = 0; i < count; i++) {
-            salida += "El soldado en la posición " + i + " es " + vertexes[i].element + " y está enlazado con el soldado " + vertexes[i].listEdge.toString();
-            if (i < count - 1) {
-                salida += "\n";
-            }
-        }//
-
-        return salida;
-    }//fin to String
 
     //Metodos privados auxiliares
     private void resetVisited() {

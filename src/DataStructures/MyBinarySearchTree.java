@@ -2,7 +2,7 @@ package DataStructures;
 
 public class MyBinarySearchTree{
 
-    BinaryNode root;// representa la entrada al arbol;
+    BinaryNode root;
 
     public MyBinarySearchTree() {
         root = null;
@@ -245,6 +245,7 @@ public class MyBinarySearchTree{
     class ExceptionTree extends RuntimeException {
 
         public ExceptionTree(String err) {
+            super(err);
         }
 
     }//class

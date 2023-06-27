@@ -18,7 +18,7 @@ public class UserBusiness {
     }
     
     public boolean login(PasswordAuthentication passwordAuthentication){
-        if ((passwordAuthentication.getUserName().equals("")
+        if ((passwordAuthentication.getUserName().equals("") 
                 ||passwordAuthentication.getPassword().length==0))return false;
         return this.userData.login(passwordAuthentication);
     }//login

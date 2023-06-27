@@ -29,5 +29,10 @@ public class User {
     public void register(String username, char[] password){
         this.passwordAuthentication = new PasswordAuthentication(username, password);
     }//register
-    
+
+    @Override
+    public String toString() {
+        return "User{" + "profile=" + profile + ", passwordAuthentication=" + passwordAuthentication + '}';
+    }
+
 }//class

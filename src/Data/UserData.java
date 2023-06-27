@@ -54,7 +54,7 @@ public class UserData {
             String passwordFound = eUser.getAttribute(ElementsXML.PASSWORD).getValue();
             return passwordFound.equals(String.copyValueOf(passwordAuthentication.getPassword()));
         } else {
-            System.out.println("User not found! Login failed!");
+            System.out.println("User does not exists! Login failed!");
             return false;
         }//if
     }//login
@@ -123,8 +123,9 @@ public class UserData {
         }//if
 
         String password = eUser.getAttributeValue(ElementsXML.PASSWORD);
-        Profile profile = new Profile(username);
-        System.out.println("aaaaa");
+        Profile profile = new Profile();
+        profile.setName(username);
+
         //loads friends
         Element eFriends = eUser.getChild(ElementsXML.FRIENDS);
         List<Element> friendsList = eFriends.getChildren();

@@ -55,4 +55,11 @@ public class Request {
         this.accepted = accepted;
     }
 
+    @Override
+    public String toString() {
+        return "Request{" + "date=" + date + ", sentBy=" + sentBy + ", sentTo=" + sentTo + ", accepted=" + accepted + '}';
+    }
+    
+    
+
 }//class

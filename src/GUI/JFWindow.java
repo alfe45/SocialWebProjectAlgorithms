@@ -1,7 +1,6 @@
 
 package GUI;
 
-import Business.UserBusiness;
 import Domain.SocialWebCore;
 import java.io.IOException;
 
@@ -13,11 +12,9 @@ public class JFWindow extends javax.swing.JFrame {
 
     public JFWindow() throws JDOMException, IOException, CloneNotSupportedException {
         initComponents();
-
         JFWindow.socialWebCore = new SocialWebCore();
         this.setSize(800,600);
         this.add(new JPLogin(this));
-
     }
 
     /**

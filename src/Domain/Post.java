@@ -47,5 +47,10 @@ public class Post {
     public void setThoughts(MyCicularDoublyLinkedList thoughts) {
         this.thoughts = thoughts;
     }
+
+    @Override
+    public String toString() {
+        return "Post{" + "title=" + title + ", date=" + date + ", thoughts=" + thoughts.getSize() + '}';
+    }
    
 }//class

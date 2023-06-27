@@ -1,16 +1,8 @@
 package GUI;
 
-import DataStructures.MyLinkedStack;
-import Domain.Post;
-
 import java.awt.Color;
-import java.awt.Image;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
+import java.io.IOException;
 public class JPMenu extends javax.swing.JPanel {
 
     private JFWindow window;
@@ -255,7 +247,7 @@ public class JPMenu extends javax.swing.JPanel {
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("POSTS: "+ JFWindow.socialWebCore.getCurrentSelectedProfile().getPosts().getSize());
+        jLabel2.setText("POSTS: X");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -401,8 +393,8 @@ public class JPMenu extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        JFWindow.socialWebCore.getLoggedUser().getProfile().sendFriendRequest(
-            JFWindow.socialWebCore.getCurrentSelectedProfile());
+//        JFWindow.socialWebCore.getLoggedUser().getProfile().sendFriendRequest(
+//            JFWindow.socialWebCore.getCurrentSelectedProfile());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void JButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonSearchActionPerformed
@@ -416,17 +408,17 @@ public class JPMenu extends javax.swing.JPanel {
                 this.jLabelResult.setForeground(Color.GREEN);
                 this.jLabelResult.setText("User found!");
 
-                JFWindow.socialWebCore.setCurrentSelectedProfile(
-                    JFWindow.socialWebCore.getUserBusiness().loadProfile(
-                        jTextFieldSearch.getText()));
-                if (!JFWindow.socialWebCore.getCurrentSelectedProfile().getName().equals(
-                    JFWindow.socialWebCore.getLoggedUser().getProfile().getName())) {
-                this.jLabelUsernameFound.setText(JFWindow.socialWebCore.getCurrentSelectedProfile().getName());
-            } else {
-                this.jLabelResult.setForeground(Color.RED);
-                this.jLabelResult.setText("You can't search your profile!");
-                //                    JFWindow.socialWebCore.setCurrentSelectedProfile(null);
-            }//if
+//                JFWindow.socialWebCore.setCurrentSelectedProfile(
+//                    JFWindow.socialWebCore.getUserBusiness().loadProfile(
+//                        jTextFieldSearch.getText()));
+//                if (!JFWindow.socialWebCore.getCurrentSelectedProfile().getName().equals(
+//                    JFWindow.socialWebCore.getLoggedUser().getProfile().getName())) {
+//                this.jLabelUsernameFound.setText(JFWindow.socialWebCore.getCurrentSelectedProfile().getName());
+//            } else {
+//                this.jLabelResult.setForeground(Color.RED);
+//                this.jLabelResult.setText("You can't search your profile!");
+//                //                    JFWindow.socialWebCore.setCurrentSelectedProfile(null);
+//            }//if
 
         } else {
             this.jLabelResult.setForeground(Color.ORANGE);

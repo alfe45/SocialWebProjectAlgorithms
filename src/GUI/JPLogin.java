@@ -381,9 +381,6 @@ public class JPLogin extends javax.swing.JPanel {
             JFWindow.socialWebCore.setLoggedUser(user);
             this.window.remove(this);
 
-            //esta linea se debe eliminar luego porque carga todos los posts
-//            JFWindow.userSesion.getLoggedUser().getProfile().setPosts(JFWindow.userBusiness.loadAllPost());
-            //.
             try {
                 this.window.add(new JPMenu(this.window));
             } catch (IOException ex) {
@@ -505,7 +502,9 @@ public class JPLogin extends javax.swing.JPanel {
             User user = new User();
             user.setPasswordAuthentication(new PasswordAuthentication(jtfUsernameSignUp.getText(),
                     jPasswordFieldSignUp.getPassword()));
-            user.setProfile(new Profile(user.getPasswordAuthentication().getUserName()));
+            Profile newProfile = new Profile();
+            newProfile.setName(jtfUsernameSignUp.getText());
+            user.setProfile(newProfile);
 
             try {
                 if (JFWindow.socialWebCore.getUserBusiness().saveNewUser(user)) {
