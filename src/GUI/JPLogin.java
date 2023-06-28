@@ -364,14 +364,17 @@ public class JPLogin extends javax.swing.JPanel {
     private void jbtnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLogInActionPerformed
         String username = this.jtfUsername.getText().toLowerCase();
         String password = String.copyValueOf(this.jPasswordFieldLogin.getPassword());
+        
         if (username.equals("Username") || password.equals("Password")
                 || username.equals("") || password.equals("")) {
-            JOptionPane.showMessageDialog(this, "Invalid inputs!");
+            JOptionPane.showMessageDialog(this, "Invalid inputs!");         
         } else {
+            
             if (JFWindow.socialWebCore.getUserBusiness().login(username, password)) {
                 User user = JFWindow.socialWebCore.getUserBusiness().loadUser(username);
                 JFWindow.socialWebCore.setLoggedUser(user);
                 this.window.remove(this);
+                
                 try {
                     this.window.add(new JPMenu(this.window));
                 } catch (IOException ex) {
@@ -381,10 +384,12 @@ public class JPLogin extends javax.swing.JPanel {
                 } catch (CloneNotSupportedException ex) {
                     Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }//try
+                
                 this.window.repaint();
                 JOptionPane.showMessageDialog(this, "Inicio de sesion completado.\nUser: " + user.getUsername()
                         + "\nPassword: " + user.getPassword());
             } else {
+                
                 JOptionPane.showMessageDialog(this, "Login failed!");
             }//if
         }//if

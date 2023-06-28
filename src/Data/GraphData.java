@@ -46,8 +46,7 @@ public class GraphData {
     }//newFriendship
     
     public MyListGraph loadGraph(){
-        MyListGraph graph = new MyListGraph();
-        
+        MyListGraph graph = new MyListGraph();      
         return graph;
     }//loadGraph
     

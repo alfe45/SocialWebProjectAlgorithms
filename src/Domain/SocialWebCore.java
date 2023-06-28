@@ -23,36 +23,8 @@ public class SocialWebCore {
         this.userBusiness = new UserBusiness();
         this.loggedUser = null;
         this.friendsPosts = new MyLinkedStack();
-        this.usersGraph = this.graphData.loadGraph();
+        this.usersGraph = new MyListGraph();
     }
-
-    public UserBusiness getUserBusiness() {
-        return userBusiness;
-    }
-
-    public void setUserBusiness(UserBusiness userBusiness) {
-        this.userBusiness = userBusiness;
-    }
-
-    public User getLoggedUser() {
-        return loggedUser;
-    }
-
-    public void setLoggedUser(User loggedUser) {
-        this.loggedUser = loggedUser;
-    }
-
-    public MyLinkedStack getFriendsPosts() {
-        return friendsPosts;
-    }
-
-    public void setFriendsPosts(MyLinkedStack friendsPosts) {
-        this.friendsPosts = friendsPosts;
-    }
-
-    public void refresh() {
-
-    }//refresh
 
     public ArrayList<String> suggestFriendsOfFriends() {
         ArrayList<String> suggestions = new ArrayList<>();
@@ -104,4 +76,51 @@ public class SocialWebCore {
 
     }//acceptFriendRequest
 
+    public MyListGraph getUsersGraph() {
+        return usersGraph;
+    }
+
+    public void setUsersGraph(MyListGraph usersGraph) {
+        this.usersGraph = usersGraph;
+    }
+
+    public GraphData getGraphData() {
+        return graphData;
+    }
+
+    public void setGraphData(GraphData graphData) {
+        this.graphData = graphData;
+    }
+
+    public UserBusiness getUserBusiness() {
+        return userBusiness;
+    }
+
+    public void setUserBusiness(UserBusiness userBusiness) {
+        this.userBusiness = userBusiness;
+    }
+
+    public User getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(User loggedUser) {
+        this.loggedUser = loggedUser;
+    }
+
+    public MyLinkedStack getFriendsPosts() {
+        return friendsPosts;
+    }
+
+    public void setFriendsPosts(MyLinkedStack friendsPosts) {
+        this.friendsPosts = friendsPosts;
+    }
+
+    public void refresh() {
+
+    }//refresh
+    
+    
+    
+    
 }//class
