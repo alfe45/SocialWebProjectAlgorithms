@@ -40,19 +40,18 @@ public class GraphData {
         xmlOutputter.output(this.jdomDocument, new PrintWriter(this.rute));
     }//saveXML
     
-    private boolean newFriendship(String user1, String user2){
+    public boolean newFriendship(String user1, String user2){
         MyListGraph graph = loadGraph();
         return true;
     }//newFriendship
     
-    private MyListGraph loadGraph(){
-        //cambiar por grafo de listas
-        MyListGraph graph = new MyListGraph(0);
+    public MyListGraph loadGraph(){
+        MyListGraph graph = new MyListGraph();
         
         return graph;
     }//loadGraph
     
-    private boolean saveGraph(MyListGraph graph){
+    public boolean saveGraph(MyListGraph graph){
 
         return true;
     }//saveGraph

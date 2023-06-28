@@ -1,6 +1,7 @@
 package Domain;
 
 import Business.UserBusiness;
+import Data.GraphData;
 import DataStructures.MyLinkedStack;
 import DataStructures.MyListGraph;
 import GUI.JFWindow;
@@ -16,13 +17,13 @@ public class SocialWebCore {
     private User loggedUser;
     private MyLinkedStack friendsPosts;
     private MyListGraph usersGraph;
-//    private GraphData grahpData;
+    private GraphData graphData;
 
     public SocialWebCore() throws JDOMException, IOException, CloneNotSupportedException {
         this.userBusiness = new UserBusiness();
         this.loggedUser = null;
         this.friendsPosts = new MyLinkedStack();
-//        this.usersGraph = this.graphData.loadGraph();
+        this.usersGraph = this.graphData.loadGraph();
     }
 
     public UserBusiness getUserBusiness() {
@@ -53,54 +54,54 @@ public class SocialWebCore {
 
     }//refresh
 
-    public ArrayList<User> suggestFriendsOfFriends() {
-        ArrayList<User> friendsOfFriends = new ArrayList<>();
-        int control = 0;
-        
-        for (int i = 0; i < this.loggedUser.getFriends().getSize(); i++) {//recorro amigos de usuario loggeado
-            User friendAux = JFWindow.socialWebCore.getUserBusiness().loadUser(this.loggedUser.getFriends().getByPosition(i)+"");
-//                    (User) this.loggedUser.getFriends().getByPosition(i);
-            
-            if (this.usersGraph.existEdge(this.loggedUser, friendAux)) { //si es amigo entra
+    public ArrayList<String> suggestFriendsOfFriends() {
+        ArrayList<String> suggestions = new ArrayList<>();
+        for (int i = 1; i <= this.loggedUser.getFriends().getSize(); i++) {//recorro amigos de usuario loggeado
+            User friendAux = JFWindow.socialWebCore.getUserBusiness().loadUser(this.loggedUser.getFriends().getByPosition(i) + "");
+            if (this.usersGraph.existEdge(this.loggedUser.getUsername(), friendAux.getUsername())) { //si es amigo entra
+                for (int j = 1; j <= friendAux.getFriends().getSize(); j++) { //recorro amigos de amigo de usuario loggeado
+                    User friendOfFriendAux = JFWindow.socialWebCore.getUserBusiness().loadUser(friendAux.getFriends().getByPosition(i) + "");
+                    if (!this.usersGraph.existEdge(this.loggedUser.getUsername(), friendOfFriendAux.getUsername())) { //si ese amigo no es amigo del usuario loggeado
+                        if (!suggestions.contains(friendOfFriendAux.getUsername())) {
+                            int amigosEnComun = 1;
+                            for (int k = 1; k <= this.loggedUser.getFriends().getSize(); k++) {
+                                if (this.usersGraph.existEdge(friendOfFriendAux.getUsername(),
+                                        (String)this.loggedUser.getFriends().getByPosition(k))) {
+                                    amigosEnComun++;
+                                }//if
+                            }//for
+                            suggestions.add(friendOfFriendAux.getUsername() + "=" + amigosEnComun);
+                        }//if
+                    }//if
+                }//for j
+            } else {
+                System.out.println("Error, dicen que son amigos, pero no lo son. conexion no existente en el grafo");
+            }//if
+        }//for i
 
-                for (int j = 0; j < friendAux.getFriends().getSize(); j++) { //recorro amigos de amigo de usuario loggeado
-                    User friendOfFriendAux =  JFWindow.socialWebCore.getUserBusiness().loadUser(friendAux.getFriends().getByPosition(i)+"");
-
-                    if (!this.usersGraph.existEdge(this.loggedUser, friendOfFriendAux)) { //si ese amigo no es amigo del usuario loggeado
-
-                        for (int k = 0; k < friendsOfFriends.size(); k++) { //recorro el araylist
-                            if (friendsOfFriends.get(i).equals(friendOfFriendAux)) { //si no esta guardado, lo guarda, sino lo ignora
-                                control++;
-                                friendsOfFriends.get(i).setPriority(friendOfFriendAux.getPriority() + 1);
-                            }
-                        }
-                        if (control == 0) {
-                            friendsOfFriends.add(friendOfFriendAux);
-                        } else {
-                            control = 0;
-                        }
-                    }
-
-                }
-            }
-        }
-        
         //ordeno el arraylist
-        Collections.sort(friendsOfFriends, new Comparator<User>() {
+        Collections.sort(suggestions, new Comparator<String>() {
             @Override
-            public int compare(User p1, User p2) {
-                return new Integer(p1.getPriority()).compareTo(new Integer(p2.getPriority()));
-            }
+            public int compare(String p1, String p2) {
+                return new Integer(p1.split("=")[1]).compareTo(new Integer(p2.split("=")[1]));
+            }//compare
         });
+        
+        ArrayList<String> aux = new ArrayList<>();
+        for (int i = 0; i < suggestions.size(); i++) {
+            String[] nombres = suggestions.get(i).split("=");
+            aux.add(nombres[0]);
+            System.out.println((i+1)+ "username: "+suggestions.get(i));
+        }//if
 
-        return friendsOfFriends;
-    }
-    
-    public void acceptFriendRequest(User finalUser){
+        return aux;
+    }//suggestFriendsOfFriends
+
+    public void acceptFriendRequest(User finalUser) {
         if (!this.usersGraph.existEdge(this.loggedUser, finalUser)) {
             this.usersGraph.addEdge(this.loggedUser, finalUser);
         }//if
-        
+
     }//acceptFriendRequest
 
 }//class

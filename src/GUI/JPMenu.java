@@ -1,11 +1,7 @@
 package GUI;
 
 import Domain.SocialWebCore;
-import Domain.User;
-import java.awt.Color;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import org.jdom.JDOMException;
 public class JPMenu extends javax.swing.JPanel {
 
@@ -599,7 +595,7 @@ public class JPMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonNextThoughtActionPerformed
 
     private void jbtnShowSuggestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnShowSuggestionsActionPerformed
-        ArrayList<User> suggestFriends = this.socialWebCore.suggestFriendsOfFriends();
+//        ArrayList<User> suggestFriends = this.socialWebCore.suggestFriendsOfFriends();
         
 //        suggestFriends
     }//GEN-LAST:event_jbtnShowSuggestionsActionPerformed
