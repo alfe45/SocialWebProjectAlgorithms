@@ -374,13 +374,9 @@ public class JPLogin extends javax.swing.JPanel {
                 this.window.remove(this);
                 try {
                     this.window.add(new JPMenu(this.window));
-                } catch (IOException ex) {
+                } catch (IOException | JDOMException | CloneNotSupportedException ex) {
                     Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (JDOMException ex) {
-                    Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (CloneNotSupportedException ex) {
-                    Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
-                }//try
+                }
                 this.window.repaint();
                 JOptionPane.showMessageDialog(this, "Inicio de sesion completado.\nUser: " + user.getUsername()
                         + "\nPassword: " + user.getPassword());

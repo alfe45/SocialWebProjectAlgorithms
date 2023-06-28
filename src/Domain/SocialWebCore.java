@@ -27,7 +27,6 @@ public class SocialWebCore {
         this.friendsPosts = new MyLinkedStack();
         this.graphData = new GraphData();
         this.usersGraph = this.graphData.loadGraph();
-        
     }
 
     public UserBusiness getUserBusiness() {
@@ -117,14 +116,16 @@ public class SocialWebCore {
             }//compare
         });
         
-        ArrayList<String> aux = new ArrayList<>();
+        ArrayList<String> auxName = new ArrayList<>();
+        ArrayList<String> auxCommonFriends = new ArrayList<>();
         for (int i = 0; i < suggestions.size(); i++) {
             String[] nombres = suggestions.get(i).split("=");
-            aux.add(nombres[0]);
-            System.out.println((i+1)+ "username: "+suggestions.get(i));
+            auxName.add(nombres[0]);
+            auxCommonFriends.add(nombres[1]);
+            System.out.println((i+1)+ "username: "+auxName.get(i) + "friends in common: "+auxCommonFriends.get(i));
         }//if
 
-        return aux;
+        return suggestions;
     }//suggestFriendsOfFriends
 
 }//class
