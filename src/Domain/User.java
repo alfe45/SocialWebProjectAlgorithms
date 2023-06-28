@@ -1,38 +1,83 @@
 package Domain;
 
-import java.net.PasswordAuthentication;
+import DataStructures.MyDoubleLinkedList;
+import DataStructures.MyLinkedQueue;
+import DataStructures.MyLinkedStack;
 
 public class User {
 
-    private Profile profile;
-    private PasswordAuthentication passwordAuthentication;
+    private String nickname;
 
-    public User() {
-    }
-
-    public Profile getProfile() {
-        return profile;
-    }
+    private String username;
     
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    private String password;
+
+    private MyDoubleLinkedList friends;
+
+    private MyLinkedQueue requests;
+
+    private MyLinkedStack posts;
+
+    public User(String username, String password) {
+        this.nickname = "NAME";
+        this.username = username.toLowerCase();
+        this.password = password;
+        this.friends = new MyDoubleLinkedList();
+        this.requests = new MyLinkedQueue();
+        this.posts = new MyLinkedStack();
     }
 
-    public PasswordAuthentication getPasswordAuthentication() {
-        return passwordAuthentication;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setPasswordAuthentication(PasswordAuthentication passwordAuthentication) {
-        this.passwordAuthentication = passwordAuthentication;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public void register(String username, char[] password){
-        this.passwordAuthentication = new PasswordAuthentication(username, password);
-    }//register
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public MyDoubleLinkedList getFriends() {
+        return friends;
+    }
+
+    public void setFriends(MyDoubleLinkedList friends) {
+        this.friends = friends;
+    }
+
+    public MyLinkedQueue getRequests() {
+        return requests;
+    }
+
+    public void setRequests(MyLinkedQueue requests) {
+        this.requests = requests;
+    }
+
+    public MyLinkedStack getPosts() {
+        return posts;
+    }
+
+    public void setPosts(MyLinkedStack posts) {
+        this.posts = posts;
+    }
 
     @Override
     public String toString() {
-        return "User{" + "profile=" + profile + ", passwordAuthentication=" + passwordAuthentication + '}';
+        return "User{" + "nickname=" + nickname + ", username=" + username + ", password=" + password + ", friends=" + friends.getSize() + ", requests=" + requests.getSize() + ", posts=" + posts.getSize() + '}';
     }
 
 }//class

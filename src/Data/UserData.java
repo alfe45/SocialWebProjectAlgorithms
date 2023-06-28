@@ -3,7 +3,6 @@ package Data;
 import DataStructures.MyLinkedQueue;
 import DataStructures.MyLinkedStack;
 import Domain.Post;
-import Domain.Profile;
 import Domain.Request;
 import Domain.Thought;
 
@@ -14,7 +13,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.PasswordAuthentication;
 import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -48,11 +46,11 @@ public class UserData {
         xmlOutputter.output(this.jdomDocument, new PrintWriter(this.rute));
     }//saveXML
 
-    public boolean login(PasswordAuthentication passwordAuthentication) {
-        Element eUser = this.root.getChild(passwordAuthentication.getUserName());
+    public boolean login(String username, String password) {
+        Element eUser = this.root.getChild(username);
         if (eUser != null) {
             String passwordFound = eUser.getAttribute(ElementsXML.PASSWORD).getValue();
-            return passwordFound.equals(String.copyValueOf(passwordAuthentication.getPassword()));
+            return passwordFound.equals(password);
         } else {
             System.out.println("User does not exists! Login failed!");
             return false;
@@ -60,8 +58,7 @@ public class UserData {
     }//login
 
     public boolean saveNewUser(User user) throws IOException, CloneNotSupportedException {
-        if (root.getChild(user.getPasswordAuthentication().getUserName()) != null) {
-            System.out.println("User already exists!");
+        if (existsUser(user.getUsername())) {
             return false;
         } else {
             return saveUser(user);
@@ -70,23 +67,22 @@ public class UserData {
 
     public boolean saveUser(User user) throws IOException, CloneNotSupportedException {
         //deletes the user to override
-        this.root.removeChild(user.getProfile().getName());
+        this.root.removeChild(user.getUsername());
 
-        Element eUser = new Element(user.getProfile().getName());
-        eUser.setAttribute(ElementsXML.PASSWORD, String.copyValueOf(user.getPasswordAuthentication().getPassword()));
-        
+        Element eUser = new Element(user.getUsername());
+        eUser.setAttribute(ElementsXML.PASSWORD, user.getPassword());
+
         Element eFriends = new Element(ElementsXML.FRIENDS);
-        for (int i = 1; i <= user.getProfile().getFriends().getSize(); i++) {
-            String temp = (String) user.getProfile().getFriends().getByPosition(i);
+        for (int i = 1; i <= user.getFriends().getSize(); i++) {
+            String temp = (String) user.getFriends().getByPosition(i);
             Element eCurrentFriend = new Element(ElementsXML.FRIEND);
             eCurrentFriend.setAttribute(ElementsXML.USERNAME, temp);
             eFriends.addContent(eCurrentFriend);
-            System.out.println("i:" +i);
         }//for
         eUser.addContent(eFriends);
 
         Element eRequests = new Element(ElementsXML.REQUESTS);
-        MyLinkedQueue tempRequestsQueue = (MyLinkedQueue) user.getProfile().getRequests().clone();
+        MyLinkedQueue tempRequestsQueue = (MyLinkedQueue) user.getRequests().clone();
         while (!tempRequestsQueue.isEmpty()) {
             Request temp = (Request) tempRequestsQueue.delete();
             Element eCurrentRequest = new Element(ElementsXML.REQUEST);
@@ -97,7 +93,7 @@ public class UserData {
         eUser.addContent(eRequests);
 
         Element ePosts = new Element(ElementsXML.POSTS);
-        MyLinkedStack tempPostsStack = (MyLinkedStack) user.getProfile().getPosts().clone();
+        MyLinkedStack tempPostsStack = (MyLinkedStack) user.getPosts().clone();
         while (!tempPostsStack.isEmpty()) {
             Post temp = (Post) tempPostsStack.pop();
             Element eCurrentPost = new Element(ElementsXML.POST);
@@ -116,22 +112,21 @@ public class UserData {
         return true;
     }//saveUser
 
-    public Profile loadProfile(String username) {
+    public User loadUser(String username) {
         Element eUser = this.root.getChild(username);
         if (eUser == null) {
             return null;
         }//if
 
         String password = eUser.getAttributeValue(ElementsXML.PASSWORD);
-        Profile profile = new Profile();
-        profile.setName(username);
+        User user = new User(username, password);
 
         //loads friends
         Element eFriends = eUser.getChild(ElementsXML.FRIENDS);
         List<Element> friendsList = eFriends.getChildren();
-        
+
         for (int i = 0; i < friendsList.size(); i++) {
-            profile.getFriends().addEnd(
+            user.getFriends().addEnd(
                     friendsList.get(i).getAttribute(ElementsXML.USERNAME).getValue());
         }//for
 
@@ -140,8 +135,8 @@ public class UserData {
         List<Element> requestsList = eRequests.getChildren();
         for (int i = 0; i < requestsList.size(); i++) {
             Element eCurrent = requestsList.get(i);
-            profile.getRequests().insert(new Request(rute, eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue()
-                            , profile.getName()));
+            user.getRequests().insert(new Request("DATE", eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue(),
+                     user.getUsername()));
         }//for
 
         //loads posts
@@ -155,12 +150,16 @@ public class UserData {
                 Element eCurrentThought = thoughtsList.get(j);
                 temp.getThoughts().addEnd(new Thought(eCurrentThought.getAttributeValue(ElementsXML.THOUGHT)));
             }//for j
-            profile.getPosts().push(temp);
+            user.getPosts().push(temp);
         }//for
-        
-        return profile;
+
+        return user;
     }//loadProfile
 
+    public boolean existsUser(String username) {
+        return root.getChild(username) != null;
+    }//existsUser
+    
     public boolean searchProfile(String username) {
         Element eProfile = this.root.getChild(username);
         if (eProfile != null) {

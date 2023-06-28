@@ -9,9 +9,10 @@ public class JPMenu extends javax.swing.JPanel {
     private int indexPost;
     private int indexThought;
 
-    public JPMenu(JFWindow window) throws IOException {
+    public JPMenu(JFWindow window) throws IOException{
         initComponents();
-        init(window);
+        this.window = window;
+        init();
     }
 
     /**
@@ -52,8 +53,9 @@ public class JPMenu extends javax.swing.JPanel {
         jPanelProfile = new javax.swing.JPanel();
         jLabelUsername = new javax.swing.JLabel();
         jLabelPic = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelPostsSize = new javax.swing.JLabel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        jLabelProfileUsername = new javax.swing.JLabel();
         jPanelFriends = new javax.swing.JPanel();
         jLabelTitle = new javax.swing.JLabel();
 
@@ -330,25 +332,21 @@ public class JPMenu extends javax.swing.JPanel {
         jTabbedPane.addTab("REQUESTS", jPanelRequests);
 
         jPanelProfile.setBackground(new java.awt.Color(153, 153, 255));
-        jPanelProfile.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelUsername.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabelUsername.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelUsername.setText(JFWindow.socialWebCore.getLoggedUser().getProfile().getName().toUpperCase());
-        jPanelProfile.add(jLabelUsername, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 145, -1, -1));
+        jLabelUsername.setText(JFWindow.socialWebCore.getLoggedUser().getUsername().toUpperCase());
 
         jLabelPic.setBackground(new java.awt.Color(255, 255, 255));
         jLabelPic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/userPic.png"))); // NOI18N
         jLabelPic.setText("PROFILE PHOTO");
         jLabelPic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabelPic.setOpaque(true);
-        jPanelProfile.add(jLabelPic, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 11, 128, 128));
 
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("POSTS: "+ JFWindow.socialWebCore.getLoggedUser().getProfile().getPosts().getSize());
-        jPanelProfile.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 182, -1, -1));
+        jLabelPostsSize.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelPostsSize.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        jLabelPostsSize.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelPostsSize.setText("POSTS: "+ JFWindow.socialWebCore.getLoggedUser().getPosts().getSize());
 
         jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -360,10 +358,49 @@ public class JPMenu extends javax.swing.JPanel {
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 480, Short.MAX_VALUE)
         );
 
-        jPanelProfile.add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 11, 630, 480));
+        jLabelProfileUsername.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelProfileUsername.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        jLabelProfileUsername.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelProfileUsername.setText("@"+ JFWindow.socialWebCore.getLoggedUser().getUsername());
+
+        javax.swing.GroupLayout jPanelProfileLayout = new javax.swing.GroupLayout(jPanelProfile);
+        jPanelProfile.setLayout(jPanelProfileLayout);
+        jPanelProfileLayout.setHorizontalGroup(
+            jPanelProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelProfileLayout.createSequentialGroup()
+                .addGroup(jPanelProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelProfileLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanelProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelPic, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelUsername)))
+                    .addGroup(jPanelProfileLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelPostsSize))
+                    .addGroup(jPanelProfileLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelProfileUsername)))
+                .addGap(8, 8, 8)
+                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanelProfileLayout.setVerticalGroup(
+            jPanelProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelProfileLayout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addGroup(jPanelProfileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelProfileLayout.createSequentialGroup()
+                        .addComponent(jLabelPic, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabelUsername)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelProfileUsername)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelPostsSize))
+                    .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         jTabbedPane.addTab("PROFILE", jPanelProfile);
 
@@ -400,13 +437,13 @@ public class JPMenu extends javax.swing.JPanel {
     private void JButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonSearchActionPerformed
         // TODO add your handling code here:
 
-        if (jTextFieldSearch.getText().equals("")) {
-            this.jLabelResult.setForeground(Color.RED);
-            this.jLabelResult.setText("*Invalid input!");
-        } else {
-            if (JFWindow.socialWebCore.getUserBusiness().searchProfile(jTextFieldSearch.getText())) {
-                this.jLabelResult.setForeground(Color.GREEN);
-                this.jLabelResult.setText("User found!");
+//        if (jTextFieldSearch.getText().equals("")) {
+//            this.jLabelResult.setForeground(Color.RED);
+//            this.jLabelResult.setText("*Invalid input!");
+//        } else {
+//            if (JFWindow.socialWebCore.getUserBusiness().searchProfile(jTextFieldSearch.getText())) {
+//                this.jLabelResult.setForeground(Color.GREEN);
+//                this.jLabelResult.setText("User found!");
 
 //                JFWindow.socialWebCore.setCurrentSelectedProfile(
 //                    JFWindow.socialWebCore.getUserBusiness().loadProfile(
@@ -420,12 +457,12 @@ public class JPMenu extends javax.swing.JPanel {
 //                //                    JFWindow.socialWebCore.setCurrentSelectedProfile(null);
 //            }//if
 
-        } else {
-            this.jLabelResult.setForeground(Color.ORANGE);
-            this.jLabelResult.setText("*User not found! Search again");
-        }//if
-
-        }//if
+//        } else {
+//            this.jLabelResult.setForeground(Color.ORANGE);
+//            this.jLabelResult.setText("*User not found! Search again");
+//        }//if
+//
+//        }//if
     }//GEN-LAST:event_JButtonSearchActionPerformed
 
     private void jButtonNextPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextPostActionPerformed
@@ -452,10 +489,10 @@ public class JPMenu extends javax.swing.JPanel {
             //        }
         //
         //        this.indexPost = 1;
-        //        this.indexThought = 1;
-        //        this.currentInView = (Post) allpostsTemp.pop();
-        this.jButtonNextPost.setEnabled(true);
-        change(this.indexThought);
+//        //        this.indexThought = 1;
+//        //        this.currentInView = (Post) allpostsTemp.pop();
+//        this.jButtonNextPost.setEnabled(true);
+//        change(this.indexThought);
     }//GEN-LAST:event_jButtonRefreshActionPerformed
 
     private void jButtonPreviousThoughtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPreviousThoughtActionPerformed
@@ -488,12 +525,13 @@ public class JPMenu extends javax.swing.JPanel {
     private javax.swing.JButton jButtonPreviousThought;
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelDate;
     private javax.swing.JLabel jLabelPic;
     private javax.swing.JLabel jLabelPostFrom;
     private javax.swing.JLabel jLabelPostNumber;
+    private javax.swing.JLabel jLabelPostsSize;
+    private javax.swing.JLabel jLabelProfileUsername;
     private javax.swing.JLabel jLabelResult;
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JLabel jLabelUsername;
@@ -521,8 +559,8 @@ public class JPMenu extends javax.swing.JPanel {
 //        this.jLabelPostNumber.setText("POST #: " + this.indexPost);
     }
 
-    private void init(JFWindow window) throws IOException {
-        this.window = window;
+    private void init() throws IOException {
+        
         this.indexPost = 1;
         this.indexThought = 1;
         this.setSize(800, 600);
@@ -532,15 +570,7 @@ public class JPMenu extends javax.swing.JPanel {
         this.jPanel2.doLayout();
         this.jPanel3.doLayout();
         this.jPanel4.doLayout();
-//
-//        Image img = ((Image) ImageIO.read(getClass().getResourceAsStream("/Assets/refresh.png")).getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
-//        this.jButtonRefresh.setIcon(new ImageIcon(img));
-//        try {
-//            this.allpostsTemp = (MyLinkedStack) allposts.clone();
-//            currentInView = (Post) allpostsTemp.pop();
-//        } catch (CloneNotSupportedException ex) {
-//            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        
         change(indexThought);
     }//init
 }

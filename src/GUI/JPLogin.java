@@ -1,10 +1,8 @@
 package GUI;
 
-import Domain.Profile;
 import Domain.User;
 import java.awt.Color;
 import java.io.IOException;
-import java.net.PasswordAuthentication;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -29,6 +27,7 @@ public class JPLogin extends javax.swing.JPanel {
         this.jtfUsername.setForeground(Color.GRAY);
         this.jPasswordFieldLogin.setForeground(Color.GRAY);
 
+        this.jtfNickname.setForeground(Color.GRAY);
         this.jtfUsernameSignUp.setForeground(Color.GRAY);
         this.jPasswordFieldSignUp.setForeground(Color.GRAY);
 
@@ -49,14 +48,13 @@ public class JPLogin extends javax.swing.JPanel {
         jPasswordFieldLogin = new javax.swing.JPasswordField();
         jpSignUp = new javax.swing.JPanel();
         jtfUsernameSignUp = new javax.swing.JTextField();
-        jbtnSignUp = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jButtonSignUpUser = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
         jbtnBackLogIn = new javax.swing.JButton();
         jPasswordFieldSignUp = new javax.swing.JPasswordField();
+        jtfNickname = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -209,15 +207,6 @@ public class JPLogin extends javax.swing.JPanel {
             }
         });
 
-        jbtnSignUp.setBackground(new java.awt.Color(0, 153, 255));
-        jbtnSignUp.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnSignUp.setText("Sign Up");
-        jbtnSignUp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnSignUpActionPerformed(evt);
-            }
-        });
-
         jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("-------------------------------------------------");
 
@@ -238,10 +227,6 @@ public class JPLogin extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("------------------------------------------------------");
-
         jbtnBackLogIn.setBackground(new java.awt.Color(255, 255, 255));
         jbtnBackLogIn.setForeground(new java.awt.Color(0, 0, 0));
         jbtnBackLogIn.setText("Back to Login");
@@ -258,6 +243,24 @@ public class JPLogin extends javax.swing.JPanel {
             }
         });
 
+        jtfNickname.setBackground(new java.awt.Color(255, 255, 255));
+        jtfNickname.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        jtfNickname.setForeground(new java.awt.Color(0, 0, 0));
+        jtfNickname.setText("Nickname");
+        jtfNickname.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtfNicknameMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jtfNicknameMousePressed(evt);
+            }
+        });
+        jtfNickname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfNicknameActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpSignUpLayout = new javax.swing.GroupLayout(jpSignUp);
         jpSignUp.setLayout(jpSignUpLayout);
         jpSignUpLayout.setHorizontalGroup(
@@ -266,25 +269,22 @@ public class JPLogin extends javax.swing.JPanel {
                 .addGroup(jpSignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpSignUpLayout.createSequentialGroup()
                         .addGap(186, 186, 186)
-                        .addGroup(jpSignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jbtnSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel5))
                     .addGroup(jpSignUpLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(jpSignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                        .addGap(86, 86, 86)
+                        .addComponent(jLabel8)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpSignUpLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addGroup(jpSignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPasswordFieldSignUp)
+                            .addComponent(jButtonSignUpUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jtfUsernameSignUp, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
                             .addGroup(jpSignUpLayout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jpSignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jPasswordFieldSignUp, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButtonSignUpUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                                .addComponent(jtfUsernameSignUp, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE))))
-                    .addGroup(jpSignUpLayout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(jbtnBackLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(38, 38, 38)
+                                .addComponent(jbtnBackLogIn, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfNickname))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpSignUpLayout.setVerticalGroup(
@@ -294,25 +294,23 @@ public class JPLogin extends javax.swing.JPanel {
                     .addGroup(jpSignUpLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpSignUpLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel8)
-                        .addGap(31, 31, 31)))
+                        .addGap(92, 92, 92)))
+                .addComponent(jtfNickname, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtfUsernameSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPasswordFieldSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonSignUpUser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbtnBackLogIn)
-                .addGap(328, 328, 328)
-                .addComponent(jbtnSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                 .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/loginPresentation.png"))); // NOI18N
@@ -363,49 +361,33 @@ public class JPLogin extends javax.swing.JPanel {
     }//GEN-LAST:event_jtfUsernameActionPerformed
 
     private void jbtnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnLogInActionPerformed
-        String textJtfUsername = this.jtfUsername.getText();
-        char[] textJtfPassword = this.jPasswordFieldLogin.getPassword();
-        PasswordAuthentication login = new PasswordAuthentication(textJtfUsername, textJtfPassword);
-        if (JFWindow.socialWebCore.getUserBusiness().login(login)) {
-            User user = new User();
-            user.setPasswordAuthentication(login);
-            user.setProfile(JFWindow.socialWebCore.getUserBusiness().loadProfile(textJtfUsername));
-            try {
-                JFWindow.socialWebCore.getUserBusiness().saveUser(user);
-            } catch (IOException ex) {
-                Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            JFWindow.socialWebCore.setLoggedUser(user);
-            this.window.remove(this);
-
-            try {
-                this.window.add(new JPMenu(this.window));
-            } catch (IOException ex) {
-                Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.window.repaint();
-
-            System.out.println("Inicio de sesion completado.\nUser: "
-                    + JFWindow.socialWebCore.getLoggedUser().getPasswordAuthentication().getUserName()
-                    + "\nPassword: " + String.copyValueOf(JFWindow.socialWebCore.getLoggedUser().getPasswordAuthentication().getPassword()));
+        String username = this.jtfUsername.getText().toLowerCase();
+        String password = String.copyValueOf(this.jPasswordFieldLogin.getPassword());
+        if (username.equals("Username") || password.equals("Password")
+                || username.equals("") || password.equals("")) {
+            JOptionPane.showMessageDialog(this, "Invalid inputs!");
         } else {
-            System.out.println("Datos incorrectos o usuario no encontrado.");
+            if (JFWindow.socialWebCore.getUserBusiness().login(username, password)) {
+                User user = JFWindow.socialWebCore.getUserBusiness().loadUser(username);
+                JFWindow.socialWebCore.setLoggedUser(user);
+                this.window.remove(this);
+                try {
+                    this.window.add(new JPMenu(this.window));
+                } catch (IOException ex) {
+                    Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }//try
+                this.window.repaint();
+                JOptionPane.showMessageDialog(this, "Inicio de sesion completado.\nUser: " + user.getUsername()
+                        + "\nPassword: " + user.getPassword());
+            } else {
+                JOptionPane.showMessageDialog(this, "Login failed!");
+            }//if
         }//if
-
     }//GEN-LAST:event_jbtnLogInActionPerformed
 
     private void jtfUsernameSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfUsernameSignUpActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfUsernameSignUpActionPerformed
-
-    private void jbtnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSignUpActionPerformed
-        if (this.jtfUsernameSignUp.getText().equals("") || this.jPasswordFieldSignUp.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(this, "Fill in the blanks");
-        }//if
-    }//GEN-LAST:event_jbtnSignUpActionPerformed
 
     private void jbtnSignUpAuxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSignUpAuxActionPerformed
         this.jpLogIn.setVisible(false);
@@ -484,6 +466,12 @@ public class JPLogin extends javax.swing.JPanel {
             this.jPasswordFieldSignUp.setText("Password");
             this.jPasswordFieldSignUp.setForeground(Color.GRAY);
         }//if  
+
+        if (this.jtfNickname.getText().length() == 0) {
+            this.jtfNickname.setText("Nickname");
+            this.jtfNickname.setForeground(Color.GRAY);
+        }//if
+
     }//GEN-LAST:event_jpSignUpMousePressed
 
     private void jPasswordFieldSignUpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordFieldSignUpMousePressed
@@ -495,57 +483,63 @@ public class JPLogin extends javax.swing.JPanel {
     }//GEN-LAST:event_jPasswordFieldSignUpMousePressed
 
     private void jButtonSignUpUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSignUpUserActionPerformed
-
-        if (jtfUsernameSignUp.getText().equals("") || jPasswordFieldSignUp.getPassword().length < 4) {
-            System.out.println("Invalid inputs! User not saved!");
+        String username = jtfUsernameSignUp.getText().toLowerCase();
+        String password = String.copyValueOf(jPasswordFieldSignUp.getPassword());
+        String nickname = jtfNickname.getText();
+        if (username.equals("Username") || password.equals("Password")
+                || username.equals("") || password.equals("")) {
+            JOptionPane.showMessageDialog(this, "Invalid inputs!");
         } else {
-            User user = new User();
-            user.setPasswordAuthentication(new PasswordAuthentication(jtfUsernameSignUp.getText(),
-                    jPasswordFieldSignUp.getPassword()));
-            Profile newProfile = new Profile();
-            newProfile.setName(jtfUsernameSignUp.getText());
-            user.setProfile(newProfile);
-
-            try {
-                if (JFWindow.socialWebCore.getUserBusiness().saveNewUser(user)) {
-                    System.out.println("User: " + user.getPasswordAuthentication().getUserName() + " signed up!");
-
-                    //test a
-                    JFWindow.socialWebCore.setLoggedUser(user);
-                    this.window.remove(this);
-
-                    //esta linea se debe eliminar luego porque carga todos los posts
-//                    JFWindow.userSesion.getLoggedUser().getProfile().setPosts(JFWindow.userBusiness.loadAllPost());
-                    //.
-                    try {
-                        this.window.add(new JPMenu(this.window));
-                    } catch (IOException ex) {
-                        Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    this.window.repaint();
-
-                    System.out.println("Registro completado.\nUser: "
-                            + JFWindow.socialWebCore.getLoggedUser().getPasswordAuthentication().getUserName()
-                            + "\nPassword: " + String.copyValueOf(JFWindow.socialWebCore.getLoggedUser().getPasswordAuthentication().getPassword()));
-
-                    //test a
+            if (JFWindow.socialWebCore.getUserBusiness().existsUser(username)) {
+                JOptionPane.showMessageDialog(this, "Username already in use!");
+            } else {
+                User user = new User(username, password);
+                if (nickname.length() >= 4) {
+                    user.setNickname(nickname);
                 } else {
-                    System.out.println("User not saved!");
+                    user.setNickname("DEFAULT NAME");
                 }//if
-            } catch (IOException ex) {
-                Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
-            }//try
-
+                try {
+                    if (JFWindow.socialWebCore.getUserBusiness().saveNewUser(user)) {
+                        jtfUsernameSignUp.setText("");
+                        jPasswordFieldSignUp.setText("");
+                        this.jpLogIn.setVisible(true);
+                        this.jLabel4.setVisible(true);
+                        this.jpSignUp.setVisible(false);
+                        this.jLabel3.setVisible(false);
+                        this.window.repaint();
+                        JOptionPane.showMessageDialog(this, "Signed up.\nUser: "
+                                + user.getUsername()
+                                + "\nPassword: " + user.getPassword());
+                    } else {
+                        JOptionPane.showMessageDialog(this, "User not saved!");
+                    }//if
+                } catch (IOException | CloneNotSupportedException ex) {
+                    Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }//try
+            }//if
         }//if
     }//GEN-LAST:event_jButtonSignUpUserActionPerformed
 
+    private void jtfNicknameMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfNicknameMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfNicknameMouseClicked
+
+    private void jtfNicknameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfNicknameMousePressed
+        // TODO add your handling code here:
+        if (this.jtfNickname.getText().equalsIgnoreCase("nickname")) {
+            this.jtfNickname.setText("");
+            this.jtfNickname.setForeground(Color.blue);
+        }//if
+    }//GEN-LAST:event_jtfNicknameMousePressed
+
+    private void jtfNicknameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNicknameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfNicknameActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSignUpUser;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -557,12 +551,12 @@ public class JPLogin extends javax.swing.JPanel {
     private javax.swing.JPasswordField jPasswordFieldSignUp;
     private javax.swing.JButton jbtnBackLogIn;
     private javax.swing.JButton jbtnLogIn;
-    private javax.swing.JButton jbtnSignUp;
     private javax.swing.JButton jbtnSignUpAux;
     private javax.swing.JLabel jlbQuestion;
     private javax.swing.JLabel jlblTitle;
     private javax.swing.JPanel jpLogIn;
     private javax.swing.JPanel jpSignUp;
+    private javax.swing.JTextField jtfNickname;
     private javax.swing.JTextField jtfUsername;
     private javax.swing.JTextField jtfUsernameSignUp;
     // End of variables declaration//GEN-END:variables

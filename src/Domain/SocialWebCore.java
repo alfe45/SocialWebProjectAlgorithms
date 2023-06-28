@@ -8,7 +8,7 @@ import org.jdom.JDOMException;
 
 public class SocialWebCore {
     
-    public UserBusiness userBusiness;
+    private UserBusiness userBusiness;
     private User loggedUser;
     private MyLinkedStack friendsPosts;
 
