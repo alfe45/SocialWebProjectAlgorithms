@@ -17,6 +17,8 @@ public class User {
     private MyLinkedQueue requests;
 
     private MyLinkedStack posts;
+    
+    public int priority;
 
     public User(String username, String password) {
         this.nickname = "NAME";
@@ -25,6 +27,7 @@ public class User {
         this.friends = new MyDoubleLinkedList();
         this.requests = new MyLinkedQueue();
         this.posts = new MyLinkedStack();
+        this.priority = 0;
     }
 
     public String getNickname() {
@@ -73,6 +76,14 @@ public class User {
 
     public void setPosts(MyLinkedStack posts) {
         this.posts = posts;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     @Override

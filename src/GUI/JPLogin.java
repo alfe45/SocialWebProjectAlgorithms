@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.jdom.JDOMException;
 
 public class JPLogin extends javax.swing.JPanel {
 
@@ -374,6 +375,10 @@ public class JPLogin extends javax.swing.JPanel {
                 try {
                     this.window.add(new JPMenu(this.window));
                 } catch (IOException ex) {
+                    Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (JDOMException ex) {
+                    Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (CloneNotSupportedException ex) {
                     Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }//try
                 this.window.repaint();

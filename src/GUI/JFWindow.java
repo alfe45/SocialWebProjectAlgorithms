@@ -8,7 +8,7 @@ import org.jdom.JDOMException;
 
 public class JFWindow extends javax.swing.JFrame {
 
-    protected static SocialWebCore socialWebCore;
+    public static SocialWebCore socialWebCore;
 
     public JFWindow() throws JDOMException, IOException, CloneNotSupportedException {
         initComponents();

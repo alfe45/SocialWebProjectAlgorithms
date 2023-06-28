@@ -1,173 +1,163 @@
 package DataStructures;
 
+import java.util.ArrayList;
+
 public class MyListGraph {
 
-    private Vertex[] vertexes; //arreglo de vertices
-    private int count;
-    private MyLinkedStack stack;//para el recorrido dfs - profundidad 
-    private MyLinkedQueue queue;//para el recorrido bfs - anchura
+    private ArrayList<Vertex> vertexes;
 
-    public MyListGraph(int n) {
-        if (n <= 0) {
-            System.exit(0);
-        }//if
-        count = 0;
-        vertexes = new Vertex[n];//el numero maximo de vertices
-        stack = new MyLinkedStack();
-        queue = new MyLinkedQueue();
+    public MyListGraph() {
+        this.vertexes = new ArrayList<>();
     }
 
-    public void cancel() {
-        for (int i = 0; i < count; i++) {
-            vertexes[i] = null;
-        }//for
-        count = 0;//preparamos contador para el sgte vertice q se agregue
-    }//cancel
+    public void reset() {
+        this.vertexes = new ArrayList<>();
+    }
 
-    public boolean isEmpty() throws ExceptionGraph {
-        return count == 0;
-    }//isEmpty
+    public boolean isEmpty() {
+        return this.vertexes.size() == 0;
+    }
 
     public int getSize() throws ExceptionGraph {
-        if (isEmpty()) {
-            throw new ExceptionGraph("el grafo no existe");
-        }//if
-        return count;
-    }//getSize
+        return this.vertexes.size();
+    }
 
     public boolean existVertex(Object element) throws ExceptionGraph {
-        if (isEmpty()) {
-            throw new ExceptionGraph("el grafo no existe");
-        }//if
-        for (int i = 0; i < count; i++) {
-            if (vertexes[i].element.equals(element)) {
-                return true;//encontro el elemento
-            }//if
-        }//for
-        return false;//no encontro elemento
-    }//existVertex
-
-    public boolean existEdge(Object v1, Object v2) throws ExceptionGraph {
-        if (isEmpty()) {
-            throw new ExceptionGraph("no existe grafo en el cual buscar");
-        }//if
-        if (vertexes[getPosition(v1)].listEdge.exists(v2)) {
-            return true;
-        }//if
+        for (int i = 0; i < this.vertexes.size(); i++) {
+            if (this.vertexes.get(i).element.equals(element)) {
+                return true;
+            }
+        }
         return false;
-    }//existEdge
+    }
 
-    public void addVertex(Object element) throws ExceptionGraph {
-        if (count >= vertexes.length) {
-            throw new ExceptionGraph("el grafo esta lleno");
-        }//if
-        vertexes[count++] = new Vertex(element);
-    }//addVertex
+    public boolean existEdge(Object v1, Object v2) {
+        if (this.isEmpty()) {//valido que la lista no este vacia
+            throw new ExceptionGraph("El grafo esta vacio");
+        }
 
+        if (existVertex(v1) && existVertex(v2)) {
+            if (this.vertexes.get(this.getPosicion(v1)).listEdge.exists(v2) && this.vertexes.get(this.getPosicion(v2)).listEdge.exists(v1)) {
+                return true;
+            }
+        } else {
+            if (!existVertex(v1)) {
+                throw new ExceptionGraph("El vertice " + v1 + " no existe");
+            } else {
+                throw new ExceptionGraph("El vertice " + v2 + " no existe");
+            }
+        }
+
+        return false;
+    }
+
+    
+    public void addVertex(Object element) {
+        this.vertexes.add(new Vertex(element));
+    }
+
+    
     public void addEdge(Object v1, Object v2) throws ExceptionGraph {
-        if (!existVertex(v1) || !existVertex(v2)) {
-            throw new ExceptionGraph("Alguno o ninguno de los vertices existe");
-        }//if
-        vertexes[getPosition(v1)].listEdge.addEnd(v2);
-        vertexes[getPosition(v2)].listEdge.addEnd(v1);
-    }//addEdge
 
-    public void addWeight(Object v1, Object v2, Object weight) throws ExceptionGraph {
-        if (!existVertex(v1) || !existVertex(v2)) {
-            throw new ExceptionGraph("Alguno o ninguno de los vertices existe");
-        }//if
-        vertexes[getPosition(v1)].listEdge.addEnd(v2);
-        vertexes[getPosition(v2)].listEdge.addEnd(v1);
-        vertexes[getPosition(v1)].listWeight.addEnd(weight);
-        vertexes[getPosition(v2)].listWeight.addEnd(weight);
-    }//addWeight
+        if (this.isEmpty()) {//valido que la lista no este vacia
+            throw new ExceptionGraph("El grafo esta vacio");
+        }
 
-    public String dfs() throws ExceptionGraph {
-        String info = " ";
-        vertexes[0].visited = true;
-        info = showVextex(0) + " ";
-        stack.push(0);
+        if (!existVertex(v1)) {// valido que el vertice exista
+            throw new ExceptionGraph("No existe el vertice " + v1);
+        }
 
-        while (!stack.isEmpty()) {
-            int v = VerticeAdyacenteNoVisitado(Integer.parseInt(stack.top().toString()));
-            if (v == -1) {
-                stack.pop();
-            } else { // if
-                vertexes[v].visited = true;
-                info += showVextex(v) + " ";
-                stack.push(v);
-            }//else
-        }//while
-        // reset flags
-        for (int j = 0; j < count; j++) {
-            vertexes[j].visited = false;
-        }//for
-        resetVisited();
-        return info;
-    }//dfs
+        if (!existVertex(v2)) {// valido que el vertice exista
+            throw new ExceptionGraph("No existe el vertice " + v2);
+        }
 
-    public String bfs() throws ExceptionGraph {
-        String info = " ";
-        vertexes[0].visited = true;
-        info = showVextex(0) + " ";
-        queue.insert(0);
-        int v2;
-        while (!queue.isEmpty()) {
-            int v1 = Integer.parseInt(queue.delete().toString());
+        //aca lo que dice es deme la lista de vertices de esta clase, deme la posicion en la que se encuentra ese vertice,
+        // deme la listaCircularDoblementeEnlazada de aristas y agregue al final el v2 (esto para que tengan la conexion) 
+        this.vertexes.get(this.getPosicion(v1)).listEdge.addEnd(v2);
+        this.vertexes.get(this.getPosicion(v2)).listEdge.addEnd(v1);//lo mismo con este (y asi seria un Grafo no dirigido)
 
-            while ((v2 = VerticeAdyacenteNoVisitado(v1)) != -1) {
-                vertexes[v2].visited = true;
-                info += showVextex(v2) + " ";
-                queue.insert(v2);
-            }//while
-        }//while
-        for (int j = 0; j < count; j++) {
-            vertexes[j].visited = false;
-        }//for
-        resetVisited();
-        return info;
-    }//bfs
+    }
 
-    public Object getElement(int position) {
-        for (int i = 0; i < count; i++) {
-            if (i == position) {
-                return vertexes[i].element;
-            }//if
-        }//for
-        return -1;//significa que el vertice no existe
-    }//getElement
+    
+    public void addWeight(Object v1, Object v2, Object peso) throws ExceptionGraph {
 
-    //Metodos privados auxiliares
-    private void resetVisited() {
-        for (int i = 0; i < count; i++) {
-            vertexes[i].visited = false;
-        }//for
-    }//resetVisited
+        if (this.isEmpty()) {
+            throw new ExceptionGraph("Grafo vacio");
+        }
 
-    private int getPosition(Object element) {
-        for (int i = 0; i < count; i++) {
-            if (vertexes[i].element.equals(element)) {
+        if (!existEdge(v1, v2)) {
+            throw new ExceptionGraph("No existe Arista");
+        }
+
+        this.vertexes.get(this.getPosicion(v1)).listWeight.addEnd(peso);
+        this.vertexes.get(this.getPosicion(v2)).listWeight.addEnd(peso);
+    }
+
+    //metodo auxiliar solo para usarlo dentro de esta clase, no lo puedo instanciar fuera de esta clase
+    private int getPosicion(Object element) throws ExceptionGraph {
+        for (int i = 0; i < this.vertexes.size(); i++) {
+            if (this.vertexes.get(i).element.equals(element)) {
                 return i;
-            }//if
-        }//for
+            }
+        }
         return -1;//significa que el vertice no existe
-    }//getPosition
+    }
 
-    private int VerticeAdyacenteNoVisitado(int v) throws ExceptionGraph {
-        for (int j = 0; j < count; j++) {
-            if (vertexes[j].listEdge.exists(showVextex(v)) && vertexes[j].visited == false) {
-                return j;//retorna el indice
-            }//if
-        }//for
-        return -1;
-    }//VerticeAdyacenteNoVisitado
+    public String toStringVertices() {
+        String salida = "";
+        for (int i = 0; i < this.vertexes.size(); i++) {
+            salida += "El vertice en la posicion " + i + " es: " + this.vertexes.get(i).element + "\n";
+        }
+        return salida;
+    }
 
-    private Object showVextex(int position) throws ExceptionGraph {
-        if (position < 0 || position == count) {
-            throw new ExceptionGraph("No existe el vertice en el grafo");
-        }//if
-        return vertexes[position].element.toString();
-    }//showVextex
+    public String toStringAristas() {
+
+        String s = "\n";
+        for (Vertex v : this.vertexes) {
+            s += v.element + " --------> ";
+            for (int i = 0; i < v.listEdge.getSize(); i++) {
+                if (i + 1 == v.listEdge.getSize()) {
+                    s += v.listEdge.getByPosition(i) + "\n";
+                } else {
+                    s += v.listEdge.getByPosition(i) + ", ";
+                } // if
+            } // for
+        } // for
+        return s + "\n";
+
+    }
+
+    public String toStringPeso() {
+
+        String s = "";
+        for (Vertex v : this.vertexes) {
+            s += v.element + " tiene los pesos: ";
+            for (int i = 0; i < v.listWeight.getSize(); i++) {
+                if (i + 1 == v.listWeight.getSize()) {
+                    s += v.listWeight.getByPosition(i) + "\n";
+                } else {
+                    s += v.listWeight.getByPosition(i) + ", ";
+                } // if
+            } // for
+        } // for
+        return s;
+
+    }
+
+    //toString completo (CON TODOS A LA VEZ)
+    public String toString() {//vertices, aristas y pesos (todo en uno mismo)
+
+        String salida = "\nInformacion del grafo\n\n";
+
+        for (int i = 0; i < this.vertexes.size(); i++) {
+            salida += "El vertice en la posicion " + i + " es: " + this.vertexes.get(i).element + "\n";
+            salida += "Sus Aristas son: " + vertexes.get(i).listEdge.toString() + "\n";
+            salida += "Sus Pesos son: " + vertexes.get(i).listWeight.toString() + "\n\n";
+        }
+
+        return salida;
+    }
 
     public class ExceptionGraph extends RuntimeException {
 

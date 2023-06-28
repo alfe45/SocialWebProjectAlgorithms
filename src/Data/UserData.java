@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -136,7 +137,7 @@ public class UserData {
         for (int i = 0; i < requestsList.size(); i++) {
             Element eCurrent = requestsList.get(i);
             user.getRequests().insert(new Request("DATE", eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue(),
-                     user.getUsername()));
+                    user.getUsername()));
         }//for
 
         //loads posts
@@ -159,7 +160,7 @@ public class UserData {
     public boolean existsUser(String username) {
         return root.getChild(username) != null;
     }//existsUser
-    
+
     public boolean searchProfile(String username) {
         Element eProfile = this.root.getChild(username);
         if (eProfile != null) {
@@ -231,5 +232,58 @@ public class UserData {
 //        
     }//loadAllPost
 //
+
+//    public ArrayList<User> loadAllUser() {
+//        List elementListUsers = this.root.getChildren();
+//
+//        if (elementListUsers == null) {
+//            return null;
+//        }//if
+//
+//        for (Object objetoActual : elementListUsers) {
+//            Element eActualObject = (Element) objetoActual;  
+//            String password = elementListUsers.getAttributeValue(ElementsXML.PASSWORD);
+//            
+//            User user = new User(
+//                    eActualObject.getAttributeValue("name"), 
+//                    password);
+//
+//            //loads friends
+//            Element eFriends = elementListUsers.getChild(ElementsXML.FRIENDS);
+//            List<Element> friendsList = eFriends.getChildren();
+//
+//            for (int i = 0; i < friendsList.size(); i++) {
+//                user.getFriends().addEnd(
+//                        friendsList.get(i).getAttribute(ElementsXML.USERNAME).getValue());
+//            }//for
+//
+//            //loads requests
+//            Element eRequests = elementListUsers.getChild(ElementsXML.REQUESTS);
+//            List<Element> requestsList = eRequests.getChildren();
+//            for (int i = 0; i < requestsList.size(); i++) {
+//                Element eCurrent = requestsList.get(i);
+//                user.getRequests().insert(new Request("DATE", eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue(),
+//                        user.getUsername()));
+//            }//for
+//
+//            //loads posts
+//            Element ePosts = elementListUsers.getChild(ElementsXML.REQUESTS);
+//            List<Element> postsList = ePosts.getChildren();
+//            for (int i = 0; i < postsList.size(); i++) {
+//                Element eCurrentPost = postsList.get(i);
+//                Post temp = new Post();
+//                List<Element> thoughtsList = eCurrentPost.getChildren();
+//                for (int j = 0; j < thoughtsList.size(); j++) {
+//                    Element eCurrentThought = thoughtsList.get(j);
+//                    temp.getThoughts().addEnd(new Thought(eCurrentThought.getAttributeValue(ElementsXML.THOUGHT)));
+//                }//for j
+//                user.getPosts().push(temp);
+//            }//for
+//
+//        }// for        
+//
+//        return user;
+//
+//    }//loadProfile
 
 }//class
