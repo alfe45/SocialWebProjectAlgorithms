@@ -15,10 +15,10 @@ public class MyListGraph {
     }
 
     public boolean isEmpty() {
-        return this.vertexes.size() == 0;
+        return this.vertexes.isEmpty();
     }
 
-    public int getSize() throws ExceptionGraph {
+    public int getSize() {
         return this.vertexes.size();
     }
 
@@ -32,14 +32,14 @@ public class MyListGraph {
     }
 
     public boolean existEdge(Object v1, Object v2) {
-        if (this.isEmpty()) {//valido que la lista no este vacia
-            throw new ExceptionGraph("El grafo esta vacio");
-        }
-
+        if (isEmpty()) {
+            return false;
+        }//if
         if (existVertex(v1) && existVertex(v2)) {
-            if (this.vertexes.get(this.getPosicion(v1)).listEdge.exists(v2) && this.vertexes.get(this.getPosicion(v2)).listEdge.exists(v1)) {
+
+            if (this.vertexes.get(this.getElementPosition(v1)).listEdge.exists(v2) && this.vertexes.get(this.getElementPosition(v2)).listEdge.exists(v1)) {
                 return true;
-            }
+            }//if
         } else {
             if (!existVertex(v1)) {
                 throw new ExceptionGraph("El vertice " + v1 + " no existe");
@@ -47,18 +47,16 @@ public class MyListGraph {
                 throw new ExceptionGraph("El vertice " + v2 + " no existe");
             }
         }
-
         return false;
     }
 
-    
     public void addVertex(Object element) {
-        this.vertexes.add(new Vertex(element));
-    }
+        if (!existVertex(element)) {
+            this.vertexes.add(new Vertex(element));
+        }//if
+    }//addVertex
 
-    
     public void addEdge(Object v1, Object v2) throws ExceptionGraph {
-
         if (this.isEmpty()) {//valido que la lista no este vacia
             throw new ExceptionGraph("El grafo esta vacio");
         }
@@ -73,12 +71,11 @@ public class MyListGraph {
 
         //aca lo que dice es deme la lista de vertices de esta clase, deme la posicion en la que se encuentra ese vertice,
         // deme la listaCircularDoblementeEnlazada de aristas y agregue al final el v2 (esto para que tengan la conexion) 
-        this.vertexes.get(this.getPosicion(v1)).listEdge.addEnd(v2);
-        this.vertexes.get(this.getPosicion(v2)).listEdge.addEnd(v1);//lo mismo con este (y asi seria un Grafo no dirigido)
+        this.vertexes.get(this.getElementPosition(v1)).listEdge.addEnd(v2);
+        this.vertexes.get(this.getElementPosition(v2)).listEdge.addEnd(v1);//lo mismo con este (y asi seria un Grafo no dirigido)
 
     }
 
-    
     public void addWeight(Object v1, Object v2, Object peso) throws ExceptionGraph {
 
         if (this.isEmpty()) {
@@ -89,19 +86,19 @@ public class MyListGraph {
             throw new ExceptionGraph("No existe Arista");
         }
 
-        this.vertexes.get(this.getPosicion(v1)).listWeight.addEnd(peso);
-        this.vertexes.get(this.getPosicion(v2)).listWeight.addEnd(peso);
+        this.vertexes.get(this.getElementPosition(v1)).listWeight.addEnd(peso);
+        this.vertexes.get(this.getElementPosition(v2)).listWeight.addEnd(peso);
     }
 
     //metodo auxiliar solo para usarlo dentro de esta clase, no lo puedo instanciar fuera de esta clase
-    private int getPosicion(Object element) throws ExceptionGraph {
+    public int getElementPosition(Object element) throws ExceptionGraph {
         for (int i = 0; i < this.vertexes.size(); i++) {
             if (this.vertexes.get(i).element.equals(element)) {
                 return i;
-            }
-        }
+            }//if
+        }//for
         return -1;//significa que el vertice no existe
-    }
+    }//getVertexPosition
 
     public String toStringVertices() {
         String salida = "";
@@ -116,8 +113,8 @@ public class MyListGraph {
         String s = "\n";
         for (Vertex v : this.vertexes) {
             s += v.element + " --------> ";
-            for (int i = 0; i < v.listEdge.getSize(); i++) {
-                if (i + 1 == v.listEdge.getSize()) {
+            for (int i = 1; i <= v.listEdge.getSize(); i++) {
+                if (i == v.listEdge.getSize()) {
                     s += v.listEdge.getByPosition(i) + "\n";
                 } else {
                     s += v.listEdge.getByPosition(i) + ", ";
@@ -183,4 +180,18 @@ public class MyListGraph {
 
     }//class
 
+    //METHODS FOR GRAPHDATA
+    public Object getVertexElement(int n) throws ExceptionGraph {
+        return vertexes.get(n).element;
+    }//getVertexElement
+
+    public int getVertexEdgeSize(int n) throws ExceptionGraph {
+        return vertexes.get(n).listEdge.getSize();
+    }//getVertexEdgeSize
+
+    public Object getVertexEdgeValue(int vertex, int edge) throws ExceptionGraph {
+        return vertexes.get(vertex).listEdge.getByPosition(edge);
+    }//getVertexEdgeValue
+
+    //METHODS FOR GRAPHDATA
 }//class

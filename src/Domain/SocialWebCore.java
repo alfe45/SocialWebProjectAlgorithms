@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdom.JDOMException;
 
 public class SocialWebCore {
@@ -23,7 +25,9 @@ public class SocialWebCore {
         this.userBusiness = new UserBusiness();
         this.loggedUser = null;
         this.friendsPosts = new MyLinkedStack();
+        this.graphData = new GraphData();
         this.usersGraph = this.graphData.loadGraph();
+        
     }
 
     public UserBusiness getUserBusiness() {
@@ -50,8 +54,34 @@ public class SocialWebCore {
         this.friendsPosts = friendsPosts;
     }
 
-    public void refresh() {
+    public GraphData getGraphData() {
+        return graphData;
+    }
 
+    public void setGraphData(GraphData graphData) {
+        this.graphData = graphData;
+    }
+
+    public MyListGraph getUsersGraph() {
+        return usersGraph;
+    }
+
+    public void setUsersGraph(MyListGraph usersGraph) {
+        this.usersGraph = usersGraph;
+    }
+
+    public void refresh() {
+        try {
+            this.graphData.saveGraph(this.usersGraph);
+            this.usersGraph = this.graphData.loadGraph();
+        } catch (IOException ex) {
+            Logger.getLogger(SocialWebCore.class.getName()).log(Level.SEVERE, null, ex);
+        }//try
+
+        //aqui se refrescan los datos del core
+        
+        
+        
     }//refresh
 
     public ArrayList<String> suggestFriendsOfFriends() {
@@ -96,12 +126,5 @@ public class SocialWebCore {
 
         return aux;
     }//suggestFriendsOfFriends
-
-    public void acceptFriendRequest(User finalUser) {
-        if (!this.usersGraph.existEdge(this.loggedUser, finalUser)) {
-            this.usersGraph.addEdge(this.loggedUser, finalUser);
-        }//if
-
-    }//acceptFriendRequest
 
 }//class
