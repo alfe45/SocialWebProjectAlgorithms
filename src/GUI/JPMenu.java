@@ -4,6 +4,8 @@ import Domain.SocialWebCore;
 import Domain.User;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdom.JDOMException;
 
 public class JPMenu extends javax.swing.JPanel {
@@ -706,38 +708,58 @@ public class JPMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jbtnShowSuggestionsActionPerformed
 
     private void jbtnAddFriend1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddFriend1ActionPerformed
-        this.socialWebCore.getUsersGraph().addEdge(this.socialWebCore.getLoggedUser(), suggestFriends.get(0));
-        this.suggestFriends.remove(this.suggestFriends.get(0));
-        this.jtfSuggestFriend1.setVisible(false);
-        this.jbtnAddFriend1.setVisible(false);
+        try {
+            JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(JFWindow.socialWebCore.getLoggedUser().getUsername(), suggestFriends.get(0));
+            this.suggestFriends.remove(this.suggestFriends.get(0));
+            this.jtfSuggestFriend1.setVisible(false);
+            this.jbtnAddFriend1.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbtnAddFriend1ActionPerformed
 
     private void jbtnAddFriend2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddFriend2ActionPerformed
-        this.socialWebCore.getUsersGraph().addEdge(this.socialWebCore.getLoggedUser(), suggestFriends.get(1));
-        this.suggestFriends.remove(this.suggestFriends.get(1));
-        this.jtfSuggestFriend2.setVisible(false);
-        this.jbtnAddFriend2.setVisible(false);
+        try {
+            JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(JFWindow.socialWebCore.getLoggedUser().getUsername(), suggestFriends.get(1));
+            this.suggestFriends.remove(this.suggestFriends.get(1));
+            this.jtfSuggestFriend2.setVisible(false);
+            this.jbtnAddFriend2.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbtnAddFriend2ActionPerformed
 
     private void jbtnAddFriend3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddFriend3ActionPerformed
-        this.socialWebCore.getUsersGraph().addEdge(this.socialWebCore.getLoggedUser(), suggestFriends.get(2));
-        this.suggestFriends.remove(this.suggestFriends.get(2));
-        this.jtfSuggestFriend3.setVisible(false);
-        this.jbtnAddFriend3.setVisible(false);
+        try {
+            JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(JFWindow.socialWebCore.getLoggedUser().getUsername(), suggestFriends.get(2));
+            this.suggestFriends.remove(this.suggestFriends.get(2));
+            this.jtfSuggestFriend3.setVisible(false);
+            this.jbtnAddFriend3.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbtnAddFriend3ActionPerformed
 
     private void jbtnAddFriend4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddFriend4ActionPerformed
-        this.socialWebCore.getUsersGraph().addEdge(this.socialWebCore.getLoggedUser(), suggestFriends.get(3));
-        this.suggestFriends.remove(this.suggestFriends.get(3));
-        this.jtfSuggestFriend4.setVisible(false);
-        this.jbtnAddFriend4.setVisible(false);
+        try {
+            JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(JFWindow.socialWebCore.getLoggedUser().getUsername(), suggestFriends.get(3));
+            this.suggestFriends.remove(this.suggestFriends.get(3));
+            this.jtfSuggestFriend4.setVisible(false);
+            this.jbtnAddFriend4.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbtnAddFriend4ActionPerformed
 
     private void jbtnAddFriend5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddFriend5ActionPerformed
-        this.socialWebCore.getUsersGraph().addEdge(this.socialWebCore.getLoggedUser(), suggestFriends.get(4));
-        this.suggestFriends.remove(this.suggestFriends.get(4));
-        this.jtfSuggestFriend5.setVisible(false);
-        this.jbtnAddFriend5.setVisible(false);
+        try {
+            JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(JFWindow.socialWebCore.getLoggedUser().getUsername(), suggestFriends.get(4));
+            this.suggestFriends.remove(this.suggestFriends.get(4));
+            this.jtfSuggestFriend5.setVisible(false);
+            this.jbtnAddFriend5.setVisible(false);
+        } catch (IOException ex) {
+            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbtnAddFriend5ActionPerformed
 
     private void jbtnDelete1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDelete1ActionPerformed

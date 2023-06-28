@@ -47,30 +47,30 @@ public class GraphData {
     }//saveXML
 
     public boolean addNewFriendshipToGraph(String user1, String user2) throws IOException {
-        MyListGraph graph = loadGraph();
-        if (!graph.existEdge(user1, user2)) {
-            System.out.println("No existe");
-            graph.addEdge(user1, user2);
-            saveGraph(graph);
-            JFWindow.socialWebCore.refresh();
-            return true;
-        }//if
+//        MyListGraph graph = loadGraph();
+//        if (!graph.existEdge(user1, user2)) {
+//            System.out.println("No existe");
+//            graph.addEdge(user1, user2);
+//            saveGraph(graph);
+//            JFWindow.socialWebCore.refresh();
+//            return true;
+//        }//if
         return false;
     }//newFriendship
 
     public MyListGraph loadGraph() {
         MyListGraph graph = new MyListGraph();
-        List<Element> vertexesList = this.root.getChild(ElementsXML.VERTEXES).getContent();
-        for (Element currentVertex : vertexesList) {
-            graph.addVertex(currentVertex.getAttribute("from").getValue());
-        }//for
-        for (Element currentVertex : vertexesList) {
-            List<Element> edgesList = currentVertex.getContent();
-            for (Element currentEdge : edgesList) {
-                graph.addEdge(currentVertex.getAttribute("from").getValue(),
-                        currentEdge.getAttribute("to").getValue());
-            }//for
-        }//for
+//        List<Element> vertexesList = this.root.getChild(ElementsXML.VERTEXES).getContent();
+//        for (Element currentVertex : vertexesList) {
+//            graph.addVertex(currentVertex.getAttribute("from").getValue());
+//        }//for
+//        for (Element currentVertex : vertexesList) {
+//            List<Element> edgesList = currentVertex.getContent();
+//            for (Element currentEdge : edgesList) {
+//                graph.addEdge(currentVertex.getAttribute("from").getValue(),
+//                        currentEdge.getAttribute("to").getValue());
+//            }//for
+//        }//for
         return graph;
     }//loadGraph
 
