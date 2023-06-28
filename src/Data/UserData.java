@@ -27,7 +27,7 @@ public class UserData {
     private String rute;
 
     public UserData() throws JDOMException, IOException {
-        this.rute = FileRutes.USERSPATH;
+        this.rute = FileRutes.USERS_PATH;
         File file = new File(this.rute);
         if (file.exists()) {
             SAXBuilder saxBuilder = new SAXBuilder();
@@ -35,7 +35,7 @@ public class UserData {
             this.jdomDocument = saxBuilder.build(file);
             this.root = this.jdomDocument.getRootElement();
         } else {
-            this.root = new Element(ElementsXML.ROOT);
+            this.root = new Element(ElementsXML.ROOT_USERS);
             this.jdomDocument = new Document(this.root);
             saveXML();
         }//if

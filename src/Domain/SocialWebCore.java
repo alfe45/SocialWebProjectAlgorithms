@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdom.JDOMException;
 
 public class SocialWebCore {
@@ -23,8 +25,63 @@ public class SocialWebCore {
         this.userBusiness = new UserBusiness();
         this.loggedUser = null;
         this.friendsPosts = new MyLinkedStack();
-        this.usersGraph = new MyListGraph();
+        this.graphData = new GraphData();
+        this.usersGraph = this.graphData.loadGraph();
     }
+
+    public UserBusiness getUserBusiness() {
+        return userBusiness;
+    }
+
+    public void setUserBusiness(UserBusiness userBusiness) {
+        this.userBusiness = userBusiness;
+    }
+
+    public User getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(User loggedUser) {
+        this.loggedUser = loggedUser;
+    }
+
+    public MyLinkedStack getFriendsPosts() {
+        return friendsPosts;
+    }
+
+    public void setFriendsPosts(MyLinkedStack friendsPosts) {
+        this.friendsPosts = friendsPosts;
+    }
+
+    public GraphData getGraphData() {
+        return graphData;
+    }
+
+    public void setGraphData(GraphData graphData) {
+        this.graphData = graphData;
+    }
+
+    public MyListGraph getUsersGraph() {
+        return usersGraph;
+    }
+
+    public void setUsersGraph(MyListGraph usersGraph) {
+        this.usersGraph = usersGraph;
+    }
+
+    public void refresh() {
+        try {
+            this.graphData.saveGraph(this.usersGraph);
+            this.usersGraph = this.graphData.loadGraph();
+        } catch (IOException ex) {
+            Logger.getLogger(SocialWebCore.class.getName()).log(Level.SEVERE, null, ex);
+        }//try
+
+        //aqui se refrescan los datos del core
+        
+        
+        
+    }//refresh
 
     public ArrayList<String> suggestFriendsOfFriends() {
         ArrayList<String> suggestions = new ArrayList<>();
@@ -59,68 +116,16 @@ public class SocialWebCore {
             }//compare
         });
         
-        ArrayList<String> aux = new ArrayList<>();
+        ArrayList<String> auxName = new ArrayList<>();
+        ArrayList<String> auxCommonFriends = new ArrayList<>();
         for (int i = 0; i < suggestions.size(); i++) {
             String[] nombres = suggestions.get(i).split("=");
-            aux.add(nombres[0]);
-            System.out.println((i+1)+ "username: "+suggestions.get(i));
+            auxName.add(nombres[0]);
+            auxCommonFriends.add(nombres[1]);
+            System.out.println((i+1)+ "username: "+auxName.get(i) + "friends in common: "+auxCommonFriends.get(i));
         }//if
 
-        return aux;
+        return suggestions;
     }//suggestFriendsOfFriends
 
-    public void acceptFriendRequest(User finalUser) {
-        if (!this.usersGraph.existEdge(this.loggedUser, finalUser)) {
-            this.usersGraph.addEdge(this.loggedUser, finalUser);
-        }//if
-
-    }//acceptFriendRequest
-
-    public MyListGraph getUsersGraph() {
-        return usersGraph;
-    }
-
-    public void setUsersGraph(MyListGraph usersGraph) {
-        this.usersGraph = usersGraph;
-    }
-
-    public GraphData getGraphData() {
-        return graphData;
-    }
-
-    public void setGraphData(GraphData graphData) {
-        this.graphData = graphData;
-    }
-
-    public UserBusiness getUserBusiness() {
-        return userBusiness;
-    }
-
-    public void setUserBusiness(UserBusiness userBusiness) {
-        this.userBusiness = userBusiness;
-    }
-
-    public User getLoggedUser() {
-        return loggedUser;
-    }
-
-    public void setLoggedUser(User loggedUser) {
-        this.loggedUser = loggedUser;
-    }
-
-    public MyLinkedStack getFriendsPosts() {
-        return friendsPosts;
-    }
-
-    public void setFriendsPosts(MyLinkedStack friendsPosts) {
-        this.friendsPosts = friendsPosts;
-    }
-
-    public void refresh() {
-
-    }//refresh
-    
-    
-    
-    
 }//class
