@@ -1,7 +1,7 @@
 package GUI;
 
 import Domain.SocialWebCore;
-import Domain.User;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -17,8 +17,7 @@ public class JPMenu extends javax.swing.JPanel {
     private ArrayList<String> suggestFriends;
 
     public JPMenu(JFWindow window) throws IOException, JDOMException, CloneNotSupportedException {
-        this.socialWebCore = new SocialWebCore();
-        this.suggestFriends = this.socialWebCore.suggestFriendsOfFriends();
+        this.suggestFriends = JFWindow.socialWebCore.suggestFriendsOfFriends();
         initComponents();
         this.window = window;
         init();
@@ -265,6 +264,12 @@ public class JPMenu extends javax.swing.JPanel {
         jbtnAddFriend5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnAddFriend5ActionPerformed(evt);
+            }
+        });
+
+        jtfSuggestFriend1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfSuggestFriend1ActionPerformed(evt);
             }
         });
 
@@ -675,41 +680,46 @@ public class JPMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonNextThoughtActionPerformed
 
     private void jbtnShowSuggestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnShowSuggestionsActionPerformed
+        if (suggestFriends.size() > 0) {
+            if (suggestFriends.get(0) != null) {
+                this.jtfSuggestFriend1.setText(suggestFriends.get(0));
+                this.jtfSuggestFriend1.setVisible(true);
+                this.jbtnAddFriend1.setVisible(true);
+            } else {
+                this.jtfSuggestFriend1.setVisible(true);
+                this.jtfSuggestFriend1.setText("You don´t have any Friend Request");
+            }
+            if (suggestFriends.get(1) != null) {
+                this.jtfSuggestFriend2.setText(suggestFriends.get(1));
+                this.jtfSuggestFriend2.setVisible(true);
+                this.jbtnAddFriend2.setVisible(true);
+            }
+            if (suggestFriends.get(2) != null) {
+                this.jtfSuggestFriend3.setText(suggestFriends.get(2));
+                this.jtfSuggestFriend3.setVisible(true);
+                this.jbtnAddFriend3.setVisible(true);
+            }
+            if (suggestFriends.get(3) != null) {
+                this.jtfSuggestFriend4.setText(suggestFriends.get(3));
+                this.jtfSuggestFriend4.setVisible(true);
+                this.jbtnAddFriend4.setVisible(true);
+            }
+            if (suggestFriends.get(4) != null) {
+                this.jtfSuggestFriend5.setText(suggestFriends.get(4));
+                this.jtfSuggestFriend5.setVisible(true);
+                this.jbtnAddFriend5.setVisible(true);
+            }
+        }else{
+            System.out.println("No hay sugerencias!");
+        }
 
-        if (suggestFriends.get(0) != null) {
-            this.jtfSuggestFriend1.setText(suggestFriends.get(0));
-            this.jtfSuggestFriend1.setVisible(true);
-            this.jbtnAddFriend1.setVisible(true);
-        } else {
-            this.jtfSuggestFriend1.setVisible(true);
-            this.jtfSuggestFriend1.setText("You don´t have any Friend Request");
-        }
-        if (suggestFriends.get(1) != null) {
-            this.jtfSuggestFriend2.setText(suggestFriends.get(1));
-            this.jtfSuggestFriend2.setVisible(true);
-            this.jbtnAddFriend2.setVisible(true);
-        }
-        if (suggestFriends.get(2) != null) {
-            this.jtfSuggestFriend3.setText(suggestFriends.get(2));
-            this.jtfSuggestFriend3.setVisible(true);
-            this.jbtnAddFriend3.setVisible(true);
-        }
-        if (suggestFriends.get(3) != null) {
-            this.jtfSuggestFriend4.setText(suggestFriends.get(3));
-            this.jtfSuggestFriend4.setVisible(true);
-            this.jbtnAddFriend4.setVisible(true);
-        }
-        if (suggestFriends.get(4) != null) {
-            this.jtfSuggestFriend5.setText(suggestFriends.get(4));
-            this.jtfSuggestFriend5.setVisible(true);
-            this.jbtnAddFriend5.setVisible(true);
-        }
-        return;
+
     }//GEN-LAST:event_jbtnShowSuggestionsActionPerformed
 
     private void jbtnAddFriend1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddFriend1ActionPerformed
         try {
-            JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(JFWindow.socialWebCore.getLoggedUser().getUsername(), suggestFriends.get(0));
+
+            JFWindow.socialWebCore.sendFriendshipRequest(suggestFriends.get(0), JFWindow.socialWebCore.getLoggedUser().getUsername());
             this.suggestFriends.remove(this.suggestFriends.get(0));
             this.jtfSuggestFriend1.setVisible(false);
             this.jbtnAddFriend1.setVisible(false);
@@ -720,7 +730,7 @@ public class JPMenu extends javax.swing.JPanel {
 
     private void jbtnAddFriend2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddFriend2ActionPerformed
         try {
-            JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(JFWindow.socialWebCore.getLoggedUser().getUsername(), suggestFriends.get(1));
+            JFWindow.socialWebCore.sendFriendshipRequest(suggestFriends.get(1), JFWindow.socialWebCore.getLoggedUser().getUsername());
             this.suggestFriends.remove(this.suggestFriends.get(1));
             this.jtfSuggestFriend2.setVisible(false);
             this.jbtnAddFriend2.setVisible(false);
@@ -731,7 +741,7 @@ public class JPMenu extends javax.swing.JPanel {
 
     private void jbtnAddFriend3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddFriend3ActionPerformed
         try {
-            JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(JFWindow.socialWebCore.getLoggedUser().getUsername(), suggestFriends.get(2));
+            JFWindow.socialWebCore.sendFriendshipRequest(suggestFriends.get(2), JFWindow.socialWebCore.getLoggedUser().getUsername());
             this.suggestFriends.remove(this.suggestFriends.get(2));
             this.jtfSuggestFriend3.setVisible(false);
             this.jbtnAddFriend3.setVisible(false);
@@ -742,7 +752,7 @@ public class JPMenu extends javax.swing.JPanel {
 
     private void jbtnAddFriend4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddFriend4ActionPerformed
         try {
-            JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(JFWindow.socialWebCore.getLoggedUser().getUsername(), suggestFriends.get(3));
+            JFWindow.socialWebCore.sendFriendshipRequest(suggestFriends.get(3), JFWindow.socialWebCore.getLoggedUser().getUsername());
             this.suggestFriends.remove(this.suggestFriends.get(3));
             this.jtfSuggestFriend4.setVisible(false);
             this.jbtnAddFriend4.setVisible(false);
@@ -753,7 +763,7 @@ public class JPMenu extends javax.swing.JPanel {
 
     private void jbtnAddFriend5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddFriend5ActionPerformed
         try {
-            JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(JFWindow.socialWebCore.getLoggedUser().getUsername(), suggestFriends.get(4));
+            JFWindow.socialWebCore.sendFriendshipRequest(suggestFriends.get(4), JFWindow.socialWebCore.getLoggedUser().getUsername());
             this.suggestFriends.remove(this.suggestFriends.get(4));
             this.jtfSuggestFriend5.setVisible(false);
             this.jbtnAddFriend5.setVisible(false);
@@ -791,6 +801,10 @@ public class JPMenu extends javax.swing.JPanel {
         this.jtfSuggestFriend5.setVisible(false);
         this.jbtnAddFriend5.setVisible(false);
     }//GEN-LAST:event_jbtnDelete5ActionPerformed
+
+    private void jtfSuggestFriend1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfSuggestFriend1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfSuggestFriend1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
