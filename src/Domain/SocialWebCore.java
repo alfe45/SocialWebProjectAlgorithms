@@ -80,24 +80,25 @@ public class SocialWebCore {
         //aqui se refrescan los datos del core
     }//refresh
 
-    public void sendFriendshipRequest(String sentTo, String sentBy){
+    public void sendFriendshipRequest(String sentTo, String sentBy) {
         if (userBusiness.existsUser(sentTo)) {
             try {
-                User targetUser = userBusiness.loadUser(sentTo);
-                targetUser.getRequests().insert(new Request("DATE", sentBy, sentTo));
-                userBusiness.saveUser(targetUser);
-            }  catch (IOException | CloneNotSupportedException ex) {
+                if (!userBusiness.requestAlreadySent(sentTo, sentBy) && !userBusiness.areFriends(sentTo, sentBy)) {
+                    User targetUser = userBusiness.loadUser(sentTo);
+                    targetUser.getRequests().insert(new Request("DEFAULTDATE", sentBy, sentTo));
+                    userBusiness.saveUser(targetUser);
+                    System.out.println("Request sent and saved on XML!");
+                }else{
+                    System.out.println("Request already sent or are friends!");
+                }//if
+
+            } catch (IOException | CloneNotSupportedException ex) {
                 Logger.getLogger(SocialWebCore.class.getName()).log(Level.SEVERE, null, ex);
             }//try
         }//if
-
-//        JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(sentTo, sentBy);
     }//sendFriendshipRequest
 
-
-
-    
-    public boolean acceptFriendshipRequest(String sentTo, String sentBy) throws IOException{
+    public boolean acceptFriendshipRequest(String sentTo, String sentBy) throws IOException {
 //        User user = this.userBusiness.loadUser(this.loggedUser.getUsername());
 //        
 //        List<Element> friendsRequests = new ArrayList<>();
@@ -108,15 +109,15 @@ public class SocialWebCore {
 //            
         return false;
     }//acceptFriendshipRequest
-    
-    public ArrayList<User> showFriendsRequest(){
+
+    public ArrayList<User> showFriendsRequest() {
         ArrayList<User> friendsRequest = new ArrayList<>();
 //        friendsRequest = this.userBusiness.getFriendsRequestXML(this.loggedUser.getUsername());
         friendsRequest = this.userBusiness.getFriendsRequestXML("alex");
 
         return friendsRequest;
     }
-    
+
     public ArrayList<String> suggestFriendsOfFriends() {
         ArrayList<String> suggestions = new ArrayList<>();
         for (int i = 1; i <= this.loggedUser.getFriends().getSize(); i++) {//recorro amigos de usuario loggeado

@@ -37,17 +37,20 @@ public class UserBusiness {
     public MyLinkedStack loadAllPost() {
         return this.userData.loadAllPost();
     }//loadAllPost
-    
+
     public boolean existsUser(String username) {
         return this.userData.existsUser(username);
     }//existsUser
 
-    public boolean searchProfile(String username) {
-        return this.userData.searchProfile(username);
-    }//searchProfile
+    public boolean requestAlreadySent(String sentTo, String sentBy) {
+        return this.userData.requestAlreadySent(sentTo, sentBy);
+    }//existsUser
+    
+    public boolean areFriends(String sentTo, String sentBy) {
+        return this.userData.areFriends(sentTo, sentBy);
+    }//existsUser
 
-        public ArrayList<User> getFriendsRequestXML(String username) {
-            return this.userData.getFriendsRequestXML(username);
-        }   
-
+    public ArrayList<User> getFriendsRequestXML(String username) {
+        return this.userData.getFriendsRequestXML(username);
+    }
 }//class

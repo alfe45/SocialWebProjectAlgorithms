@@ -7,6 +7,7 @@ import Domain.Request;
 import Domain.Thought;
 
 import Domain.User;
+import GUI.JFWindow;
 import Utility.ElementsXML;
 import Utility.FileRutes;
 import java.io.File;
@@ -90,11 +91,10 @@ public class UserData {
             Element eCurrentRequest = new Element(ElementsXML.REQUEST);
             eCurrentRequest.setAttribute(ElementsXML.DATE, tempRequest.getDate());
             eCurrentRequest.setAttribute(ElementsXML.REQUEST_FROM, tempRequest.getSentBy());
-            eCurrentRequest.setAttribute(ElementsXML.STATE, tempRequest.getState()+"");
+            eCurrentRequest.setAttribute(ElementsXML.STATE, tempRequest.getState() + "");
             eRequests.addContent(eCurrentRequest);
         }//while
         eUser.addContent(eRequests);
-
         Element ePosts = new Element(ElementsXML.POSTS);
         MyLinkedStack tempPostsStack = (MyLinkedStack) user.getPosts().clone();
         while (!tempPostsStack.isEmpty()) {
@@ -111,7 +111,6 @@ public class UserData {
             ePosts.addContent(eCurrentPost);
         }//while
         eUser.addContent(ePosts);
-
         this.root.addContent(eUser);
         saveXML();
         return true;
@@ -130,39 +129,44 @@ public class UserData {
 
         //loads friends
         Element eFriends = eUser.getChild(ElementsXML.FRIENDS);
-        List<Element> friendsList = eFriends.getChildren();
-
-        for (int i = 0; i < friendsList.size(); i++) {
-            user.getFriends().addEnd(
-                    friendsList.get(i).getAttribute(ElementsXML.USERNAME).getValue());
-        }//for
+        if (eFriends != null) {
+            List<Element> friendsList = eFriends.getChildren();
+            for (int i = 0; i < friendsList.size(); i++) {
+                user.getFriends().addEnd(
+                        friendsList.get(i).getAttribute(ElementsXML.USERNAME).getValue());
+            }//for
+        }//if
 
         //loads requests
         Element eRequests = eUser.getChild(ElementsXML.REQUESTS);
-        List<Element> requestsList = eRequests.getChildren();
-        for (int i = 0; i < requestsList.size(); i++) {
-            Element eCurrent = requestsList.get(i);
-            Request tempRequest = new Request(eCurrent.getAttributeValue(ElementsXML.DATE), eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue(),
-                    user.getUsername());
-            tempRequest.setSentTo(eCurrent.getAttributeValue(ElementsXML.STATE));
-            user.getRequests().insert(tempRequest);
-        }//for
+        if (eRequests != null) {
+            List<Element> requestsList = eRequests.getChildren();
+            for (int i = 0; i < requestsList.size(); i++) {
+                Element eCurrent = requestsList.get(i);
+                Request tempRequest = new Request(eCurrent.getAttributeValue(ElementsXML.DATE), eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue(),
+                        user.getUsername());
+                tempRequest.setSentTo(eCurrent.getAttributeValue(ElementsXML.STATE));
+                user.getRequests().insert(tempRequest);
+            }//for
+        }//if
 
         //loads posts
-        Element ePosts = eUser.getChild(ElementsXML.REQUESTS);
-        List<Element> postsList = ePosts.getChildren();
-        for (int i = 0; i < postsList.size(); i++) {
-            Element eCurrentPost = postsList.get(i);
-            Post tempPost = new Post();
-            tempPost.setTitle(eCurrentPost.getAttributeValue(ElementsXML.TITLE));
-            tempPost.setDate(eCurrentPost.getAttributeValue(ElementsXML.DATE));
-            List<Element> thoughtsList = eCurrentPost.getChildren();
-            for (int j = 0; j < thoughtsList.size(); j++) {
-                Element eCurrentThought = thoughtsList.get(j);
-                tempPost.getThoughts().addEnd(new Thought(eCurrentThought.getAttributeValue(ElementsXML.TEXT)));
-            }//for j
-            user.getPosts().push(tempPost);
-        }//for
+        Element ePosts = eUser.getChild(ElementsXML.POSTS);
+        if (ePosts != null) {
+            List<Element> postsList = ePosts.getChildren();
+            for (int i = 0; i < postsList.size(); i++) {
+                Element eCurrentPost = postsList.get(i);
+                Post tempPost = new Post();
+                tempPost.setTitle(eCurrentPost.getAttributeValue(ElementsXML.TITLE));
+                tempPost.setDate(eCurrentPost.getAttributeValue(ElementsXML.DATE));
+                List<Element> thoughtsList = eCurrentPost.getChildren();
+                for (int j = 0; j < thoughtsList.size(); j++) {
+                    Element eCurrentThought = thoughtsList.get(j);
+                    tempPost.getThoughts().addEnd(new Thought(eCurrentThought.getAttributeValue(ElementsXML.TEXT)));
+                }//for j
+                user.getPosts().push(tempPost);
+            }//for
+        }//if
 
         return user;
     }//loadProfile
@@ -171,16 +175,63 @@ public class UserData {
         return root.getChild(username) != null;
     }//existsUser
 
-    public boolean searchProfile(String username) {
-        Element eProfile = this.root.getChild(username);
-        if (eProfile != null) {
-            System.out.println("Search result: Profile found!");
-            return true;
-        } else {
-            System.out.println("Search result: Profile not found!");
+    public boolean requestAlreadySent(String sentTo, String sentBy) {
+        Element user1 = this.root.getChild(sentTo);
+        Element user2 = this.root.getChild(sentBy);
+
+        if (user1 == null || user2 == null) {
+            System.out.println("requestAlreadySent(): One of the users does not exists on XML!");
             return false;
         }//if
-    }//searchProfile
+        List<Element> requestsListUser1 = user1.getChild(ElementsXML.REQUESTS).getContent();
+        List<Element> requestsListUser2 = user2.getChild(ElementsXML.REQUESTS).getContent();
+        
+        if (requestsListUser1 == null || requestsListUser2 == null) {
+            System.out.println("requestAlreadySent(): One of the has not requests on XML!");
+            return false;
+        }//if
+        
+        for (Element eCurrentRequest : requestsListUser1) {
+            if (eCurrentRequest.getAttributeValue(ElementsXML.REQUEST_FROM).equals(sentBy)) {
+                return true;
+            }//if
+        }//for
+        
+        for (Element eCurrentRequest : requestsListUser2) {
+            if (eCurrentRequest.getAttributeValue(ElementsXML.REQUEST_FROM).equals(sentTo)) {
+                return true;
+            }//if
+        }//for
+ 
+        return false;
+
+    }//existsUser
+
+    public boolean areFriends(String sentTo, String sentBy) {
+
+        //otra opcion
+//        return JFWindow.socialWebCore.getUsersGraph().existEdge(sentTo, sentBy);
+        User user1 = loadUser(sentTo);
+        User user2 = loadUser(sentBy);
+
+        if (user1 == null || user2 == null) {
+            System.out.println("areFriends(): One of the users does not exists on XML!");
+            return false;
+        }//if
+
+        for (int i = 1; i <= user1.getFriends().getSize(); i++) {
+            if (user1.getFriends().getByPosition(i).equals(sentBy)) {
+                return true;
+            }//if
+        }//for
+
+        for (int i = 1; i <= user2.getFriends().getSize(); i++) {
+            if (user2.getFriends().getByPosition(i).equals(sentTo)) {
+                return true;
+            }//if
+        }//for
+        return false;
+    }//existsUser
 
     public MyLinkedStack loadAllPost() {
         MyLinkedStack allPosts = new MyLinkedStack();
@@ -295,9 +346,8 @@ public class UserData {
 //        return user;
 //
 //    }//loadProfile
-
-    public ArrayList<User> getFriendsRequestXML(String username) {  
-        ArrayList<User> userFriendsRequest = new ArrayList<>(); 
+    public ArrayList<User> getFriendsRequestXML(String username) {
+        ArrayList<User> userFriendsRequest = new ArrayList<>();
         Element eUser = this.root.getChild(username);
         if (eUser == null) {
             return null;
@@ -317,5 +367,5 @@ public class UserData {
         }//for
         return userFriendsRequest;
     }//loadProfile
-    
+
 }//class

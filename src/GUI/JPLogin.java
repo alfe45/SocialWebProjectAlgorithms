@@ -2,6 +2,7 @@ package GUI;
 
 import Domain.User;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -91,6 +92,11 @@ public class JPLogin extends javax.swing.JPanel {
         jtfUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfUsernameActionPerformed(evt);
+            }
+        });
+        jtfUsername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfUsernameKeyTyped(evt);
             }
         });
 
@@ -210,6 +216,11 @@ public class JPLogin extends javax.swing.JPanel {
         jtfUsernameSignUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfUsernameSignUpActionPerformed(evt);
+            }
+        });
+        jtfUsernameSignUp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfUsernameSignUpKeyTyped(evt);
             }
         });
 
@@ -383,8 +394,6 @@ public class JPLogin extends javax.swing.JPanel {
                     Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 this.window.repaint();
-                JOptionPane.showMessageDialog(this, "Inicio de sesion completado.\nUser: " + user.getUsername()
-                        + "\nPassword: " + user.getPassword());
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed!");
             }//if
@@ -563,6 +572,36 @@ public class JPLogin extends javax.swing.JPanel {
     private void jPasswordFieldLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldLoginActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jPasswordFieldLoginActionPerformed
+
+    private void jtfUsernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfUsernameKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (c == ' ') {
+            evt.consume();
+        } else {
+            if (Character.isLetterOrDigit(c) || evt.getKeyChar() == KeyEvent.VK_SPACE || evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+                //Codigo
+                String cad = ("" + c).toLowerCase();
+                c = cad.charAt(0);
+                evt.setKeyChar(c);
+            }//if
+        }//if
+    }//GEN-LAST:event_jtfUsernameKeyTyped
+
+    private void jtfUsernameSignUpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfUsernameSignUpKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (c == ' ') {
+            evt.consume();
+        } else {
+            if (Character.isLetterOrDigit(c) || evt.getKeyChar() == KeyEvent.VK_SPACE || evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+                //Codigo
+                String cad = ("" + c).toLowerCase();
+                c = cad.charAt(0);
+                evt.setKeyChar(c);
+            }//if
+        }//if
+    }//GEN-LAST:event_jtfUsernameSignUpKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSignUpUser;

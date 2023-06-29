@@ -13,7 +13,7 @@ public class ElementsXML {
     public static final String FRIEND = "Friend";
     public static final String REQUESTS = "Requests";
     public static final String REQUEST = "Request";
-    public static final String REQUEST_FROM = "Request from";
+    public static final String REQUEST_FROM = "RequestFrom";
     public static final String POSTS = "Posts";
     public static final String POST = "Post";
     public static final String DATE = "Date";

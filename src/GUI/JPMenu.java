@@ -1,7 +1,8 @@
 package GUI;
 
-import Domain.SocialWebCore;
 import Domain.User;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class JPMenu extends javax.swing.JPanel {
     private int indexPost;
     private int indexThought;
     private ArrayList<String> suggestFriends;
+
+    private User tempUser;
 
     public JPMenu(JFWindow window) throws IOException, JDOMException, CloneNotSupportedException {
         this.suggestFriends = JFWindow.socialWebCore.suggestFriendsOfFriends();
@@ -67,12 +70,16 @@ public class JPMenu extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jTextFieldSearch = new javax.swing.JTextField();
         JButtonSearch = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabelUsernameFound = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabelResult = new javax.swing.JLabel();
+        JButtonClear = new javax.swing.JButton();
+        jLabelNicknameUserFound = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabelPostsSizeUserFound = new javax.swing.JLabel();
+        jButtonAddFriend_Search = new javax.swing.JButton();
+        jButtonViewProfile_Search = new javax.swing.JButton();
+        jLabelUsernameUserFound = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabelFriendsSizeUserFound = new javax.swing.JLabel();
         jPanelProfile = new javax.swing.JPanel();
         jLabelUsername = new javax.swing.JLabel();
         jLabelPic = new javax.swing.JLabel();
@@ -426,6 +433,12 @@ public class JPMenu extends javax.swing.JPanel {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
+        jTextFieldSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldSearchKeyTyped(evt);
+            }
+        });
+
         JButtonSearch.setText("Search");
         JButtonSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -433,60 +446,46 @@ public class JPMenu extends javax.swing.JPanel {
             }
         });
 
-        jPanel4.setBackground(new java.awt.Color(204, 204, 255));
+        jLabelResult.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelResult.setForeground(new java.awt.Color(0, 0, 0));
 
-        jButton1.setBackground(new java.awt.Color(255, 204, 255));
-        jButton1.setText("Add Friend");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        JButtonClear.setText("Clear");
+        JButtonClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                JButtonClearActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 204, 255));
-        jButton2.setText("View Profile");
+        jLabelNicknameUserFound.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelNicknameUserFound.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
+        jLabelNicknameUserFound.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelNicknameUserFound.setText("<NICKNAME>");
 
-        jLabelUsernameFound.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelUsernameFound.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
-        jLabelUsernameFound.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelUsernameFound.setText("<NAME>");
+        jLabelPostsSizeUserFound.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelPostsSizeUserFound.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        jLabelPostsSizeUserFound.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelPostsSizeUserFound.setText("<Posts>");
 
-        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("POSTS: X");
+        jButtonAddFriend_Search.setBackground(new java.awt.Color(255, 204, 255));
+        jButtonAddFriend_Search.setText("Add Friend");
+        jButtonAddFriend_Search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddFriend_SearchActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelUsernameFound, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 381, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelUsernameFound)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton2))
-                .addGap(332, 332, 332))
-        );
+        jButtonViewProfile_Search.setBackground(new java.awt.Color(255, 204, 255));
+        jButtonViewProfile_Search.setText("View Profile");
 
-        jLabelResult.setBackground(new java.awt.Color(0, 0, 0));
-        jLabelResult.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelUsernameUserFound.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelUsernameUserFound.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        jLabelUsernameUserFound.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelUsernameUserFound.setText("<@USERNAME>");
+
+        jLabelFriendsSizeUserFound.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelFriendsSizeUserFound.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        jLabelFriendsSizeUserFound.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelFriendsSizeUserFound.setText("<Friends>");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -497,22 +496,58 @@ public class JPMenu extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JButtonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JButtonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabelResult, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(JButtonSearch)
-                        .addGap(36, 36, 36)
-                        .addComponent(jLabelResult, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelNicknameUserFound, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelUsernameUserFound, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabelPostsSizeUserFound, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonViewProfile_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabelFriendsSizeUserFound, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonAddFriend_Search, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JButtonSearch)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JButtonSearch)
+                        .addComponent(JButtonClear))
                     .addComponent(jLabelResult, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabelNicknameUserFound))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelFriendsSizeUserFound)
+                            .addComponent(jButtonAddFriend_Search))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabelPostsSizeUserFound)
+                            .addComponent(jButtonViewProfile_Search)
+                            .addComponent(jLabelUsernameUserFound))))
+                .addGap(12, 12, 12)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jTabbedPaneRequests.addTab("SEARCH", jPanel3);
@@ -633,39 +668,55 @@ public class JPMenu extends javax.swing.JPanel {
         add(jLabelTitle, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonAddFriend_SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddFriend_SearchActionPerformed
         // TODO add your handling code here:
-//        JFWindow.socialWebCore.getLoggedUser().getProfile().sendFriendRequest(
-//            JFWindow.socialWebCore.getCurrentSelectedProfile());
-    }//GEN-LAST:event_jButton1ActionPerformed
+        this.jButtonAddFriend_Search.setEnabled(false);
+        this.jButtonAddFriend_Search.setText("Request sent");
+        JFWindow.socialWebCore.sendFriendshipRequest(tempUser.getUsername(),
+                JFWindow.socialWebCore.getLoggedUser().getUsername());
+    }//GEN-LAST:event_jButtonAddFriend_SearchActionPerformed
 
     private void JButtonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonSearchActionPerformed
         // TODO add your handling code here:
+        String searchText = jTextFieldSearch.getText();
+        if (searchText.equals("")) {
+            this.jLabelResult.setForeground(Color.RED);
+            this.jLabelResult.setText("*Invalid input!");
+        } else {
+            if (JFWindow.socialWebCore.getUserBusiness().existsUser(searchText)) {
+                if (JFWindow.socialWebCore.getLoggedUser().getUsername().equals(searchText)) {
+                    this.jLabelResult.setForeground(Color.ORANGE);
+                    this.jLabelResult.setText("*That's yourself!");
+                } else {
+                    this.jLabelResult.setForeground(Color.GREEN);
+                    this.tempUser = JFWindow.socialWebCore.getUserBusiness().loadUser(searchText);
+                    this.jLabelNicknameUserFound.setText(tempUser.getNickname());
+                    this.jLabelUsernameUserFound.setText("@" + tempUser.getUsername());
+                    this.jLabelFriendsSizeUserFound.setText("Friends: " + tempUser.getFriends().getSize());
+                    this.jLabelPostsSizeUserFound.setText("Posts: " + tempUser.getPosts().getSize());
+                    this.jButtonViewProfile_Search.setVisible(true);
+                    this.jButtonAddFriend_Search.setVisible(true);
 
-//        if (jTextFieldSearch.getText().equals("")) {
-//            this.jLabelResult.setForeground(Color.RED);
-//            this.jLabelResult.setText("*Invalid input!");
-//        } else {
-//            if (JFWindow.socialWebCore.getUserBusiness().searchProfile(jTextFieldSearch.getText())) {
-//                this.jLabelResult.setForeground(Color.GREEN);
-//                this.jLabelResult.setText("User found!");
-//                JFWindow.socialWebCore.setCurrentSelectedProfile(
-//                    JFWindow.socialWebCore.getUserBusiness().loadProfile(
-//                        jTextFieldSearch.getText()));
-//                if (!JFWindow.socialWebCore.getCurrentSelectedProfile().getName().equals(
-//                    JFWindow.socialWebCore.getLoggedUser().getProfile().getName())) {
-//                this.jLabelUsernameFound.setText(JFWindow.socialWebCore.getCurrentSelectedProfile().getName());
-//            } else {
-//                this.jLabelResult.setForeground(Color.RED);
-//                this.jLabelResult.setText("You can't search your profile!");
-//                //                    JFWindow.socialWebCore.setCurrentSelectedProfile(null);
-//            }//if
-//        } else {
-//            this.jLabelResult.setForeground(Color.ORANGE);
-//            this.jLabelResult.setText("*User not found! Search again");
-//        }//if
-//
-//        }//if
+                    if (!JFWindow.socialWebCore.getUserBusiness().requestAlreadySent(searchText,
+                            JFWindow.socialWebCore.getLoggedUser().getUsername())) {
+                        this.jButtonAddFriend_Search.setEnabled(true);
+                    } else {
+                        this.jButtonAddFriend_Search.setEnabled(false);
+                        this.jButtonAddFriend_Search.setText("Request Sent");
+                    }//if
+                    if (JFWindow.socialWebCore.getUserBusiness().areFriends(searchText, 
+                            JFWindow.socialWebCore.getLoggedUser().getUsername())) {
+                        this.jButtonAddFriend_Search.setText("Is Friend");
+                        this.jButtonAddFriend_Search.setEnabled(false); 
+                    }//if
+
+                }//if
+            } else {
+                this.jLabelResult.setForeground(Color.ORANGE);
+                this.jLabelResult.setText("*User not found!");
+            }//if
+
+        }//if
     }//GEN-LAST:event_JButtonSearchActionPerformed
 
     private void jButtonNextPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNextPostActionPerformed
@@ -719,7 +770,7 @@ public class JPMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonNextThoughtActionPerformed
 
     private void jbtnShowSuggestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnShowSuggestionsActionPerformed
-        if (suggestFriends.size() > 0) {
+        if (!suggestFriends.isEmpty()) {
             if (suggestFriends.get(0) != null) {
                 this.jtfSuggestFriend1.setText(suggestFriends.get(0));
                 this.jtfSuggestFriend1.setVisible(true);
@@ -833,38 +884,73 @@ public class JPMenu extends javax.swing.JPanel {
         this.showFriendsRequest();
     }//GEN-LAST:event_jbtnRefreshFriendRequestActionPerformed
 
+    private void JButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonClearActionPerformed
+        // TODO add your handling code here:
+        jTextFieldSearch.setText("");
+        jLabelResult.setText("");
+        jLabelNicknameUserFound.setText("");
+        jLabelPostsSizeUserFound.setText("");
+        jLabelFriendsSizeUserFound.setText("");
+        jLabelUsernameUserFound.setText("");
+        this.jButtonAddFriend_Search.setVisible(false);
+        this.jButtonViewProfile_Search.setVisible(false);
+        this.tempUser = null;
+        this.jButtonAddFriend_Search.setEnabled(true);
+        this.jButtonAddFriend_Search.setText("Add Friend");
+    }//GEN-LAST:event_JButtonClearActionPerformed
+
+    private void jTextFieldSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldSearchKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (c == ' ') {
+            evt.consume();
+        } else {
+            if (Character.isLetterOrDigit(c) || evt.getKeyChar() == KeyEvent.VK_SPACE || evt.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+                //Codigo
+                String cad = ("" + c).toLowerCase();
+                c = cad.charAt(0);
+                evt.setKeyChar(c);
+            }//if
+        }//if
+
+    }//GEN-LAST:event_jTextFieldSearchKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JButtonClear;
     private javax.swing.JButton JButtonSearch;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonAddFriend_Search;
     private javax.swing.JButton jButtonNextPost;
     private javax.swing.JButton jButtonNextThought;
     private javax.swing.JButton jButtonPreviousThought;
     private javax.swing.JButton jButtonRefresh;
+    private javax.swing.JButton jButtonViewProfile_Search;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelDate;
+    private javax.swing.JLabel jLabelFriendsSizeUserFound;
+    private javax.swing.JLabel jLabelNicknameUserFound;
     private javax.swing.JLabel jLabelPic;
     private javax.swing.JLabel jLabelPostFrom;
     private javax.swing.JLabel jLabelPostNumber;
     private javax.swing.JLabel jLabelPostsSize;
+    private javax.swing.JLabel jLabelPostsSizeUserFound;
     private javax.swing.JLabel jLabelProfileUsername;
     private javax.swing.JLabel jLabelResult;
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JLabel jLabelUsername;
-    private javax.swing.JLabel jLabelUsernameFound;
+    private javax.swing.JLabel jLabelUsernameUserFound;
     private javax.swing.JList<String> jListMyRequests;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelFriends;
     private javax.swing.JPanel jPanelHome;
     private javax.swing.JPanel jPanelProfile;
     private javax.swing.JPanel jPanelRequests;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTabbedPane jTabbedPaneRequests;
     private javax.swing.JTextArea jTextArea1;
@@ -903,10 +989,10 @@ public class JPMenu extends javax.swing.JPanel {
         this.setSize(800, 600);
         this.doLayout();
 
+        this.doLayout();
         this.jPanel1.doLayout();
         this.jPanel2.doLayout();
         this.jPanel3.doLayout();
-        this.jPanel4.doLayout();
 
         this.jtfSuggestFriend1.setVisible(false);
         this.jbtnAddFriend1.setVisible(false);
@@ -923,6 +1009,14 @@ public class JPMenu extends javax.swing.JPanel {
         this.jtfSuggestFriend5.setVisible(false);
         this.jbtnAddFriend5.setVisible(false);
 
+        //SEARCH SECTION
+        this.jButtonAddFriend_Search.setVisible(false);
+        this.jButtonViewProfile_Search.setVisible(false);
+        this.jLabelNicknameUserFound.setText("");
+        this.jLabelUsernameUserFound.setText("");
+        this.jLabelPostsSizeUserFound.setText("");
+        this.jLabelFriendsSizeUserFound.setText("");
+
         change(indexThought);
     }//init
 
@@ -930,10 +1024,9 @@ public class JPMenu extends javax.swing.JPanel {
         DefaultListModel model = new DefaultListModel();
         jListMyRequests.setModel(model);
         return model;
-        
+
     }
-    
-    
+
     public DefaultListModel deleteFriendRequest() {
         DefaultListModel model = (DefaultListModel) this.jListMyRequests.getModel();
         model.remove(this.jListMyRequests.getSelectedIndex());
