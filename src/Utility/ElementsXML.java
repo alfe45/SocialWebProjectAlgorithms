@@ -16,6 +16,7 @@ public class ElementsXML {
     public static final String POSTS = "Posts";
     public static final String POST = "Post";
     public static final String DATE = "Date";
+    public static final String STATE = "State";
 
     public static final String THOUGHT = "Thought";
     public static final String TEXT = "Text";

@@ -88,6 +88,7 @@ public class UserData {
             Element eCurrentRequest = new Element(ElementsXML.REQUEST);
             eCurrentRequest.setAttribute(ElementsXML.REQUEST_FROM, temp.getSentBy());
             eCurrentRequest.setAttribute(ElementsXML.DATE, temp.getDate());
+            eCurrentRequest.setAttribute(ElementsXML.STATE, temp.getState()+"");
             eRequests.addContent(eCurrentRequest);
         }//while
         eUser.addContent(eRequests);

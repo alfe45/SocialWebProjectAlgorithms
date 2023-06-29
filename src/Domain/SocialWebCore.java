@@ -78,27 +78,21 @@ public class SocialWebCore {
         }//try
 
         //aqui se refrescan los datos del core
-        
-        
-        
     }//refresh
-    
-    public void sendFriendshipRequest(String sentTo, String sentBy) throws IOException{
-        //1. leer el usuarios.xml
-        //2. verificar si ya existe la solicitud
-        //3. si no existe escrirla en el xml del usuario destino
-        //4. guadar el xml//1. leer el usuarios.xml
-        //2. verificar si ya existe la solicitud
-        //3. si no existe escrirla en el xml del usuario destino
-        //4. guadar el xml
-        
+
+    public void sendFriendshipRequest(String sentTo, String sentBy) throws IOException, CloneNotSupportedException {
+        if (userBusiness.existsUser(sentTo)) {
+            User targetUser = userBusiness.loadUser(sentTo);
+            targetUser.getRequests().insert(new Request("DATE", sentBy, sentTo));
+            userBusiness.saveUser(targetUser);
+        }//if
+
 //        JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(sentTo, sentBy);
     }//sendFriendshipRequest
-    
-    public void acceptFriendshipRequest(String sentTo, String sentBy) throws IOException{
+
+    public void acceptFriendshipRequest(String sentTo, String sentBy) throws IOException {
 
     }//acceptFriendshipRequest
-    
 
     public ArrayList<String> suggestFriendsOfFriends() {
         ArrayList<String> suggestions = new ArrayList<>();
@@ -112,7 +106,7 @@ public class SocialWebCore {
                             int amigosEnComun = 1;
                             for (int k = 1; k <= this.loggedUser.getFriends().getSize(); k++) {
                                 if (this.usersGraph.existEdge(friendOfFriendAux.getUsername(),
-                                        (String)this.loggedUser.getFriends().getByPosition(k))) {
+                                        (String) this.loggedUser.getFriends().getByPosition(k))) {
                                     amigosEnComun++;
                                 }//if
                             }//for
@@ -132,7 +126,7 @@ public class SocialWebCore {
                 return new Integer(p1.split("=")[1]).compareTo(new Integer(p2.split("=")[1]));
             }//compare
         });
-        
+
 //        ArrayList<String> auxName = new ArrayList<>();
 //        ArrayList<String> auxCommonFriends = new ArrayList<>();
 //        for (int i = 0; i < suggestions.size(); i++) {
@@ -141,7 +135,6 @@ public class SocialWebCore {
 //            auxCommonFriends.add(nombres[1]);
 //            System.out.println((i+1)+ "username: "+auxName.get(i) + "friends in common: "+auxCommonFriends.get(i));
 //        }//if
-
         return suggestions;
     }//suggestFriendsOfFriends
 

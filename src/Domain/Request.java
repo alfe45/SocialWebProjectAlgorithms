@@ -6,13 +6,13 @@ public class Request {
     private String date;
     private String sentBy;
     private String sentTo;
-    private int accepted;// 0 = waiting, -1 = denied, 1 = accepted
+    private int state;// 0 = waiting, -1 = denied, 1 = accepted
 
     public Request(String date, String sentBy, String sentTo) {
         this.date = date;
         this.sentBy = sentBy;
         this.sentTo = sentTo;
-        this.accepted = 0;
+        this.state = 0;
     }
 
     public String getDate() {
@@ -40,26 +40,24 @@ public class Request {
     }
     
     public void deny(){
-        this.accepted = -1;
+        this.state = -1;
     }//deny
     
     public void accept(){
-        this.accepted = 1;
+        this.state = 1;
     }//accept
 
-    public int getAccepted() {
-        return accepted;
+    public int getState() {
+        return state;
     }
 
-    public void setAccepted(int accepted) {
-        this.accepted = accepted;
+    public void setState(int state) {
+        this.state = state;
     }
 
     @Override
     public String toString() {
-        return "Request{" + "date=" + date + ", sentBy=" + sentBy + ", sentTo=" + sentTo + ", accepted=" + accepted + '}';
+        return "Request{" + "date=" + date + ", sentBy=" + sentBy + ", sentTo=" + sentTo + ", state=" + state + '}';
     }
-    
-    
 
 }//class

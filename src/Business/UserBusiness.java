@@ -36,10 +36,6 @@ public class UserBusiness {
     public MyLinkedStack loadAllPost() {
         return this.userData.loadAllPost();
     }//loadAllPost
-
-//    public MyLinkedStack loadUserPosts(String username){
-//        return this.userData.loadUserPosts();
-//    }//loadUserPosts
     
     public boolean existsUser(String username) {
         return this.userData.existsUser(username);
