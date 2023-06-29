@@ -11,7 +11,7 @@ public class JFWindow extends javax.swing.JFrame {
     
     public JFWindow() throws JDOMException, IOException, CloneNotSupportedException {
         initComponents();
-        this.socialWebCore = new SocialWebCore();
+        JFWindow.socialWebCore = new SocialWebCore();
         this.setSize(800,600);
         this.add(new JPLogin(this)); //se añade el login
     }

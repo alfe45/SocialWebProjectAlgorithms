@@ -6,6 +6,7 @@ public class ElementsXML {
     public static final String ROOT_USERS = "Users";
     public static final String USER = "User";
     public static final String USERNAME = "Username";
+    public static final String NICKNAME = "Nickname";
     public static final String PASSWORD = "Password";
     public static final String PROFILE = "Profile";
     public static final String FRIENDS = "Friends";
@@ -17,7 +18,8 @@ public class ElementsXML {
     public static final String POST = "Post";
     public static final String DATE = "Date";
     public static final String STATE = "State";
-
+    public static final String TITLE = "Title";
+            
     public static final String THOUGHT = "Thought";
     public static final String TEXT = "Text";
 

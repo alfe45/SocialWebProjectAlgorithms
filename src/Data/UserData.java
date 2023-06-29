@@ -72,6 +72,7 @@ public class UserData {
 
         Element eUser = new Element(user.getUsername());
         eUser.setAttribute(ElementsXML.PASSWORD, user.getPassword());
+        eUser.setAttribute(ElementsXML.NICKNAME, user.getNickname());
 
         Element eFriends = new Element(ElementsXML.FRIENDS);
         for (int i = 1; i <= user.getFriends().getSize(); i++) {
@@ -85,11 +86,11 @@ public class UserData {
         Element eRequests = new Element(ElementsXML.REQUESTS);
         MyLinkedQueue tempRequestsQueue = (MyLinkedQueue) user.getRequests().clone();
         while (!tempRequestsQueue.isEmpty()) {
-            Request temp = (Request) tempRequestsQueue.delete();
+            Request tempRequest = (Request) tempRequestsQueue.delete();
             Element eCurrentRequest = new Element(ElementsXML.REQUEST);
-            eCurrentRequest.setAttribute(ElementsXML.REQUEST_FROM, temp.getSentBy());
-            eCurrentRequest.setAttribute(ElementsXML.DATE, temp.getDate());
-            eCurrentRequest.setAttribute(ElementsXML.STATE, temp.getState()+"");
+            eCurrentRequest.setAttribute(ElementsXML.DATE, tempRequest.getDate());
+            eCurrentRequest.setAttribute(ElementsXML.REQUEST_FROM, tempRequest.getSentBy());
+            eCurrentRequest.setAttribute(ElementsXML.STATE, tempRequest.getState()+"");
             eRequests.addContent(eCurrentRequest);
         }//while
         eUser.addContent(eRequests);
@@ -97,10 +98,12 @@ public class UserData {
         Element ePosts = new Element(ElementsXML.POSTS);
         MyLinkedStack tempPostsStack = (MyLinkedStack) user.getPosts().clone();
         while (!tempPostsStack.isEmpty()) {
-            Post temp = (Post) tempPostsStack.pop();
+            Post tempPost = (Post) tempPostsStack.pop();
             Element eCurrentPost = new Element(ElementsXML.POST);
-            for (int i = 1; i <= temp.getThoughts().getSize(); i++) {
-                String tempThought = temp.getThought(i);
+            eCurrentPost.setAttribute(ElementsXML.TITLE, tempPost.getTitle());
+            eCurrentPost.setAttribute(ElementsXML.DATE, tempPost.getDate());
+            for (int i = 1; i <= tempPost.getThoughts().getSize(); i++) {
+                String tempThought = tempPost.getThought(i);
                 Element eCurrentThought = new Element(ElementsXML.THOUGHT);
                 eCurrentThought.setAttribute(ElementsXML.TEXT, tempThought);
                 eCurrentPost.addContent(eCurrentThought);
@@ -121,7 +124,9 @@ public class UserData {
         }//if
 
         String password = eUser.getAttributeValue(ElementsXML.PASSWORD);
+        String nickname = eUser.getAttributeValue(ElementsXML.NICKNAME);
         User user = new User(username, password);
+        user.setNickname(nickname);
 
         //loads friends
         Element eFriends = eUser.getChild(ElementsXML.FRIENDS);
@@ -137,8 +142,10 @@ public class UserData {
         List<Element> requestsList = eRequests.getChildren();
         for (int i = 0; i < requestsList.size(); i++) {
             Element eCurrent = requestsList.get(i);
-            user.getRequests().insert(new Request("DATE", eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue(),
-                    user.getUsername()));
+            Request tempRequest = new Request(eCurrent.getAttributeValue(ElementsXML.DATE), eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue(),
+                    user.getUsername());
+            tempRequest.setSentTo(eCurrent.getAttributeValue(ElementsXML.STATE));
+            user.getRequests().insert(tempRequest);
         }//for
 
         //loads posts
@@ -146,13 +153,15 @@ public class UserData {
         List<Element> postsList = ePosts.getChildren();
         for (int i = 0; i < postsList.size(); i++) {
             Element eCurrentPost = postsList.get(i);
-            Post temp = new Post();
+            Post tempPost = new Post();
+            tempPost.setTitle(eCurrentPost.getAttributeValue(ElementsXML.TITLE));
+            tempPost.setDate(eCurrentPost.getAttributeValue(ElementsXML.DATE));
             List<Element> thoughtsList = eCurrentPost.getChildren();
             for (int j = 0; j < thoughtsList.size(); j++) {
                 Element eCurrentThought = thoughtsList.get(j);
-                temp.getThoughts().addEnd(new Thought(eCurrentThought.getAttributeValue(ElementsXML.THOUGHT)));
+                tempPost.getThoughts().addEnd(new Thought(eCurrentThought.getAttributeValue(ElementsXML.TEXT)));
             }//for j
-            user.getPosts().push(temp);
+            user.getPosts().push(tempPost);
         }//for
 
         return user;

@@ -1,7 +1,6 @@
 package Data;
 
 import DataStructures.MyListGraph;
-import GUI.JFWindow;
 import Utility.ElementsXML;
 import Utility.FileRutes;
 import java.io.File;
@@ -60,17 +59,17 @@ public class GraphData {
 
     public MyListGraph loadGraph() {
         MyListGraph graph = new MyListGraph();
-//        List<Element> vertexesList = this.root.getChild(ElementsXML.VERTEXES).getContent();
-//        for (Element currentVertex : vertexesList) {
-//            graph.addVertex(currentVertex.getAttribute("from").getValue());
-//        }//for
-//        for (Element currentVertex : vertexesList) {
-//            List<Element> edgesList = currentVertex.getContent();
-//            for (Element currentEdge : edgesList) {
-//                graph.addEdge(currentVertex.getAttribute("from").getValue(),
-//                        currentEdge.getAttribute("to").getValue());
-//            }//for
-//        }//for
+        List<Element> vertexesList = this.root.getChild(ElementsXML.VERTEXES).getContent();
+        for (Element currentVertex : vertexesList) {
+            graph.addVertex(currentVertex.getAttribute("from").getValue());
+        }//for
+        for (Element currentVertex : vertexesList) {
+            List<Element> edgesList = currentVertex.getContent();
+            for (Element currentEdge : edgesList) {
+                graph.addEdge(currentVertex.getAttribute("from").getValue(),
+                        currentEdge.getAttribute("to").getValue());
+            }//for
+        }//for
         return graph;
     }//loadGraph
 

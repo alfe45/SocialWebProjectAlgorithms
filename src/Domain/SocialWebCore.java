@@ -9,10 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.text.Element;
 import org.jdom.JDOMException;
 
 public class SocialWebCore {
@@ -82,11 +80,15 @@ public class SocialWebCore {
         //aqui se refrescan los datos del core
     }//refresh
 
-    public void sendFriendshipRequest(String sentTo, String sentBy) throws IOException, CloneNotSupportedException {
+    public void sendFriendshipRequest(String sentTo, String sentBy){
         if (userBusiness.existsUser(sentTo)) {
-            User targetUser = userBusiness.loadUser(sentTo);
-            targetUser.getRequests().insert(new Request("DATE", sentBy, sentTo));
-            userBusiness.saveUser(targetUser);
+            try {
+                User targetUser = userBusiness.loadUser(sentTo);
+                targetUser.getRequests().insert(new Request("DATE", sentBy, sentTo));
+                userBusiness.saveUser(targetUser);
+            }  catch (IOException | CloneNotSupportedException ex) {
+                Logger.getLogger(SocialWebCore.class.getName()).log(Level.SEVERE, null, ex);
+            }//try
         }//if
 
 //        JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(sentTo, sentBy);
@@ -111,7 +113,6 @@ public class SocialWebCore {
         ArrayList<User> friendsRequest = new ArrayList<>();
 //        friendsRequest = this.userBusiness.getFriendsRequestXML(this.loggedUser.getUsername());
         friendsRequest = this.userBusiness.getFriendsRequestXML("alex");
-
 
         return friendsRequest;
     }
