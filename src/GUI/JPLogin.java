@@ -132,6 +132,11 @@ public class JPLogin extends javax.swing.JPanel {
                 jPasswordFieldLoginMousePressed(evt);
             }
         });
+        jPasswordFieldLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordFieldLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpLogInLayout = new javax.swing.GroupLayout(jpLogIn);
         jpLogIn.setLayout(jpLogInLayout);
@@ -391,6 +396,8 @@ public class JPLogin extends javax.swing.JPanel {
     }//GEN-LAST:event_jtfUsernameSignUpActionPerformed
 
     private void jbtnSignUpAuxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSignUpAuxActionPerformed
+        this.jPasswordFieldLogin.setText("Password");
+        this.jtfUsername.setText("Username");
         this.jpLogIn.setVisible(false);
         this.jLabel4.setVisible(false);
         this.jpSignUp.setVisible(true);
@@ -420,6 +427,15 @@ public class JPLogin extends javax.swing.JPanel {
     }//GEN-LAST:event_jtfUsernameSignUpMousePressed
 
     private void jbtnBackLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBackLogInActionPerformed
+        jtfNickname.setText("Nickname");
+        jtfUsernameSignUp.setText("Username");
+        jPasswordFieldSignUp.setText("Password");
+
+        jtfNickname.setForeground(Color.GRAY);
+        jtfUsernameSignUp.setForeground(Color.GRAY);
+        jPasswordFieldSignUp.setForeground(Color.GRAY);
+
+        this.jPasswordFieldSignUp.setEchoChar((char) 0);
         this.jpLogIn.setVisible(true);
         this.jLabel4.setVisible(true);
         this.jpSignUp.setVisible(false);
@@ -473,6 +489,7 @@ public class JPLogin extends javax.swing.JPanel {
             this.jtfNickname.setForeground(Color.GRAY);
         }//if
 
+
     }//GEN-LAST:event_jpSignUpMousePressed
 
     private void jPasswordFieldSignUpMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPasswordFieldSignUpMousePressed
@@ -502,8 +519,13 @@ public class JPLogin extends javax.swing.JPanel {
                 }//if
                 try {
                     if (JFWindow.socialWebCore.getUserBusiness().saveNewUser(user)) {
-                        jtfUsernameSignUp.setText("");
-                        jPasswordFieldSignUp.setText("");
+                        jtfNickname.setText("Nickname");
+                        jtfUsernameSignUp.setText("Username");
+                        jPasswordFieldSignUp.setText("Password");
+                        jtfNickname.setForeground(Color.GRAY);
+                        jtfUsernameSignUp.setForeground(Color.GRAY);
+                        jPasswordFieldSignUp.setForeground(Color.GRAY);
+                        this.jPasswordFieldSignUp.setEchoChar((char) 0);
                         this.jpLogIn.setVisible(true);
                         this.jLabel4.setVisible(true);
                         this.jpSignUp.setVisible(false);
@@ -537,6 +559,10 @@ public class JPLogin extends javax.swing.JPanel {
     private void jtfNicknameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNicknameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfNicknameActionPerformed
+
+    private void jPasswordFieldLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordFieldLoginActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSignUpUser;
