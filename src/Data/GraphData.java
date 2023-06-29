@@ -1,6 +1,8 @@
 package Data;
 
 import DataStructures.MyListGraph;
+import DataStructures.MySimpleLinkedList;
+import GUI.JFWindow;
 import Utility.ElementsXML;
 import Utility.FileRutes;
 import java.io.File;
@@ -46,14 +48,15 @@ public class GraphData {
     }//saveXML
 
     public boolean addNewFriendshipToGraph(String user1, String user2) throws IOException {
-//        MyListGraph graph = loadGraph();
-//        if (!graph.existEdge(user1, user2)) {
-//            System.out.println("No existe");
-//            graph.addEdge(user1, user2);
-//            saveGraph(graph);
-//            JFWindow.socialWebCore.refresh();
-//            return true;
-//        }//if
+        MyListGraph graph = loadGraph();
+        if (!graph.existEdge(user1, user2)) {
+            System.out.println("No existe, entonces creado");
+            graph.addEdge(user1, user2);
+            saveGraph(graph);
+            JFWindow.socialWebCore.setUsersGraph(graph);
+            JFWindow.socialWebCore.refresh();
+            return true;
+        }//if
         return false;
     }//newFriendship
 
@@ -95,7 +98,7 @@ public class GraphData {
         return true;
     }//saveGraph
 
-    private boolean existsEdgeInVertex(Element eEdge, Element eVertex) {
+    public boolean existsEdgeInVertex(Element eEdge, Element eVertex) {
         String usernameEdge = eEdge.getAttributeValue(eEdge.getAttributeValue("to"));
         List<Element> edgesList = eVertex.getContent();
         for (Element currentEdge : edgesList) {
@@ -105,6 +108,32 @@ public class GraphData {
             }//if
         }//for
         return false;
+    }//existsEdgeInVertex
+
+    public int getNumberOfFriendsInCommon(String user1, String user2) {
+        int friendsInCommon = 0;
+//        MyListGraph graph = loadGraph();
+//        MySimpleLinkedList mylist = new MySimpleLinkedList();
+//        mylist.exists(mylist);
+//     
+//        int a1 = graph.getElementPosition(user1);
+//        int b1 = graph.getElementPosition(user2);
+//        System.out.println("a: "+a1);
+//        System.out.println("a: "+b1);
+//        for (int i = 0; i < graph.getVertexEdgeSize(a1); i++) {
+////            String tempFriendUser1 = (String)graph.getVertexEdgeValue(a1, i);
+////            for (int j = 0; j < graph.getVertexEdgeSize(b1); j++) {
+////                String tempFriendUser2 = (String)graph.getVertexEdgeValue(b1, j);
+////                if (!mylist.exists(tempFriendUser1)) {
+////                    if (tempFriendUser1.equals(tempFriendUser2)) {
+////                        friendsInCommon++;
+////                        mylist.insert(tempFriendUser1);
+////                    }//if
+////                }//if
+////            }//for
+//        }//for
+        
+        return friendsInCommon;
     }//existsEdgeInVertex
 
 }//class

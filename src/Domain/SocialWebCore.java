@@ -71,8 +71,8 @@ public class SocialWebCore {
 
     public void refresh() {
         try {
-            this.graphData.saveGraph(this.usersGraph);
             this.usersGraph = this.graphData.loadGraph();
+            this.graphData.saveGraph(this.usersGraph);
         } catch (IOException ex) {
             Logger.getLogger(SocialWebCore.class.getName()).log(Level.SEVERE, null, ex);
         }//try

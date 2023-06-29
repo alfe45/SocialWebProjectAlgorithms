@@ -28,7 +28,7 @@ public class GraphTest {
         socialWebCore.getUsersGraph().addVertex(user5);
 
         socialWebCore.refresh();
-        
+       
         socialWebCore.getGraphData().addNewFriendshipToGraph(user1, user2);
         
         socialWebCore.refresh();
