@@ -4,6 +4,7 @@ import Data.UserData;
 import DataStructures.MyLinkedStack;
 import Domain.User;
 import java.io.IOException;
+import java.util.ArrayList;
 import org.jdom.JDOMException;
 
 public class UserBusiness {
@@ -44,5 +45,9 @@ public class UserBusiness {
     public boolean searchProfile(String username) {
         return this.userData.searchProfile(username);
     }//searchProfile
+
+        public ArrayList<User> getFriendsRequestXML(String username) {
+            return this.userData.getFriendsRequestXML(username);
+        }   
 
 }//class

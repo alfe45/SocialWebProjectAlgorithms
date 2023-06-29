@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -286,4 +287,26 @@ public class UserData {
 //
 //    }//loadProfile
 
+    public ArrayList<User> getFriendsRequestXML(String username) {  
+        ArrayList<User> userFriendsRequest = new ArrayList<>(); 
+        Element eUser = this.root.getChild(username);
+        if (eUser == null) {
+            return null;
+        }//if
+
+        String password = eUser.getAttributeValue(ElementsXML.PASSWORD);
+        User user = new User(username, password);
+
+        //loads requests
+        Element eRequests = eUser.getChild(ElementsXML.REQUESTS);
+        List<Element> requestsList = eRequests.getChildren();
+        for (int i = 0; i < requestsList.size(); i++) {
+            Element eCurrent = requestsList.get(i);
+            user.getRequests().insert(new Request("DATE", eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue(),
+                    user.getUsername()));
+            userFriendsRequest.add(user);
+        }//for
+        return userFriendsRequest;
+    }//loadProfile
+    
 }//class

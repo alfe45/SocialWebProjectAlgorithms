@@ -1,11 +1,14 @@
 package GUI;
 
 import Domain.SocialWebCore;
+import Domain.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
 import org.jdom.JDOMException;
 
 public class JPMenu extends javax.swing.JPanel {
@@ -13,13 +16,13 @@ public class JPMenu extends javax.swing.JPanel {
     private JFWindow window;
     private int indexPost;
     private int indexThought;
-    private SocialWebCore socialWebCore;
     private ArrayList<String> suggestFriends;
 
     public JPMenu(JFWindow window) throws IOException, JDOMException, CloneNotSupportedException {
         this.suggestFriends = JFWindow.socialWebCore.suggestFriendsOfFriends();
         initComponents();
         this.window = window;
+        this.cleanJList();
         init();
     }
 
@@ -43,6 +46,9 @@ public class JPMenu extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListMyRequests = new javax.swing.JList<>();
+        jbtnAceptRequest = new javax.swing.JButton();
+        jbtnDeleteRequest = new javax.swing.JButton();
+        jbtnRefreshFriendRequest = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jbtnAddFriend2 = new javax.swing.JButton();
         jbtnShowSuggestions = new javax.swing.JButton();
@@ -202,14 +208,41 @@ public class JPMenu extends javax.swing.JPanel {
         jListMyRequests.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jListMyRequests);
 
+        jbtnAceptRequest.setText("Acept Request");
+
+        jbtnDeleteRequest.setText("Delete Request");
+        jbtnDeleteRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDeleteRequestActionPerformed(evt);
+            }
+        });
+
+        jbtnRefreshFriendRequest.setText("Refresh the Friends request");
+        jbtnRefreshFriendRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnRefreshFriendRequestActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(389, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jbtnAceptRequest)
+                                .addGap(20, 20, 20))
+                            .addComponent(jbtnDeleteRequest, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(107, 107, 107))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jbtnRefreshFriendRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,6 +250,14 @@ public class JPMenu extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnRefreshFriendRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(118, 118, 118)
+                .addComponent(jbtnAceptRequest)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbtnDeleteRequest)
+                .addGap(113, 113, 113))
         );
 
         jTabbedPaneRequests.addTab("FRIEND REQUESTS", jPanel1);
@@ -709,7 +750,7 @@ public class JPMenu extends javax.swing.JPanel {
                 this.jtfSuggestFriend5.setVisible(true);
                 this.jbtnAddFriend5.setVisible(true);
             }
-        }else{
+        } else {
             System.out.println("No hay sugerencias!");
         }
 
@@ -806,6 +847,15 @@ public class JPMenu extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfSuggestFriend1ActionPerformed
 
+    private void jbtnDeleteRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteRequestActionPerformed
+        this.deleteFriendRequest();
+
+    }//GEN-LAST:event_jbtnDeleteRequestActionPerformed
+
+    private void jbtnRefreshFriendRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRefreshFriendRequestActionPerformed
+        this.showFriendsRequest();
+    }//GEN-LAST:event_jbtnRefreshFriendRequestActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JButtonSearch;
@@ -842,6 +892,7 @@ public class JPMenu extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jTabbedPaneRequests;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextFieldSearch;
+    private javax.swing.JButton jbtnAceptRequest;
     private javax.swing.JButton jbtnAddFriend1;
     private javax.swing.JButton jbtnAddFriend2;
     private javax.swing.JButton jbtnAddFriend3;
@@ -852,6 +903,8 @@ public class JPMenu extends javax.swing.JPanel {
     private javax.swing.JButton jbtnDelete3;
     private javax.swing.JButton jbtnDelete4;
     private javax.swing.JButton jbtnDelete5;
+    private javax.swing.JButton jbtnDeleteRequest;
+    private javax.swing.JButton jbtnRefreshFriendRequest;
     private javax.swing.JButton jbtnShowSuggestions;
     private javax.swing.JTextField jtfSuggestFriend1;
     private javax.swing.JTextField jtfSuggestFriend2;
@@ -895,4 +948,24 @@ public class JPMenu extends javax.swing.JPanel {
 
         change(indexThought);
     }//init
+
+    public DefaultListModel cleanJList() {
+        DefaultListModel model = new DefaultListModel();
+        jListMyRequests.setModel(model);
+        return model;
+        
+    }
+    
+    
+    public DefaultListModel deleteFriendRequest() {
+        DefaultListModel model = (DefaultListModel) this.jListMyRequests.getModel();
+        model.remove(this.jListMyRequests.getSelectedIndex());
+        return model;
+    }
+
+    public DefaultListModel showFriendsRequest() {
+        DefaultListModel model = new DefaultListModel();
+        model.addAll(this.window.socialWebCore.showFriendsRequest());
+        return model;
+    }
 }

@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.text.Element;
 import org.jdom.JDOMException;
 
 public class SocialWebCore {
@@ -90,10 +92,30 @@ public class SocialWebCore {
 //        JFWindow.socialWebCore.getGraphData().addNewFriendshipToGraph(sentTo, sentBy);
     }//sendFriendshipRequest
 
-    public void acceptFriendshipRequest(String sentTo, String sentBy) throws IOException {
 
+
+    
+    public boolean acceptFriendshipRequest(String sentTo, String sentBy) throws IOException{
+//        User user = this.userBusiness.loadUser(this.loggedUser.getUsername());
+//        
+//        List<Element> friendsRequests = new ArrayList<>();
+//        int count =0;
+//        while (user.getRequests() != null) {            
+//            friendsRequests.get(count);
+//        }
+//            
+        return false;
     }//acceptFriendshipRequest
+    
+    public ArrayList<User> showFriendsRequest(){
+        ArrayList<User> friendsRequest = new ArrayList<>();
+//        friendsRequest = this.userBusiness.getFriendsRequestXML(this.loggedUser.getUsername());
+        friendsRequest = this.userBusiness.getFriendsRequestXML("alex");
 
+
+        return friendsRequest;
+    }
+    
     public ArrayList<String> suggestFriendsOfFriends() {
         ArrayList<String> suggestions = new ArrayList<>();
         for (int i = 1; i <= this.loggedUser.getFriends().getSize(); i++) {//recorro amigos de usuario loggeado
