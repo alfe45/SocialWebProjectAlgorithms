@@ -135,25 +135,26 @@ public class SocialWebCore {
 
     public ArrayList<String> suggestFriendsOfFriends() throws IOException, CloneNotSupportedException {
         ArrayList<String> suggestions = new ArrayList<>();
-        
+
         for (int i = 1; i <= this.loggedUser.getFriends().getSize(); i++) {//recorro amigos de usuario loggeado
-            
+
             User friendAux = JFWindow.socialWebCore.getUserBusiness().loadUser(this.loggedUser.getFriends().getByPosition(i) + "");
+
             if (this.usersGraph.existEdge(this.loggedUser.getUsername(), friendAux.getUsername())) { //si es amigo entra
+
                 for (int j = 1; j <= friendAux.getFriends().getSize(); j++) { //recorro amigos de amigo de usuario loggeado
                     User friendOfFriendAux = JFWindow.socialWebCore.getUserBusiness().loadUser(friendAux.getFriends().getByPosition(i) + "");
-                    if (!this.usersGraph.existEdge(this.loggedUser.getUsername(), friendOfFriendAux.getUsername())) { //si ese amigo no es amigo del usuario loggeado
-                        if (!suggestions.contains(friendOfFriendAux.getUsername())) {
-                            int amigosEnComun = 1;
-                            for (int k = 1; k <= this.loggedUser.getFriends().getSize(); k++) {
-                                if (this.usersGraph.existEdge(friendOfFriendAux.getUsername(),
-                                        (String) this.loggedUser.getFriends().getByPosition(k))) {
+                    if (friendOfFriendAux != null) {
+                        if (this.userBusiness.areFriends(this.loggedUser.getUsername(), friendOfFriendAux.getUsername())) {
+                            if (!this.usersGraph.existEdge(this.loggedUser.getUsername(), friendOfFriendAux.getUsername())) { //si ese amigo no es amigo del usuario loggeado
+                                int amigosEnComun = 1;
+                                if (suggestions.contains(friendOfFriendAux.getUsername())) {
                                     amigosEnComun++;
                                 }//if
-                            }//for
-                            suggestions.add(friendOfFriendAux.getUsername() + "=" + amigosEnComun);
-                        }//if
-                    }//if
+                                suggestions.add(friendOfFriendAux.getUsername() + "=" + amigosEnComun);
+                            }//if
+                        }
+                    }
                 }//for jn
             } else {
                 System.out.println("Error, dicen que son amigos, pero no lo son. conexion no existente en el grafo");
@@ -166,7 +167,7 @@ public class SocialWebCore {
                 return new Integer(p1.split("=")[1]).compareTo(new Integer(p2.split("=")[1]));
             }//compare
         });
-        System.out.println(suggestions);
+//        System.out.println(suggestions);
         return suggestions;
     }//suggestFriendsOfFriends
 

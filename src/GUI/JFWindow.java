@@ -13,6 +13,7 @@ public class JFWindow extends javax.swing.JFrame {
         initComponents();
         JFWindow.socialWebCore = new SocialWebCore();
         this.setSize(800,600);
+        this.setLocationRelativeTo(null);
         this.add(new JPLogin(this)); //se añade el login
     }
 

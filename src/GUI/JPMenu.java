@@ -66,11 +66,6 @@ public class JPMenu extends javax.swing.JPanel {
         jSeparator3 = new javax.swing.JSeparator();
         jPanelRequests = new javax.swing.JPanel();
         jTabbedPaneRequests = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListMyRequests = new javax.swing.JList<>();
-        jbtnAceptRequest = new javax.swing.JButton();
-        jbtnDeleteRequest = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jbtnAddFriend2 = new javax.swing.JButton();
         jbtnShowSuggestions = new javax.swing.JButton();
@@ -101,6 +96,11 @@ public class JPMenu extends javax.swing.JPanel {
         jLabelUsernameUserFound = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabelFriendsSizeUserFound = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListMyRequests = new javax.swing.JList<>();
+        jbtnAceptRequest = new javax.swing.JButton();
+        jbtnDeleteRequest = new javax.swing.JButton();
         jPanelProfile = new javax.swing.JPanel();
         jLabelUsername = new javax.swing.JLabel();
         jLabelPic = new javax.swing.JLabel();
@@ -251,28 +251,29 @@ public class JPMenu extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE))))
                     .addGroup(jPanelHomeLayout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(jButtonPreviousThought, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelDate)
-                            .addComponent(jLabelPostNumber)
-                            .addGroup(jPanelHomeLayout.createSequentialGroup()
-                                .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanelHomeLayout.createSequentialGroup()
-                                        .addComponent(jButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jbtnNextPostOfFriend)
-                                        .addGap(37, 37, 37)
-                                        .addComponent(jButtonNextPost, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonNextThought, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabelPostFrom)))
-                    .addGroup(jPanelHomeLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator3)))
                 .addContainerGap())
+            .addGroup(jPanelHomeLayout.createSequentialGroup()
+                .addGap(147, 147, 147)
+                .addComponent(jButtonPreviousThought, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelDate)
+                    .addComponent(jLabelPostNumber)
+                    .addGroup(jPanelHomeLayout.createSequentialGroup()
+                        .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelHomeLayout.createSequentialGroup()
+                                .addComponent(jButtonRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbtnNextPostOfFriend)
+                                .addGap(37, 37, 37)
+                                .addComponent(jButtonNextPost, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonNextThought, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelPostFrom))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelHomeLayout.setVerticalGroup(
             jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,7 +293,7 @@ public class JPMenu extends javax.swing.JPanel {
                     .addComponent(jScrollPane4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabelPostFrom)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDate)
@@ -310,7 +311,7 @@ public class JPMenu extends javax.swing.JPanel {
                     .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonNextPost, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jbtnNextPostOfFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("HOME", jPanelHome);
@@ -321,41 +322,6 @@ public class JPMenu extends javax.swing.JPanel {
         jTabbedPaneRequests.setForeground(new java.awt.Color(0, 0, 0));
         jTabbedPaneRequests.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         jTabbedPaneRequests.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jListMyRequests.setBackground(new java.awt.Color(204, 204, 204));
-        jListMyRequests.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jListMyRequests.setForeground(new java.awt.Color(0, 0, 0));
-        jListMyRequests.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "<Request>", "<Request>", "<Request>", "<Request>" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jListMyRequests.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(jListMyRequests);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 654, 175));
-
-        jbtnAceptRequest.setText("Acept");
-        jbtnAceptRequest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnAceptRequestActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jbtnAceptRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 355, 143, -1));
-
-        jbtnDeleteRequest.setText("Delete");
-        jbtnDeleteRequest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnDeleteRequestActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jbtnDeleteRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 384, 143, -1));
-
-        jTabbedPaneRequests.addTab("FRIEND REQUESTS", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -451,9 +417,6 @@ public class JPMenu extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(jbtnShowSuggestions, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtfSuggestFriend1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -474,8 +437,11 @@ public class JPMenu extends javax.swing.JPanel {
                             .addComponent(jbtnDelete1)
                             .addComponent(jbtnDelete4)
                             .addComponent(jbtnDelete3)
-                            .addComponent(jbtnDelete5))))
-                .addContainerGap(175, Short.MAX_VALUE))
+                            .addComponent(jbtnDelete5)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(231, 231, 231)
+                        .addComponent(jbtnShowSuggestions, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -513,9 +479,9 @@ public class JPMenu extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jtfSuggestFriend5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(jbtnShowSuggestions, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                .addGap(64, 64, 64))
         );
 
         jTabbedPaneRequests.addTab("SUGGESTIONS", jPanel2);
@@ -641,6 +607,41 @@ public class JPMenu extends javax.swing.JPanel {
         );
 
         jTabbedPaneRequests.addTab("SEARCH", jPanel3);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jListMyRequests.setBackground(new java.awt.Color(204, 204, 204));
+        jListMyRequests.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jListMyRequests.setForeground(new java.awt.Color(0, 0, 0));
+        jListMyRequests.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "<Request>", "<Request>", "<Request>", "<Request>" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jListMyRequests.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jListMyRequests);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 654, 175));
+
+        jbtnAceptRequest.setText("Acept");
+        jbtnAceptRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAceptRequestActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtnAceptRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 355, 143, -1));
+
+        jbtnDeleteRequest.setText("Delete");
+        jbtnDeleteRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnDeleteRequestActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtnDeleteRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 384, 143, -1));
+
+        jTabbedPaneRequests.addTab("FRIEND REQUESTS", jPanel1);
 
         javax.swing.GroupLayout jPanelRequestsLayout = new javax.swing.GroupLayout(jPanelRequests);
         jPanelRequests.setLayout(jPanelRequestsLayout);
@@ -875,39 +876,29 @@ public class JPMenu extends javax.swing.JPanel {
 
     private void jbtnShowSuggestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnShowSuggestionsActionPerformed
         if (!this.suggestFriends.isEmpty()) {
-            if (this.suggestFriends.get(0) != null) {
-                this.jtfSuggestFriend1.setText(suggestFriends.get(0));
+            if (!this.suggestFriends.get(0).isEmpty()) {
+                this.jtfSuggestFriend1.setText(suggestFriends.get(0) + " Friends in common");
                 this.jtfSuggestFriend1.setVisible(true);
                 this.jbtnAddFriend1.setVisible(true);
                 this.jbtnDelete1.setVisible(true);
 
             }
             if (this.suggestFriends.get(1) != null) {
-                this.jtfSuggestFriend2.setText(suggestFriends.get(1));
+                this.jtfSuggestFriend2.setText(suggestFriends.get(1) + " Friends in common");
                 this.jtfSuggestFriend2.setVisible(true);
                 this.jbtnAddFriend2.setVisible(true);
                 this.jbtnDelete2.setVisible(true);
             }
-            if (this.suggestFriends.get(2) != null) {
-                this.jtfSuggestFriend3.setText(suggestFriends.get(2));
-                this.jtfSuggestFriend3.setVisible(true);
-                this.jbtnAddFriend3.setVisible(true);
-                this.jbtnDelete3.setVisible(true);
-            }
-            if (this.suggestFriends.get(3) != null) {
-                this.jtfSuggestFriend4.setText(suggestFriends.get(3));
-                this.jtfSuggestFriend4.setVisible(true);
-                this.jbtnAddFriend4.setVisible(true);
-                this.jbtnDelete4.setVisible(true);
-            }
-            if (this.suggestFriends.get(4) != null) {
-                this.jtfSuggestFriend5.setText(suggestFriends.get(4));
-                this.jtfSuggestFriend5.setVisible(true);
-                this.jbtnAddFriend5.setVisible(true);
-                this.jbtnDelete5.setVisible(true);
-            }
+//            String Friend3 = this.suggestFriends.get(2);
+//            if (Friend3 != null) {
+//                this.jtfSuggestFriend3.setText(suggestFriends.get(2));
+//                this.jtfSuggestFriend3.setVisible(true);
+//                this.jbtnAddFriend3.setVisible(true);
+//                this.jbtnDelete3.setVisible(true);
+//            }
+            
         } else {
-            System.out.println("No hay sugerencias!");
+            JOptionPane.showMessageDialog(this, "You dont have any friend suggest");
         }
 
 
@@ -999,8 +990,8 @@ public class JPMenu extends javax.swing.JPanel {
                 this.jbtnDeleteRequest.setVisible(false);
             }//if
         } else {
-            this.jbtnAceptRequest.setVisible(false);
-            this.jbtnDeleteRequest.setVisible(false);
+                        JOptionPane.showMessageDialog(this, "You dont have friends request");
+
         }//if
     }//GEN-LAST:event_jbtnDeleteRequestActionPerformed
 
@@ -1057,9 +1048,8 @@ public class JPMenu extends javax.swing.JPanel {
                 this.jbtnAceptRequest.setVisible(false);
                 this.jbtnDeleteRequest.setVisible(false);
             }//if
-        } else {
-            this.jbtnAceptRequest.setVisible(false);
-            this.jbtnDeleteRequest.setVisible(false);
+        } else { 
+            JOptionPane.showMessageDialog(this, "You dont have friends request");
         }//if
     }//GEN-LAST:event_jbtnAceptRequestActionPerformed
 
