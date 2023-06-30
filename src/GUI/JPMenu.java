@@ -8,12 +8,10 @@ import Domain.Request;
 import Domain.User;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.jdom.JDOMException;
@@ -24,9 +22,9 @@ public class JPMenu extends javax.swing.JPanel {
     private int indexPost;
     private int indexThought;
     private ArrayList<String> suggestFriends;
-    
+
     private MyDoubleLinkedList thoughts;
-    
+
     private ArrayList<String> requestsNamesList;
 
     private User tempUser;
@@ -424,9 +422,6 @@ public class JPMenu extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(jbtnShowSuggestions, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtfSuggestFriend1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -447,8 +442,11 @@ public class JPMenu extends javax.swing.JPanel {
                             .addComponent(jbtnDelete1)
                             .addComponent(jbtnDelete4)
                             .addComponent(jbtnDelete3)
-                            .addComponent(jbtnDelete5))))
-                .addContainerGap(175, Short.MAX_VALUE))
+                            .addComponent(jbtnDelete5)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(231, 231, 231)
+                        .addComponent(jbtnShowSuggestions, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,9 +484,9 @@ public class JPMenu extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jtfSuggestFriend5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addComponent(jbtnShowSuggestions, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                .addGap(64, 64, 64))
         );
 
         jTabbedPaneRequests.addTab("SUGGESTIONS", jPanel2);
@@ -847,40 +845,53 @@ public class JPMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonNextThoughtActionPerformed
 
     private void jbtnShowSuggestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnShowSuggestionsActionPerformed
+
         if (!this.suggestFriends.isEmpty()) {
+
+            for (int i = 0; i < this.suggestFriends.size(); i++) {
+                if (this.suggestFriends.get(i) != null) {
+                this.jtfSuggestFriend1.setText(suggestFriends.get(i).toString() + " friends in common");
+                this.jtfSuggestFriend1.setVisible(true);
+                this.jbtnAddFriend1.setVisible(true);
+                this.jbtnDelete1.setVisible(true);
+
+            }
+
+            }
+
             if (this.suggestFriends.get(0) != null) {
-                this.jtfSuggestFriend1.setText(suggestFriends.get(0));
+                this.jtfSuggestFriend1.setText(suggestFriends.get(0).toString() + " friends in common");
                 this.jtfSuggestFriend1.setVisible(true);
                 this.jbtnAddFriend1.setVisible(true);
                 this.jbtnDelete1.setVisible(true);
 
             }
             if (this.suggestFriends.get(1) != null) {
-                this.jtfSuggestFriend2.setText(suggestFriends.get(1));
+                this.jtfSuggestFriend2.setText(suggestFriends.get(1).toString() + " friends in common");
                 this.jtfSuggestFriend2.setVisible(true);
                 this.jbtnAddFriend2.setVisible(true);
                 this.jbtnDelete2.setVisible(true);
             }
-            if (this.suggestFriends.get(2) != null) {
-                this.jtfSuggestFriend3.setText(suggestFriends.get(2));
-                this.jtfSuggestFriend3.setVisible(true);
-                this.jbtnAddFriend3.setVisible(true);
-                this.jbtnDelete3.setVisible(true);
-            }
-            if (this.suggestFriends.get(3) != null) {
-                this.jtfSuggestFriend4.setText(suggestFriends.get(3));
-                this.jtfSuggestFriend4.setVisible(true);
-                this.jbtnAddFriend4.setVisible(true);
-                this.jbtnDelete4.setVisible(true);
-            }
-            if (this.suggestFriends.get(4) != null) {
-                this.jtfSuggestFriend5.setText(suggestFriends.get(4));
-                this.jtfSuggestFriend5.setVisible(true);
-                this.jbtnAddFriend5.setVisible(true);
-                this.jbtnDelete5.setVisible(true);
-            }
+//            if (this.suggestFriends.get(2) != null) {
+//                this.jtfSuggestFriend3.setText(suggestFriends.get(2) + " friends in common");
+//                this.jtfSuggestFriend3.setVisible(true);
+//                this.jbtnAddFriend3.setVisible(true);
+//                this.jbtnDelete3.setVisible(true);
+//            }
+//            if (this.suggestFriends.get(3) != null) {
+//                this.jtfSuggestFriend4.setText(suggestFriends.get(3) + " friends in common");
+//                this.jtfSuggestFriend4.setVisible(true);
+//                this.jbtnAddFriend4.setVisible(true);
+//                this.jbtnDelete4.setVisible(true);
+//            }
+//            if (this.suggestFriends.get(4) != null) {
+//                this.jtfSuggestFriend5.setText(suggestFriends.get(4)+ " friends in common");
+//                this.jtfSuggestFriend5.setVisible(true);
+//                this.jbtnAddFriend5.setVisible(true);
+//                this.jbtnDelete5.setVisible(true);
+//            }
         } else {
-            System.out.println("No hay sugerencias!");
+            System.out.println("There are not suggest for you :)!");
         }
 
 
@@ -1020,12 +1031,12 @@ public class JPMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jtfUploadThoughtActionPerformed
 
     private void jbtnAddThoughtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddThoughtActionPerformed
-        if (this.thoughts.getSize() < 10 ) {
+        if (this.thoughts.getSize() < 10) {
             if (!jtfUploadThought.getText().equals("")) {
                 this.thoughts.addEnd(jtfUploadThought.getText());
                 this.jtaUploadThoughts.append(jtfUploadThought.getText() + "\n");
                 this.jtfUploadThought.setText("");
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Write something in your thought!");
                 return;
             }
@@ -1050,7 +1061,7 @@ public class JPMenu extends javax.swing.JPanel {
             user.getPosts().push(postAuxiliar);
             this.jtfUploadPostTitle.setText("");
             this.jtfUploadThought.setText("");
-           JOptionPane.showMessageDialog(this, "post upload succesfully");
+            JOptionPane.showMessageDialog(this, "post upload succesfully");
         } else {
             JOptionPane.showMessageDialog(this, "Add the title to the post");
         }
@@ -1176,6 +1187,8 @@ public class JPMenu extends javax.swing.JPanel {
         this.jtaUploadThoughts.setEnabled(false);
         reloadRequestsList();
 
+        this.suggestFriends = this.window.socialWebCore.suggestFriendsOfFriends();//traigo los amigos de amigos
+
         change(indexThought);
     }//init
 
@@ -1219,13 +1232,5 @@ public class JPMenu extends javax.swing.JPanel {
         model.remove(this.jListMyRequests.getSelectedIndex());
         return model;
     }
-
-//    public DefaultListModel showFriendsRequest() {
-//        DefaultListModel model = new DefaultListModel();
-//        ArrayList<String> myFriendsRequest = new ArrayList<>();
-//        myFriendsRequest = this.window.socialWebCore.showFriendsRequest();
-//        model.addAll(myFriendsRequest);
-//        return model;
-//    }
 
 }//clase
