@@ -17,7 +17,6 @@ public class Main {
         JFWindow jFWindow = new JFWindow();
         jFWindow.setVisible(true); 
         
-        System.out.println(jFWindow.socialWebCore.showFriendsRequest());
     }//main
 
 }//class

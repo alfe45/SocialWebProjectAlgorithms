@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultListModel;
 import org.jdom.JDOMException;
@@ -23,9 +25,11 @@ public class JPMenu extends javax.swing.JPanel {
 
     public JPMenu(JFWindow window) throws IOException, JDOMException, CloneNotSupportedException {
         this.suggestFriends = JFWindow.socialWebCore.suggestFriendsOfFriends();
+//        this.cleanJList();
+        this.showFriendsRequest();
         initComponents();
         this.window = window;
-        this.cleanJList();
+        
         init();
     }
 
@@ -215,6 +219,11 @@ public class JPMenu extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jListMyRequests);
 
         jbtnAceptRequest.setText("Acept");
+        jbtnAceptRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAceptRequestActionPerformed(evt);
+            }
+        });
 
         jbtnDeleteRequest.setText("Delete");
         jbtnDeleteRequest.addActionListener(new java.awt.event.ActionListener() {
@@ -755,34 +764,37 @@ public class JPMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonNextThoughtActionPerformed
 
     private void jbtnShowSuggestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnShowSuggestionsActionPerformed
-        if (!suggestFriends.isEmpty()) {
-            if (suggestFriends.get(0) != null) {
+        if (!this.suggestFriends.isEmpty()) {
+            if (this.suggestFriends.get(0) != null) {
                 this.jtfSuggestFriend1.setText(suggestFriends.get(0));
                 this.jtfSuggestFriend1.setVisible(true);
                 this.jbtnAddFriend1.setVisible(true);
-            } else {
-                this.jtfSuggestFriend1.setVisible(true);
-                this.jtfSuggestFriend1.setText("You don´t have any Friend Request");
+                this.jbtnDelete1.setVisible(true);
+
             }
-            if (suggestFriends.get(1) != null) {
+            if (this.suggestFriends.get(1) != null) {
                 this.jtfSuggestFriend2.setText(suggestFriends.get(1));
                 this.jtfSuggestFriend2.setVisible(true);
                 this.jbtnAddFriend2.setVisible(true);
+                this.jbtnDelete2.setVisible(true);
             }
-            if (suggestFriends.get(2) != null) {
+            if (this.suggestFriends.get(2) != null) {
                 this.jtfSuggestFriend3.setText(suggestFriends.get(2));
                 this.jtfSuggestFriend3.setVisible(true);
                 this.jbtnAddFriend3.setVisible(true);
+                this.jbtnDelete3.setVisible(true);
             }
-            if (suggestFriends.get(3) != null) {
+            if (this.suggestFriends.get(3) != null) {
                 this.jtfSuggestFriend4.setText(suggestFriends.get(3));
                 this.jtfSuggestFriend4.setVisible(true);
                 this.jbtnAddFriend4.setVisible(true);
+                this.jbtnDelete4.setVisible(true);
             }
-            if (suggestFriends.get(4) != null) {
+            if (this.suggestFriends.get(4) != null) {
                 this.jtfSuggestFriend5.setText(suggestFriends.get(4));
                 this.jtfSuggestFriend5.setVisible(true);
                 this.jbtnAddFriend5.setVisible(true);
+                this.jbtnDelete5.setVisible(true);
             }
         } else {
             System.out.println("No hay sugerencias!");
@@ -896,6 +908,14 @@ public class JPMenu extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jTextFieldSearchKeyTyped
 
+    private void jbtnAceptRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAceptRequestActionPerformed
+        try {
+            this.acceptFriendsRequest();
+        } catch (IOException ex) {
+            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }      
+    }//GEN-LAST:event_jbtnAceptRequestActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JButtonClear;
@@ -976,18 +996,23 @@ public class JPMenu extends javax.swing.JPanel {
 
         this.jtfSuggestFriend1.setVisible(false);
         this.jbtnAddFriend1.setVisible(false);
+        this.jbtnDelete1.setVisible(false);
 
         this.jtfSuggestFriend2.setVisible(false);
         this.jbtnAddFriend2.setVisible(false);
+        this.jbtnDelete2.setVisible(false);
 
         this.jtfSuggestFriend3.setVisible(false);
         this.jbtnAddFriend3.setVisible(false);
+        this.jbtnDelete3.setVisible(false);
 
         this.jtfSuggestFriend4.setVisible(false);
         this.jbtnAddFriend4.setVisible(false);
+        this.jbtnDelete4.setVisible(false);
 
         this.jtfSuggestFriend5.setVisible(false);
         this.jbtnAddFriend5.setVisible(false);
+        this.jbtnDelete5.setVisible(false);
 
         //SEARCH SECTION
         this.jButtonAddFriend_Search.setVisible(false);
@@ -1002,38 +1027,39 @@ public class JPMenu extends javax.swing.JPanel {
         change(indexThought);
     }//init
 
-    public void reloadRequestsList() throws CloneNotSupportedException{
+    public void reloadRequestsList() throws CloneNotSupportedException {
         //FRIEND REQUESTS
         MyLinkedQueue tempRequestsQueue = (MyLinkedQueue) JFWindow.socialWebCore.getLoggedUser().getRequests().clone();
         int size = tempRequestsQueue.getSize();
         String[] myRequests = new String[size];
         int i = 0;
-        while (!tempRequestsQueue.isEmpty()) {    
+        while (!tempRequestsQueue.isEmpty()) {
             Request currentRequest = (Request) tempRequestsQueue.delete();
-            myRequests[i] =currentRequest.getDate()+": "+ currentRequest.getSentBy()+ " sent a friend request. "
-                    +JFWindow.socialWebCore.getGraphData().getNumberOfFriendsInCommon(currentRequest.getSentBy(), 
-                            JFWindow.socialWebCore.getLoggedUser().getUsername())+" friends in common";
+            myRequests[i] = currentRequest.getDate() + ": " + currentRequest.getSentBy() + " sent a friend request. "
+                    + JFWindow.socialWebCore.getGraphData().getNumberOfFriendsInCommon(currentRequest.getSentBy(),
+                            JFWindow.socialWebCore.getLoggedUser().getUsername()) + " friends in common";
             i++;
         }//while
-      
+
         this.jListMyRequests.setModel(new javax.swing.AbstractListModel<String>() {
 
             public int getSize() {
                 return myRequests.length;
             }
+
             public String getElementAt(int i) {
                 return myRequests[i];
             }
         });
     }//reloadRequestsList
-    
+
+    //FRIEND REQUEST
     public DefaultListModel cleanJList() {
         DefaultListModel model = new DefaultListModel();
         jListMyRequests.setModel(model);
         return model;
 
     }
-    
 
     public DefaultListModel deleteFriendRequest() {
         DefaultListModel model = (DefaultListModel) this.jListMyRequests.getModel();
@@ -1043,7 +1069,17 @@ public class JPMenu extends javax.swing.JPanel {
 
     public DefaultListModel showFriendsRequest() {
         DefaultListModel model = new DefaultListModel();
-        model.addAll(this.window.socialWebCore.showFriendsRequest());
+        ArrayList<String> myFriendsRequest = new ArrayList<>();
+        myFriendsRequest = this.window.socialWebCore.showFriendsRequest();
+        model.addAll(myFriendsRequest);
         return model;
     }
-}
+
+    public String acceptFriendsRequest() throws IOException {
+        DefaultListModel model = new DefaultListModel();
+        String friendRequest = (String) model.get(this.jListMyRequests.getSelectedIndex());
+        this.window.socialWebCore.acceptFriendshipRequest(friendRequest);
+        return friendRequest;
+    }
+
+}//clase
