@@ -8,10 +8,12 @@ import Domain.Request;
 import Domain.User;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import org.jdom.JDOMException;
@@ -56,12 +58,12 @@ public class JPMenu extends javax.swing.JPanel {
         jtfUploadPostTitle = new javax.swing.JTextField();
         jbtnUploadPost = new javax.swing.JButton();
         jtfUploadThought = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jbtnAddThought = new javax.swing.JButton();
         jbtnNextPostOfFriend = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jtaUploadThoughts = new javax.swing.JTextArea();
+        jLabelNewPost = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
         jPanelRequests = new javax.swing.JPanel();
         jTabbedPaneRequests = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -117,6 +119,12 @@ public class JPMenu extends javax.swing.JPanel {
         jTabbedPane.setForeground(new java.awt.Color(0, 0, 0));
 
         jPanelHome.setBackground(new java.awt.Color(153, 153, 255));
+        jPanelHome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanelHomeMousePressed(evt);
+            }
+        });
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -162,32 +170,48 @@ public class JPMenu extends javax.swing.JPanel {
         jLabelPostNumber.setForeground(new java.awt.Color(0, 0, 0));
         jLabelPostNumber.setText("POST #: ");
 
+        jtfUploadPostTitle.setText("Title");
+        jtfUploadPostTitle.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jtfUploadPostTitle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jtfUploadPostTitleMousePressed(evt);
+            }
+        });
         jtfUploadPostTitle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfUploadPostTitleActionPerformed(evt);
             }
         });
+        jtfUploadPostTitle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfUploadPostTitleKeyPressed(evt);
+            }
+        });
 
-        jbtnUploadPost.setText("Upload post");
+        jbtnUploadPost.setText("Upload");
+        jbtnUploadPost.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jbtnUploadPost.setEnabled(false);
         jbtnUploadPost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnUploadPostActionPerformed(evt);
             }
         });
 
+        jtfUploadThought.setText("What are you thinking...?");
+        jtfUploadThought.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jtfUploadThought.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jtfUploadThoughtMousePressed(evt);
+            }
+        });
         jtfUploadThought.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtfUploadThoughtActionPerformed(evt);
             }
         });
 
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Title:");
-
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Thought:");
-
         jbtnAddThought.setText("Add Thought");
+        jbtnAddThought.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jbtnAddThought.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnAddThoughtActionPerformed(evt);
@@ -200,6 +224,10 @@ public class JPMenu extends javax.swing.JPanel {
         jtaUploadThoughts.setRows(5);
         jScrollPane4.setViewportView(jtaUploadThoughts);
 
+        jLabelNewPost.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabelNewPost.setForeground(new java.awt.Color(0, 0, 0));
+        jLabelNewPost.setText("New Post");
+
         javax.swing.GroupLayout jPanelHomeLayout = new javax.swing.GroupLayout(jPanelHome);
         jPanelHome.setLayout(jPanelHomeLayout);
         jPanelHomeLayout.setHorizontalGroup(
@@ -207,7 +235,23 @@ public class JPMenu extends javax.swing.JPanel {
             .addGroup(jPanelHomeLayout.createSequentialGroup()
                 .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelHomeLayout.createSequentialGroup()
-                        .addGap(135, 135, 135)
+                        .addContainerGap()
+                        .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelHomeLayout.createSequentialGroup()
+                                .addComponent(jLabelNewPost)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jPanelHomeLayout.createSequentialGroup()
+                                .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtfUploadPostTitle)
+                                    .addComponent(jtfUploadThought, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                                    .addGroup(jPanelHomeLayout.createSequentialGroup()
+                                        .addComponent(jbtnAddThought, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jbtnUploadPost, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE))))
+                    .addGroup(jPanelHomeLayout.createSequentialGroup()
+                        .addGap(52, 52, 52)
                         .addComponent(jButtonPreviousThought, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,44 +270,29 @@ public class JPMenu extends javax.swing.JPanel {
                                 .addComponent(jButtonNextThought, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabelPostFrom)))
                     .addGroup(jPanelHomeLayout.createSequentialGroup()
-                        .addGap(76, 76, 76)
-                        .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jtfUploadPostTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(jPanelHomeLayout.createSequentialGroup()
-                                .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane4)
-                                    .addComponent(jtfUploadThought, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jbtnUploadPost)
-                                    .addComponent(jbtnAddThought))))))
-                .addContainerGap(164, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jSeparator3)))
+                .addContainerGap())
         );
         jPanelHomeLayout.setVerticalGroup(
             jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHomeLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap()
+                .addComponent(jLabelNewPost)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelHomeLayout.createSequentialGroup()
-                        .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfUploadPostTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jtfUploadThought, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jbtnAddThought)))
+                        .addComponent(jtfUploadPostTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
-                    .addGroup(jPanelHomeLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbtnUploadPost)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfUploadThought, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbtnAddThought, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbtnUploadPost, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(jLabelPostFrom)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelDate)
@@ -281,7 +310,7 @@ public class JPMenu extends javax.swing.JPanel {
                     .addGroup(jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonNextPost, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jbtnNextPostOfFriend, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(37, 37, 37))
+                .addContainerGap())
         );
 
         jTabbedPane.addTab("HOME", jPanelHome);
@@ -422,6 +451,9 @@ public class JPMenu extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(jbtnShowSuggestions, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(148, 148, 148)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtfSuggestFriend1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -442,11 +474,8 @@ public class JPMenu extends javax.swing.JPanel {
                             .addComponent(jbtnDelete1)
                             .addComponent(jbtnDelete4)
                             .addComponent(jbtnDelete3)
-                            .addComponent(jbtnDelete5)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(231, 231, 231)
-                        .addComponent(jbtnShowSuggestions, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(197, Short.MAX_VALUE))
+                            .addComponent(jbtnDelete5))))
+                .addContainerGap(175, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,9 +513,9 @@ public class JPMenu extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jtfSuggestFriend5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addComponent(jbtnShowSuggestions, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
+                .addGap(60, 60, 60))
         );
 
         jTabbedPaneRequests.addTab("SUGGESTIONS", jPanel2);
@@ -845,53 +874,40 @@ public class JPMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonNextThoughtActionPerformed
 
     private void jbtnShowSuggestionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnShowSuggestionsActionPerformed
-
         if (!this.suggestFriends.isEmpty()) {
-
-            for (int i = 0; i < this.suggestFriends.size(); i++) {
-                if (this.suggestFriends.get(i) != null) {
-                this.jtfSuggestFriend1.setText(suggestFriends.get(i).toString() + " friends in common");
-                this.jtfSuggestFriend1.setVisible(true);
-                this.jbtnAddFriend1.setVisible(true);
-                this.jbtnDelete1.setVisible(true);
-
-            }
-
-            }
-
             if (this.suggestFriends.get(0) != null) {
-                this.jtfSuggestFriend1.setText(suggestFriends.get(0).toString() + " friends in common");
+                this.jtfSuggestFriend1.setText(suggestFriends.get(0));
                 this.jtfSuggestFriend1.setVisible(true);
                 this.jbtnAddFriend1.setVisible(true);
                 this.jbtnDelete1.setVisible(true);
 
             }
             if (this.suggestFriends.get(1) != null) {
-                this.jtfSuggestFriend2.setText(suggestFriends.get(1).toString() + " friends in common");
+                this.jtfSuggestFriend2.setText(suggestFriends.get(1));
                 this.jtfSuggestFriend2.setVisible(true);
                 this.jbtnAddFriend2.setVisible(true);
                 this.jbtnDelete2.setVisible(true);
             }
-//            if (this.suggestFriends.get(2) != null) {
-//                this.jtfSuggestFriend3.setText(suggestFriends.get(2) + " friends in common");
-//                this.jtfSuggestFriend3.setVisible(true);
-//                this.jbtnAddFriend3.setVisible(true);
-//                this.jbtnDelete3.setVisible(true);
-//            }
-//            if (this.suggestFriends.get(3) != null) {
-//                this.jtfSuggestFriend4.setText(suggestFriends.get(3) + " friends in common");
-//                this.jtfSuggestFriend4.setVisible(true);
-//                this.jbtnAddFriend4.setVisible(true);
-//                this.jbtnDelete4.setVisible(true);
-//            }
-//            if (this.suggestFriends.get(4) != null) {
-//                this.jtfSuggestFriend5.setText(suggestFriends.get(4)+ " friends in common");
-//                this.jtfSuggestFriend5.setVisible(true);
-//                this.jbtnAddFriend5.setVisible(true);
-//                this.jbtnDelete5.setVisible(true);
-//            }
+            if (this.suggestFriends.get(2) != null) {
+                this.jtfSuggestFriend3.setText(suggestFriends.get(2));
+                this.jtfSuggestFriend3.setVisible(true);
+                this.jbtnAddFriend3.setVisible(true);
+                this.jbtnDelete3.setVisible(true);
+            }
+            if (this.suggestFriends.get(3) != null) {
+                this.jtfSuggestFriend4.setText(suggestFriends.get(3));
+                this.jtfSuggestFriend4.setVisible(true);
+                this.jbtnAddFriend4.setVisible(true);
+                this.jbtnDelete4.setVisible(true);
+            }
+            if (this.suggestFriends.get(4) != null) {
+                this.jtfSuggestFriend5.setText(suggestFriends.get(4));
+                this.jtfSuggestFriend5.setVisible(true);
+                this.jbtnAddFriend5.setVisible(true);
+                this.jbtnDelete5.setVisible(true);
+            }
         } else {
-            System.out.println("There are not suggest for you :)!");
+            System.out.println("No hay sugerencias!");
         }
 
 
@@ -967,13 +983,25 @@ public class JPMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jtfSuggestFriend1ActionPerformed
 
     private void jbtnDeleteRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteRequestActionPerformed
+
         int index = this.jListMyRequests.getSelectedIndex();
-        String name = this.requestsNamesList.get(index);
-        try {
-            JFWindow.socialWebCore.deleteFriendshipRequest(name);
-        } catch (IOException | CloneNotSupportedException ex) {
-            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }//try
+        if (index != -1) {
+            this.jbtnAceptRequest.setVisible(true);
+            this.jbtnDeleteRequest.setVisible(true);
+            String name = this.requestsNamesList.get(index);
+            try {
+                JFWindow.socialWebCore.deleteFriendshipRequest(name);
+            } catch (IOException | CloneNotSupportedException ex) {
+                Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }//try
+            if (requestsNamesList.isEmpty()) {
+                this.jbtnAceptRequest.setVisible(false);
+                this.jbtnDeleteRequest.setVisible(false);
+            }//if
+        } else {
+            this.jbtnAceptRequest.setVisible(false);
+            this.jbtnDeleteRequest.setVisible(false);
+        }//if
     }//GEN-LAST:event_jbtnDeleteRequestActionPerformed
 
     private void JButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonClearActionPerformed
@@ -1001,6 +1029,8 @@ public class JPMenu extends javax.swing.JPanel {
                 //Codigo
                 String cad = ("" + c).toLowerCase();
                 c = cad.charAt(0);
+                this.jbtnAceptRequest.setVisible(true);
+                this.jbtnDeleteRequest.setVisible(true);
                 evt.setKeyChar(c);
             }//if
         }//if
@@ -1009,16 +1039,27 @@ public class JPMenu extends javax.swing.JPanel {
 
     private void jbtnAceptRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAceptRequestActionPerformed
         int index = this.jListMyRequests.getSelectedIndex();
-        String name = this.requestsNamesList.get(index);
-        try {
-            if (JFWindow.socialWebCore.acceptFriendshipRequest(name)) {
-                JFWindow.socialWebCore.setLoggedUser(
-                        JFWindow.socialWebCore.getUserBusiness().loadUser(JFWindow.socialWebCore.getLoggedUser().getUsername()));
-                requestsNamesList.remove(name);
-                reloadRequestsList();
+        if (index != -1) {
+            this.jbtnAceptRequest.setVisible(true);
+            this.jbtnDeleteRequest.setVisible(true);
+            String name = this.requestsNamesList.get(index);
+            try {
+                if (JFWindow.socialWebCore.acceptFriendshipRequest(name)) {
+                    JFWindow.socialWebCore.setLoggedUser(
+                            JFWindow.socialWebCore.getUserBusiness().loadUser(JFWindow.socialWebCore.getLoggedUser().getUsername()));
+                    requestsNamesList.remove(name);
+                    reloadRequestsList();
+                }//if
+            } catch (IOException | CloneNotSupportedException ex) {
+                Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
             }//if
-        } catch (IOException | CloneNotSupportedException ex) {
-            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+            if (requestsNamesList.isEmpty()) {
+                this.jbtnAceptRequest.setVisible(false);
+                this.jbtnDeleteRequest.setVisible(false);
+            }//if
+        } else {
+            this.jbtnAceptRequest.setVisible(false);
+            this.jbtnDeleteRequest.setVisible(false);
         }//if
     }//GEN-LAST:event_jbtnAceptRequestActionPerformed
 
@@ -1028,46 +1069,97 @@ public class JPMenu extends javax.swing.JPanel {
 
     private void jtfUploadThoughtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfUploadThoughtActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_jtfUploadThoughtActionPerformed
 
     private void jbtnAddThoughtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddThoughtActionPerformed
+
         if (this.thoughts.getSize() < 10) {
-            if (!jtfUploadThought.getText().equals("")) {
+            if (!jtfUploadThought.getText().equals("") && !jtfUploadThought.getText().equals("What are you thinking...?")) {
+                this.jbtnUploadPost.setEnabled(true);
                 this.thoughts.addEnd(jtfUploadThought.getText());
                 this.jtaUploadThoughts.append(jtfUploadThought.getText() + "\n");
-                this.jtfUploadThought.setText("");
+                this.jtfUploadThought.setText("What are you thinking...?");
             } else {
                 JOptionPane.showMessageDialog(this, "Write something in your thought!");
-                return;
-            }
+            }//if
         } else {
-            JOptionPane.showMessageDialog(this, "you cant upload more than 10 thoughts for post");
+            JOptionPane.showMessageDialog(this, "You can't add more than 10 thoughts for post");
             this.jtfUploadThought.setEnabled(false);
-            this.jtfUploadThought.setText("");
+            this.jtfUploadThought.setText("What are you thinking...?");
             this.jbtnAddThought.setEnabled(false);
-            return;
-        }
+        }//if
     }//GEN-LAST:event_jbtnAddThoughtActionPerformed
 
     private void jbtnUploadPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUploadPostActionPerformed
         Post postAuxiliar = new Post();
-        MyLinkedStack linkedStack = new MyLinkedStack();
         User user = JFWindow.socialWebCore.getLoggedUser();
-        if (!jtfUploadPostTitle.getText().equals("")) {
-            postAuxiliar.setTitle(jtfUploadPostTitle.getText()); //le asigo el titulo al post
-            for (int i = 0; i < this.thoughts.getSize(); i++) {
-                postAuxiliar.addThought((String) this.thoughts.getByPosition(i)); //agrego todos los pensamientos en el post auxiliar
-            }//for       
-            user.getPosts().push(postAuxiliar);
-            this.jtfUploadPostTitle.setText("");
-            this.jtfUploadThought.setText("");
-            JOptionPane.showMessageDialog(this, "post upload succesfully");
+        if (!jtfUploadPostTitle.getText().equals("") && !jtfUploadPostTitle.getText().equals("Title")) {
+            if (this.thoughts.getSize() > 0) {
+                postAuxiliar.setTitle(jtfUploadPostTitle.getText()); //le asigo el titulo al post
+                for (int i = 1; i <= this.thoughts.getSize(); i++) {
+                    postAuxiliar.addThought((String) this.thoughts.getByPosition(i)); //agrego todos los pensamientos en el post auxiliar
+                }//for       
+                user.getPosts().push(postAuxiliar);
+                this.jtfUploadPostTitle.setText("Title");
+                this.jtfUploadThought.setText("What are you thinking...?");
+                JOptionPane.showMessageDialog(this, "Post uploaded succesfully!");
+
+                this.thoughts.cancel();
+                this.jtaUploadThoughts.setText("");
+                this.jtaUploadThoughts.setEnabled(true);
+                try {
+                    JFWindow.socialWebCore.getUserBusiness().saveUser(user);//guarda al usuario en el xml con el nuevo post
+                } catch (IOException | CloneNotSupportedException ex) {
+                    Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }//try
+                this.jbtnUploadPost.setEnabled(true);
+                this.jtfUploadThought.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "The thoughts are empty!");
+            }//if
         } else {
-            JOptionPane.showMessageDialog(this, "Add the title to the post");
-        }
+            JOptionPane.showMessageDialog(this, "Add title to the post!");
+        }//if
         this.jtfUploadPostTitle.setEnabled(true);
         this.jbtnAddThought.setEnabled(true);
     }//GEN-LAST:event_jbtnUploadPostActionPerformed
+
+    private void jtfUploadPostTitleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfUploadPostTitleKeyPressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jtfUploadPostTitleKeyPressed
+
+    private void jtfUploadThoughtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfUploadThoughtMousePressed
+        // TODO add your handling code here:
+        if (this.jtfUploadThought.isEnabled()) {
+            if (this.jtfUploadThought.getText().equals("What are you thinking...?")) {
+                this.jtfUploadThought.setText("");
+            }//if
+        }//if
+
+
+    }//GEN-LAST:event_jtfUploadThoughtMousePressed
+
+    private void jtfUploadPostTitleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfUploadPostTitleMousePressed
+        // TODO add your handling code here:
+        if (this.jtfUploadPostTitle.getText().equals("Title")) {
+            this.jtfUploadPostTitle.setText("");
+        }//if
+    }//GEN-LAST:event_jtfUploadPostTitleMousePressed
+
+    private void jPanelHomeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelHomeMousePressed
+        // TODO add your handling code here:
+        this.jPanelHome.requestFocus();
+        if (this.jtfUploadThought.getText().equals("")) {
+            this.jtfUploadThought.setText("What are you thinking...?");
+        }//if
+
+        if (this.jtfUploadPostTitle.getText().equals("")) {
+            this.jtfUploadPostTitle.setText("Title");
+        }//if
+
+    }//GEN-LAST:event_jPanelHomeMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1080,10 +1172,9 @@ public class JPMenu extends javax.swing.JPanel {
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JButton jButtonViewProfile_Search;
     private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelDate;
     private javax.swing.JLabel jLabelFriendsSizeUserFound;
+    private javax.swing.JLabel jLabelNewPost;
     private javax.swing.JLabel jLabelNicknameUserFound;
     private javax.swing.JLabel jLabelPic;
     private javax.swing.JLabel jLabelPostFrom;
@@ -1108,6 +1199,7 @@ public class JPMenu extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTabbedPane jTabbedPaneRequests;
     private javax.swing.JTextArea jTextArea1;
@@ -1187,8 +1279,10 @@ public class JPMenu extends javax.swing.JPanel {
         this.jtaUploadThoughts.setEnabled(false);
         reloadRequestsList();
 
-        this.suggestFriends = this.window.socialWebCore.suggestFriendsOfFriends();//traigo los amigos de amigos
-
+        //Desabolita los botones, solos e habilitan si hay solicitudes
+        this.jbtnAceptRequest.setVisible(true);
+        this.jbtnDeleteRequest.setVisible(true);
+        //
         change(indexThought);
     }//init
 
@@ -1233,4 +1327,11 @@ public class JPMenu extends javax.swing.JPanel {
         return model;
     }
 
+//    public DefaultListModel showFriendsRequest() {
+//        DefaultListModel model = new DefaultListModel();
+//        ArrayList<String> myFriendsRequest = new ArrayList<>();
+//        myFriendsRequest = this.window.socialWebCore.showFriendsRequest();
+//        model.addAll(myFriendsRequest);
+//        return model;
+//    }
 }//clase
