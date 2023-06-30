@@ -35,9 +35,9 @@ public class UserBusiness {
         return this.userData.loadUser(username);
     }//loadProfile
 
-    public MyLinkedStack loadAllPost() {
-        return this.userData.loadAllPost();
-    }//loadAllPost
+    public MyLinkedStack loadFriendsPosts(String user) throws IOException, CloneNotSupportedException {
+        return this.userData.loadFriendsPosts(user);
+    }//loadFriendsPosts
 
     public boolean existsUser(String username) {
         return this.userData.existsUser(username);

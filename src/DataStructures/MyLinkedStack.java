@@ -40,7 +40,7 @@ public class MyLinkedStack implements Cloneable{
     }//push
 
     public Object pop() {
-        if (isEmpty())throw new ExceptionStack("Stack is empty");
+        if (isEmpty()) return null;
         Node aux = top;
         top = top.next;
         count--;
