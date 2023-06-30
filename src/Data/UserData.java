@@ -1,5 +1,6 @@
 package Data;
 
+import DataStructures.MyDoubleLinkedList;
 import DataStructures.MyLinkedQueue;
 import DataStructures.MyLinkedStack;
 import DataStructures.MyListGraph;
@@ -309,66 +310,28 @@ public class UserData {
         return graph;
     }//loadGraph
 
-    public MyLinkedStack loadAllPost() {
-        MyLinkedStack allPosts = new MyLinkedStack();
+    public MyLinkedStack loadFriendsPosts(String user) throws IOException, CloneNotSupportedException {
+        MyLinkedStack friendsPosts = new MyLinkedStack();
+        
+        User loggedUser = loadUser(user);
+        MyDoubleLinkedList loggedUserFriendsName = loggedUser.getFriends();
+        MyDoubleLinkedList loggedUserFriendsObjects = new MyDoubleLinkedList();
+        
+        for (int i = 1; i <= loggedUserFriendsName.getSize(); i++) {
+            loggedUserFriendsObjects.addEnd(loadUser((String)loggedUserFriendsName.getByPosition(i)));
+        }//for
+        
+        for (int i = 1; i <= loggedUserFriendsObjects.getSize(); i++) {
+            while (!((User)loggedUserFriendsObjects.getByPosition(i)).getPosts().isEmpty()) {                
+                friendsPosts.push(((User)loggedUserFriendsObjects.getByPosition(i)).getPosts().pop());
+            }//while
+        }//for
+        
+        System.out.println("Posts de mis amigos: "+friendsPosts.getSize());
+        
+        return friendsPosts;
+    }//loadFriendsPosts
 
-        //aqui se cargarán todos los posts de todos los usuarios desde el .xml
-        //posts for testing
-        Post post1 = new Post();
-        post1.addThought("Post 1 Thought 01");
-        post1.addThought("Post 1 Thought 02");
-        post1.addThought("Post 1 Thought 03");
-        post1.addThought("Post 1 Thought 04");
-        post1.addThought("Post 1 Thought 05");
-        post1.addThought("Post 1 Thought 06");
-        post1.addThought("Post 1 Thought 07");
-        post1.addThought("Post 1 Thought 08");
-        post1.addThought("Post 1 Thought 09");
-        post1.addThought("Post 1 Thought 10");
-
-        Post post2 = new Post();
-        post2.addThought("Post 2 Thought 01");
-        post2.addThought("Post 2 Thought 02");
-        post2.addThought("Post 2 Thought 03");
-        post2.addThought("Post 2 Thought 04");
-        post2.addThought("Post 2 Thought 05");
-        post2.addThought("Post 2 Thought 06");
-        post2.addThought("Post 2 Thought 07");
-        post2.addThought("Post 2 Thought 08");
-        post2.addThought("Post 2 Thought 09");
-        post2.addThought("Post 2 Thought 10");
-
-        Post post3 = new Post();
-        post3.addThought("Post 3 Thought 01");
-        post3.addThought("Post 3 Thought 02");
-        post3.addThought("Post 3 Thought 03");
-        post3.addThought("Post 3 Thought 04");
-        post3.addThought("Post 3 Thought 05");
-        post3.addThought("Post 3 Thought 06");
-        post3.addThought("Post 3 Thought 07");
-        post3.addThought("Post 3 Thought 08");
-        post3.addThought("Post 3 Thought 09");
-        post3.addThought("Post 3 Thought 10");
-
-        allPosts.push(post3);
-        allPosts.push(post2);
-        allPosts.push(post1);
-
-        return allPosts;
-
-//                System.out.println("Name loadAllPosts: " + JFWindow.userSesion.getLoggedUser().getProfile().getName());
-//        JFWindow.userSesion.getLoggedUser().getProfile().setPosts(allposts);
-//        int userPostsCounter = JFWindow.userSesion.getLoggedUser().getProfile().getPosts().getSize();
-//
-//        System.out.println("User post counter: " + userPostsCounter);
-//        MyLinkedStack userPostsCopy = (MyLinkedStack) JFWindow.userSesion.getLoggedUser().getProfile().getPosts().clone();
-//
-//        for (int i = 1; i <= userPostsCounter; i++) {
-//            this.allposts.push(userPostsCopy.top);
-//        }//for
-//        
-    }//loadAllPost
-//
 
 //    public ArrayList<User> loadAllUser() {
 //        List elementListUsers = this.root.getChildren();
@@ -422,6 +385,7 @@ public class UserData {
 //        return user;
 //
 //    }//loadProfile
+    
     public ArrayList<User> getFriendsRequestXML(String username) {
         ArrayList<User> userFriendsRequest = new ArrayList<>();
         Element eUser = this.root.getChild(username);
