@@ -4,7 +4,13 @@
  */
 package GUI;
 
+import Business.UserBusiness;
+import Data.UserData;
 import DataStructures.MyCicularDoublyLinkedList;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jdom.JDOMException;
 
 /**
  *
@@ -14,6 +20,7 @@ public class JFBotones extends javax.swing.JFrame {
     private int i;
     private int e;
     private MyCicularDoublyLinkedList myCicularDoublyLinkedList;
+<<<<<<< Updated upstream
     /**
      * Creates new form JFBotones
      */
@@ -22,6 +29,19 @@ public class JFBotones extends javax.swing.JFrame {
         this.i =0;
         this.e = 0;
         initComponents();
+=======
+    private UserBusiness userBusiness;
+    public JFBotones() throws JDOMException {
+        try {
+            myCicularDoublyLinkedList = new MyCicularDoublyLinkedList();
+            this.i =0;
+            this.e = 0;
+            userBusiness = new UserBusiness();
+            initComponents();
+        } catch (IOException ex) {
+            Logger.getLogger(JFBotones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+>>>>>>> Stashed changes
     }
 
     /**
@@ -129,7 +149,7 @@ public class JFBotones extends javax.swing.JFrame {
 
     private void jbtnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNextActionPerformed
         // TODO add your handling code here:
-        if(this.i+1==6){
+        if(this.i+1==myCicularDoublyLinkedList.getSize()){
             this.i=0;
         }else{
             this.i++;
@@ -139,7 +159,7 @@ public class JFBotones extends javax.swing.JFrame {
 
     private void jbtnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpActionPerformed
         // TODO add your handling code here:
-        if(this.e+1>5){
+        if(this.e+1>this.myCicularDoublyLinkedList.getSize()){
             this.e = 0;
         }else{
             this.e++;
@@ -150,7 +170,7 @@ public class JFBotones extends javax.swing.JFrame {
     private void jbtnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDownActionPerformed
         // TODO add your handling code here:
          if(this.e-1<0){
-            this.e = 5;
+            this.e = this.myCicularDoublyLinkedList.getSize();
         }else{
             this.e--;
         }
