@@ -23,11 +23,11 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
 public class UserData {
-
+    
     private Document jdomDocument;
     private Element root;
     private String rute;
-
+    
     public UserData() throws JDOMException, IOException {
         this.rute = FileRutes.USERS_PATH;
         File file = new File(this.rute);
@@ -42,7 +42,7 @@ public class UserData {
             saveXML();
         }//if
     }
-
+    
     private void saveXML() throws FileNotFoundException, IOException {
         XMLOutputter xmlOutputter = new XMLOutputter();
         xmlOutputter.output(this.jdomDocument, new PrintWriter(this.rute));
@@ -70,11 +70,11 @@ public class UserData {
     public boolean saveUser(User user) throws IOException, CloneNotSupportedException {
         //deletes the user to override
         this.root.removeChild(user.getUsername());
-
+        
         Element eUser = new Element(user.getUsername());
         eUser.setAttribute(ElementsXML.PASSWORD, user.getPassword());
         eUser.setAttribute(ElementsXML.NICKNAME, user.getNickname());
-
+        
         Element eFriends = new Element(ElementsXML.FRIENDS);
         for (int i = 1; i <= user.getFriends().getSize(); i++) {
             String temp = (String) user.getFriends().getByPosition(i);
@@ -83,7 +83,7 @@ public class UserData {
             eFriends.addContent(eCurrentFriend);
         }//for
         eUser.addContent(eFriends);
-
+        
         Element eRequests = new Element(ElementsXML.REQUESTS);
         MyLinkedQueue tempRequestsQueue = (MyLinkedQueue) user.getRequests().clone();
         while (!tempRequestsQueue.isEmpty()) {
@@ -146,7 +146,9 @@ public class UserData {
                 Request tempRequest = new Request(eCurrent.getAttributeValue(ElementsXML.DATE), eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue(),
                         user.getUsername());
                 tempRequest.setSentTo(eCurrent.getAttributeValue(ElementsXML.STATE));
-                user.getRequests().insert(tempRequest);
+                if (tempRequest.getState() != 1 || tempRequest.getState() != -1) {
+                    user.getRequests().insert(tempRequest);
+                }//if
             }//for
         }//if
 
@@ -178,7 +180,7 @@ public class UserData {
     public boolean requestAlreadySent(String sentTo, String sentBy) {
         Element user1 = this.root.getChild(sentTo);
         Element user2 = this.root.getChild(sentBy);
-
+        
         if (user1 == null || user2 == null) {
             System.out.println("requestAlreadySent(): One of the users does not exists on XML!");
             return false;
@@ -202,9 +204,9 @@ public class UserData {
                 return true;
             }//if
         }//for
- 
+        
         return false;
-
+        
     }//existsUser
 
     public boolean areFriends(String sentTo, String sentBy) {
@@ -213,7 +215,7 @@ public class UserData {
 //        return JFWindow.socialWebCore.getUsersGraph().existEdge(sentTo, sentBy);
         User user1 = loadUser(sentTo);
         User user2 = loadUser(sentBy);
-
+        
         if (user1 == null || user2 == null) {
             System.out.println("areFriends(): One of the users does not exists on XML!");
             return false;
@@ -249,7 +251,7 @@ public class UserData {
         post1.addThought("Post 1 Thought 08");
         post1.addThought("Post 1 Thought 09");
         post1.addThought("Post 1 Thought 10");
-
+        
         Post post2 = new Post();
         post2.addThought("Post 2 Thought 01");
         post2.addThought("Post 2 Thought 02");
@@ -261,7 +263,7 @@ public class UserData {
         post2.addThought("Post 2 Thought 08");
         post2.addThought("Post 2 Thought 09");
         post2.addThought("Post 2 Thought 10");
-
+        
         Post post3 = new Post();
         post3.addThought("Post 3 Thought 01");
         post3.addThought("Post 3 Thought 02");
@@ -273,11 +275,11 @@ public class UserData {
         post3.addThought("Post 3 Thought 08");
         post3.addThought("Post 3 Thought 09");
         post3.addThought("Post 3 Thought 10");
-
+        
         allPosts.push(post3);
         allPosts.push(post2);
         allPosts.push(post1);
-
+        
         return allPosts;
 
 //                System.out.println("Name loadAllPosts: " + JFWindow.userSesion.getLoggedUser().getProfile().getName());

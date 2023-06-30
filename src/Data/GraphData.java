@@ -132,7 +132,6 @@ public class GraphData {
 ////                }//if
 ////            }//for
 //        }//for
-        
         return friendsInCommon;
     }//existsEdgeInVertex
 
