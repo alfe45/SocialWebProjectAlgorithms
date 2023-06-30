@@ -27,7 +27,6 @@ public class JPMenu extends javax.swing.JPanel {
 
     public JPMenu(JFWindow window) throws IOException, JDOMException, CloneNotSupportedException {
         this.suggestFriends = JFWindow.socialWebCore.suggestFriendsOfFriends();
-//        this.cleanJList();
         this.showFriendsRequest();
         initComponents();
         this.window = window;
@@ -208,6 +207,7 @@ public class JPMenu extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jListMyRequests.setBackground(new java.awt.Color(204, 204, 204));
         jListMyRequests.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -220,12 +220,15 @@ public class JPMenu extends javax.swing.JPanel {
         jListMyRequests.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jListMyRequests);
 
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 654, 175));
+
         jbtnAceptRequest.setText("Acept");
         jbtnAceptRequest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnAceptRequestActionPerformed(evt);
             }
         });
+        jPanel1.add(jbtnAceptRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 355, 143, -1));
 
         jbtnDeleteRequest.setText("Delete");
         jbtnDeleteRequest.addActionListener(new java.awt.event.ActionListener() {
@@ -233,27 +236,7 @@ public class JPMenu extends javax.swing.JPanel {
                 jbtnDeleteRequestActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtnAceptRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtnDeleteRequest, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(180, 180, 180)
-                .addComponent(jbtnAceptRequest)
-                .addGap(6, 6, 6)
-                .addComponent(jbtnDeleteRequest))
-        );
+        jPanel1.add(jbtnDeleteRequest, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 384, 143, -1));
 
         jTabbedPaneRequests.addTab("FRIEND REQUESTS", jPanel1);
 
@@ -677,30 +660,44 @@ public class JPMenu extends javax.swing.JPanel {
                 if (JFWindow.socialWebCore.getLoggedUser().getUsername().equals(searchText)) {
                     this.jLabelResult.setForeground(Color.ORANGE);
                     this.jLabelResult.setText("*That's yourself!");
+                    this.jButtonViewProfile_Search.setVisible(false);
+                    this.jButtonAddFriend_Search.setVisible(false);
+                    this.jLabelUsernameUserFound.setText("");
+                    this.jLabelPostsSizeUserFound.setText("");
+                    this.jLabelNicknameUserFound.setText("");
+                    this.jLabelFriendsSizeUserFound.setText("");
+                    this.tempUser = null;
                 } else {
-                    this.jLabelResult.setForeground(Color.GREEN);
-                    this.tempUser = JFWindow.socialWebCore.getUserBusiness().loadUser(searchText);
-                    this.jLabelNicknameUserFound.setText(tempUser.getNickname());
-                    this.jLabelUsernameUserFound.setText("@" + tempUser.getUsername());
-                    this.jLabelFriendsSizeUserFound.setText("Friends: " + tempUser.getFriends().getSize());
-                    this.jLabelPostsSizeUserFound.setText("Posts: " + tempUser.getPosts().getSize());
-                    this.jButtonViewProfile_Search.setVisible(true);
-                    this.jButtonAddFriend_Search.setVisible(true);
+                    try {
+                        this.jLabelResult.setForeground(Color.GREEN);
+                        this.tempUser = JFWindow.socialWebCore.getUserBusiness().loadUser(searchText);
+                        this.jLabelNicknameUserFound.setText(tempUser.getNickname());
+                        this.jLabelUsernameUserFound.setText("@" + tempUser.getUsername());
+                        this.jLabelFriendsSizeUserFound.setText("Friends: " + tempUser.getFriends().getSize());
+                        this.jLabelPostsSizeUserFound.setText("Posts: " + tempUser.getPosts().getSize());
+                        this.jButtonViewProfile_Search.setVisible(true);
+                        this.jButtonAddFriend_Search.setVisible(true);
+                        
+                        if (!JFWindow.socialWebCore.getUserBusiness().requestAlreadySent(searchText,
+                                JFWindow.socialWebCore.getLoggedUser().getUsername())) {
+                            this.jButtonAddFriend_Search.setEnabled(true);
+                        } else {
+                            this.jButtonAddFriend_Search.setEnabled(false);
+                            this.jButtonAddFriend_Search.setText("Request Sent");
+                        }//if
+                        if (JFWindow.socialWebCore.getUserBusiness().areFriends(searchText,
+                                JFWindow.socialWebCore.getLoggedUser().getUsername())) {
+                            this.jButtonAddFriend_Search.setText("Is Friend");
+                            this.jButtonAddFriend_Search.setEnabled(false);
+                        }//if
+                    } //if
+                    catch (IOException ex) {
+                        Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 
-                    if (!JFWindow.socialWebCore.getUserBusiness().requestAlreadySent(searchText,
-                            JFWindow.socialWebCore.getLoggedUser().getUsername())) {
-                        this.jButtonAddFriend_Search.setEnabled(true);
-                    } else {
-                        this.jButtonAddFriend_Search.setEnabled(false);
-                        this.jButtonAddFriend_Search.setText("Request Sent");
-                    }//if
-                    if (JFWindow.socialWebCore.getUserBusiness().areFriends(searchText,
-                            JFWindow.socialWebCore.getLoggedUser().getUsername())) {
-                        this.jButtonAddFriend_Search.setText("Is Friend");
-                        this.jButtonAddFriend_Search.setEnabled(false);
-                    }//if
-
-                }//if
+                }
             } else {
                 this.jLabelResult.setForeground(Color.ORANGE);
                 this.jLabelResult.setText("*User not found!");
@@ -913,10 +910,15 @@ public class JPMenu extends javax.swing.JPanel {
         int index = this.jListMyRequests.getSelectedIndex();
         String name = this.requestsNamesList.get(index);
         try {   
-            JFWindow.socialWebCore.acceptFriendshipRequest(name);
+            if (JFWindow.socialWebCore.acceptFriendshipRequest(name)) {
+                JFWindow.socialWebCore.setLoggedUser(
+                        JFWindow.socialWebCore.getUserBusiness().loadUser(JFWindow.socialWebCore.getLoggedUser().getUsername()));
+                requestsNamesList.remove(name);
+                reloadRequestsList();
+            }//if
         } catch (IOException | CloneNotSupportedException ex) {
             Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }//if
     }//GEN-LAST:event_jbtnAceptRequestActionPerformed
 
 

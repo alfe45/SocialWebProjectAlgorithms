@@ -385,15 +385,19 @@ public class JPLogin extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Invalid inputs!");
         } else {
             if (JFWindow.socialWebCore.getUserBusiness().login(username, password)) {
-                User user = JFWindow.socialWebCore.getUserBusiness().loadUser(username);
-                JFWindow.socialWebCore.setLoggedUser(user);
-                this.window.remove(this);
                 try {
-                    this.window.add(new JPMenu(this.window));
-                } catch (IOException | JDOMException | CloneNotSupportedException ex) {
+                    User user = JFWindow.socialWebCore.getUserBusiness().loadUser(username);
+                    JFWindow.socialWebCore.setLoggedUser(user);
+                    this.window.remove(this);
+                    try {
+                        this.window.add(new JPMenu(this.window));
+                    } catch (IOException | JDOMException | CloneNotSupportedException ex) {
+                        Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    this.window.repaint();
+                } catch (IOException | CloneNotSupportedException ex) {
                     Logger.getLogger(JPLogin.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                this.window.repaint();
             } else {
                 JOptionPane.showMessageDialog(this, "Login failed!");
             }//if

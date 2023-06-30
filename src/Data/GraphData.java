@@ -63,27 +63,27 @@ public class GraphData {
         return JFWindow.socialWebCore.getUserBusiness().loadGraph();
     }//loadGraph
 
-//    public boolean saveGraph(MyListGraph graph) throws IOException {
-//        this.root.removeChildren(ElementsXML.VERTEXES);
-//        saveXML();
-//        this.root.addContent(new Element(ElementsXML.VERTEXES));
-//
-//        for (int i = 0; i < graph.getSize(); i++) {
-//            Element eVertex = new Element(ElementsXML.VERTEX);
-//            eVertex.setAttribute("from", (String) graph.getVertexElement(i));
-//            int edgesSize = graph.getVertexEdgeSize(i);
-//            for (int j = 1; j <= edgesSize; j++) {
-//                Element eEdge = new Element(ElementsXML.EDGE);
-//                eEdge.setAttribute("to", (String) graph.getVertexEdgeValue(i, j));
-//                if (!existsEdgeInVertex(eEdge, eVertex)) {
-//                    eVertex.addContent(eEdge);
-//                }//if
-//            }//for
-//            this.root.getChild(ElementsXML.VERTEXES).addContent(eVertex);
-//        }//for
-//        saveXML();
-//        return true;
-//    }//saveGraph
+    public boolean saveGraph(MyListGraph graph) throws IOException {
+        this.root.removeChildren(ElementsXML.VERTEXES);
+        saveXML();
+        this.root.addContent(new Element(ElementsXML.VERTEXES));
+
+        for (int i = 0; i < graph.getSize(); i++) {
+            Element eVertex = new Element(ElementsXML.VERTEX);
+            eVertex.setAttribute("from", (String) graph.getVertexElement(i));
+            int edgesSize = graph.getVertexEdgeSize(i);
+            for (int j = 1; j <= edgesSize; j++) {
+                Element eEdge = new Element(ElementsXML.EDGE);
+                eEdge.setAttribute("to", (String) graph.getVertexEdgeValue(i, j));
+                if (!existsEdgeInVertex(eEdge, eVertex)) {
+                    eVertex.addContent(eEdge);
+                }//if
+            }//for
+            this.root.getChild(ElementsXML.VERTEXES).addContent(eVertex);
+        }//for
+        saveXML();
+        return true;
+    }//saveGraph
 
     public boolean existsEdgeInVertex(Element eEdge, Element eVertex) {
         String usernameEdge = eEdge.getAttributeValue(eEdge.getAttributeValue("to"));

@@ -31,7 +31,7 @@ public class UserBusiness {
         return this.userData.saveNewUser(user);
     }//saveNewUser
 
-    public User loadUser(String username) {
+    public User loadUser(String username) throws IOException, CloneNotSupportedException {
         return this.userData.loadUser(username);
     }//loadProfile
 
@@ -47,7 +47,7 @@ public class UserBusiness {
         return this.userData.requestAlreadySent(sentTo, sentBy);
     }//existsUser
     
-    public boolean areFriends(String user1, String user2) {
+    public boolean areFriends(String user1, String user2) throws IOException, CloneNotSupportedException {
         return this.userData.areFriends(user1, user2);
     }//existsUser
 

@@ -25,7 +25,7 @@ public class SocialWebCore {
         this.friendsPosts = new MyLinkedStack();
         this.graphData = new GraphData();
         this.usersGraph = userBusiness.loadGraph();
- 
+        this.graphData.saveGraph(usersGraph);
     }
 
     public UserBusiness getUserBusiness() {
@@ -96,10 +96,10 @@ public class SocialWebCore {
         if (userBusiness.requestAlreadySent(this.loggedUser.getUsername(), sentBy)) {
             if (userBusiness.acceptFriendshipRequest(this.loggedUser.getUsername(), sentBy)) {
                 JOptionPane.showMessageDialog(null, "You and " + sentBy + " are now friends!");
+                return true;
             } else {
                 System.out.println("Error>acceptFriendshipRequest()");
             }//else
-            return true;
         }//if
         return false;
     }//acceptFriendshipRequest
