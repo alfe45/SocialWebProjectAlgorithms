@@ -983,13 +983,25 @@ public class JPMenu extends javax.swing.JPanel {
     }//GEN-LAST:event_jtfSuggestFriend1ActionPerformed
 
     private void jbtnDeleteRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteRequestActionPerformed
+
         int index = this.jListMyRequests.getSelectedIndex();
-        String name = this.requestsNamesList.get(index);
-        try {
-            JFWindow.socialWebCore.deleteFriendshipRequest(name);
-        } catch (IOException | CloneNotSupportedException ex) {
-            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
-        }//try
+        if (index != -1) {
+            this.jbtnAceptRequest.setVisible(true);
+            this.jbtnDeleteRequest.setVisible(true);
+            String name = this.requestsNamesList.get(index);
+            try {
+                JFWindow.socialWebCore.deleteFriendshipRequest(name);
+            } catch (IOException | CloneNotSupportedException ex) {
+                Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }//try
+            if (requestsNamesList.isEmpty()) {
+                this.jbtnAceptRequest.setVisible(false);
+                this.jbtnDeleteRequest.setVisible(false);
+            }//if
+        } else {
+            this.jbtnAceptRequest.setVisible(false);
+            this.jbtnDeleteRequest.setVisible(false);
+        }//if
     }//GEN-LAST:event_jbtnDeleteRequestActionPerformed
 
     private void JButtonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonClearActionPerformed
@@ -1017,6 +1029,8 @@ public class JPMenu extends javax.swing.JPanel {
                 //Codigo
                 String cad = ("" + c).toLowerCase();
                 c = cad.charAt(0);
+                this.jbtnAceptRequest.setVisible(true);
+                this.jbtnDeleteRequest.setVisible(true);
                 evt.setKeyChar(c);
             }//if
         }//if
@@ -1025,16 +1039,27 @@ public class JPMenu extends javax.swing.JPanel {
 
     private void jbtnAceptRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAceptRequestActionPerformed
         int index = this.jListMyRequests.getSelectedIndex();
-        String name = this.requestsNamesList.get(index);
-        try {
-            if (JFWindow.socialWebCore.acceptFriendshipRequest(name)) {
-                JFWindow.socialWebCore.setLoggedUser(
-                        JFWindow.socialWebCore.getUserBusiness().loadUser(JFWindow.socialWebCore.getLoggedUser().getUsername()));
-                requestsNamesList.remove(name);
-                reloadRequestsList();
+        if (index != -1) {
+            this.jbtnAceptRequest.setVisible(true);
+            this.jbtnDeleteRequest.setVisible(true);
+            String name = this.requestsNamesList.get(index);
+            try {
+                if (JFWindow.socialWebCore.acceptFriendshipRequest(name)) {
+                    JFWindow.socialWebCore.setLoggedUser(
+                            JFWindow.socialWebCore.getUserBusiness().loadUser(JFWindow.socialWebCore.getLoggedUser().getUsername()));
+                    requestsNamesList.remove(name);
+                    reloadRequestsList();
+                }//if
+            } catch (IOException | CloneNotSupportedException ex) {
+                Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
             }//if
-        } catch (IOException | CloneNotSupportedException ex) {
-            Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
+            if (requestsNamesList.isEmpty()) {
+                this.jbtnAceptRequest.setVisible(false);
+                this.jbtnDeleteRequest.setVisible(false);
+            }//if
+        } else {
+            this.jbtnAceptRequest.setVisible(false);
+            this.jbtnDeleteRequest.setVisible(false);
         }//if
     }//GEN-LAST:event_jbtnAceptRequestActionPerformed
 
@@ -1050,18 +1075,18 @@ public class JPMenu extends javax.swing.JPanel {
     private void jbtnAddThoughtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAddThoughtActionPerformed
 
         if (this.thoughts.getSize() < 10) {
-            if (!jtfUploadThought.getText().equals("")) {
+            if (!jtfUploadThought.getText().equals("") && !jtfUploadThought.getText().equals("What are you thinking...?")) {
                 this.jbtnUploadPost.setEnabled(true);
                 this.thoughts.addEnd(jtfUploadThought.getText());
                 this.jtaUploadThoughts.append(jtfUploadThought.getText() + "\n");
-                this.jtfUploadThought.setText("");
+                this.jtfUploadThought.setText("What are you thinking...?");
             } else {
                 JOptionPane.showMessageDialog(this, "Write something in your thought!");
             }//if
         } else {
-            JOptionPane.showMessageDialog(this, "You cant add more than 10 thoughts for post");
+            JOptionPane.showMessageDialog(this, "You can't add more than 10 thoughts for post");
             this.jtfUploadThought.setEnabled(false);
-            this.jtfUploadThought.setText("");
+            this.jtfUploadThought.setText("What are you thinking...?");
             this.jbtnAddThought.setEnabled(false);
         }//if
     }//GEN-LAST:event_jbtnAddThoughtActionPerformed
@@ -1069,15 +1094,15 @@ public class JPMenu extends javax.swing.JPanel {
     private void jbtnUploadPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUploadPostActionPerformed
         Post postAuxiliar = new Post();
         User user = JFWindow.socialWebCore.getLoggedUser();
-        if (!jtfUploadPostTitle.getText().equals("")) {
+        if (!jtfUploadPostTitle.getText().equals("") && !jtfUploadPostTitle.getText().equals("Title")) {
             if (this.thoughts.getSize() > 0) {
                 postAuxiliar.setTitle(jtfUploadPostTitle.getText()); //le asigo el titulo al post
                 for (int i = 1; i <= this.thoughts.getSize(); i++) {
                     postAuxiliar.addThought((String) this.thoughts.getByPosition(i)); //agrego todos los pensamientos en el post auxiliar
                 }//for       
                 user.getPosts().push(postAuxiliar);
-                this.jtfUploadPostTitle.setText("");
-                this.jtfUploadThought.setText("");
+                this.jtfUploadPostTitle.setText("Title");
+                this.jtfUploadThought.setText("What are you thinking...?");
                 JOptionPane.showMessageDialog(this, "Post uploaded succesfully!");
 
                 this.thoughts.cancel();
@@ -1089,6 +1114,7 @@ public class JPMenu extends javax.swing.JPanel {
                     Logger.getLogger(JPMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }//try
                 this.jbtnUploadPost.setEnabled(true);
+                this.jtfUploadThought.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(this, "The thoughts are empty!");
             }//if
@@ -1106,24 +1132,25 @@ public class JPMenu extends javax.swing.JPanel {
 
     private void jtfUploadThoughtMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfUploadThoughtMousePressed
         // TODO add your handling code here:
-        this.jtfUploadThought.setText("");
-        if (this.jtfUploadPostTitle.getText().equals("")) {
-            this.jtfUploadPostTitle.setText("Title");
+        if (this.jtfUploadThought.isEnabled()) {
+            if (this.jtfUploadThought.getText().equals("What are you thinking...?")) {
+                this.jtfUploadThought.setText("");
+            }//if
         }//if
+
 
     }//GEN-LAST:event_jtfUploadThoughtMousePressed
 
     private void jtfUploadPostTitleMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtfUploadPostTitleMousePressed
         // TODO add your handling code here:
-        this.jtfUploadPostTitle.setText("");
-        if (this.jtfUploadThought.getText().equals("")) {
-            this.jtfUploadThought.setText("What are you thinking...?");
+        if (this.jtfUploadPostTitle.getText().equals("Title")) {
+            this.jtfUploadPostTitle.setText("");
         }//if
     }//GEN-LAST:event_jtfUploadPostTitleMousePressed
 
     private void jPanelHomeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelHomeMousePressed
         // TODO add your handling code here:
-        System.out.println("mouse pressed on panel home");
+        this.jPanelHome.requestFocus();
         if (this.jtfUploadThought.getText().equals("")) {
             this.jtfUploadThought.setText("What are you thinking...?");
         }//if
@@ -1252,6 +1279,10 @@ public class JPMenu extends javax.swing.JPanel {
         this.jtaUploadThoughts.setEnabled(false);
         reloadRequestsList();
 
+        //Desabolita los botones, solos e habilitan si hay solicitudes
+        this.jbtnAceptRequest.setVisible(true);
+        this.jbtnDeleteRequest.setVisible(true);
+        //
         change(indexThought);
     }//init
 
