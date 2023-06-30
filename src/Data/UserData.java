@@ -210,7 +210,6 @@ public class UserData {
     }//existsUser
 
     public boolean areFriends(String sentTo, String sentBy) {
-
         //otra opcion
 //        return JFWindow.socialWebCore.getUsersGraph().existEdge(sentTo, sentBy);
         User user1 = loadUser(sentTo);
@@ -348,6 +347,7 @@ public class UserData {
 //        return user;
 //
 //    }//loadProfile
+    
     public ArrayList<User> getFriendsRequestXML(String username) {
         ArrayList<User> userFriendsRequest = new ArrayList<>();
         Element eUser = this.root.getChild(username);

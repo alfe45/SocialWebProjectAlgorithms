@@ -76,7 +76,6 @@ public class SocialWebCore {
         } catch (IOException ex) {
             Logger.getLogger(SocialWebCore.class.getName()).log(Level.SEVERE, null, ex);
         }//try
-
         //aqui se refrescan los datos del core
     }//refresh
 
@@ -88,34 +87,62 @@ public class SocialWebCore {
                     targetUser.getRequests().insert(new Request("DEFAULTDATE", sentBy, sentTo));
                     userBusiness.saveUser(targetUser);
                     System.out.println("Request sent and saved on XML!");
-                }else{
+                } else {
                     System.out.println("Request already sent or are friends!");
                 }//if
-
             } catch (IOException | CloneNotSupportedException ex) {
                 Logger.getLogger(SocialWebCore.class.getName()).log(Level.SEVERE, null, ex);
             }//try
         }//if
     }//sendFriendshipRequest
 
-    public boolean acceptFriendshipRequest(String sentTo, String sentBy) throws IOException {
-//        User user = this.userBusiness.loadUser(this.loggedUser.getUsername());
-//        
-//        List<Element> friendsRequests = new ArrayList<>();
-//        int count =0;
-//        while (user.getRequests() != null) {            
-//            friendsRequests.get(count);
-//        }
-//            
+    public boolean acceptFriendshipRequest(String sentBy) throws IOException {
+        User userSentBy = this.userBusiness.loadUser(sentBy);
+        int areFriends = 0;
+        boolean iHaveYourRequest = false;
+
+        for (int i = 0; i < userSentBy.getRequests().getSize(); i++) { //recorro las request
+            if (userSentBy.getRequests().firstElement().equals(sentBy)) { //dentro de las request tengo al que me la envió?
+                for (int p = 0; p < this.loggedUser.getFriends().getSize(); p++) {  //recorro los amigos del sentTo
+                    if (this.loggedUser.getFriends().getByPosition(p).equals(sentBy)) { //veo si lo tengo dentro de mi lista de amigos
+                        areFriends = 1;
+                    }
+                }
+                if (!this.userBusiness.areFriends(this.loggedUser.getUsername(), sentBy) && areFriends == 0) {
+                    try {
+                        //verifica que no son amigos en el xml y en el grafo
+                        this.usersGraph.addEdge(this.loggedUser.getUsername(), userSentBy.getUsername()); //agrego amigo al grafo
+                        this.loggedUser.getFriends().addEnd(userSentBy); //agrego amigo a la lista de amigos
+                        this.userBusiness.saveUser(loggedUser);//se guarda el usuario, sin embargo no se sobre escribe, haga el metodo weonn
+
+                        userSentBy.getFriends().addEnd(this.loggedUser.getUsername()); //el amigo que me envió la solicitud voy a aparecer en su lista de amigos
+                        this.userBusiness.saveUser(userSentBy); //sobreescribo al mismo usuario pero ahora con mi amistad en su lista de amigos
+
+                        return true;
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(SocialWebCore.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            //delete
+        }
         return false;
     }//acceptFriendshipRequest
 
-    public ArrayList<User> showFriendsRequest() {
+    public ArrayList<String> showFriendsRequest() {
         ArrayList<User> friendsRequest = new ArrayList<>();
-//        friendsRequest = this.userBusiness.getFriendsRequestXML(this.loggedUser.getUsername());
-        friendsRequest = this.userBusiness.getFriendsRequestXML("alex");
+        ArrayList<String> friendsRequestString = new ArrayList<>();
 
-        return friendsRequest;
+       
+            friendsRequest = this.userBusiness.getFriendsRequestXML(this.loggedUser.getUsername());
+            for (int i = 0; i < friendsRequest.size(); i++) {
+                friendsRequestString.add(friendsRequest.get(i).getUsername());
+            }
+       
+            friendsRequest = null;
+        
+
+        return friendsRequestString;
     }
 
     public ArrayList<String> suggestFriendsOfFriends() {
@@ -150,15 +177,6 @@ public class SocialWebCore {
                 return new Integer(p1.split("=")[1]).compareTo(new Integer(p2.split("=")[1]));
             }//compare
         });
-
-//        ArrayList<String> auxName = new ArrayList<>();
-//        ArrayList<String> auxCommonFriends = new ArrayList<>();
-//        for (int i = 0; i < suggestions.size(); i++) {
-//            String[] nombres = suggestions.get(i).split("=");
-//            auxName.add(nombres[0]);
-//            auxCommonFriends.add(nombres[1]);
-//            System.out.println((i+1)+ "username: "+auxName.get(i) + "friends in common: "+auxCommonFriends.get(i));
-//        }//if
         return suggestions;
     }//suggestFriendsOfFriends
 
