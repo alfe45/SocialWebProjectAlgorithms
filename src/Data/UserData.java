@@ -2,6 +2,7 @@ package Data;
 
 import DataStructures.MyLinkedQueue;
 import DataStructures.MyLinkedStack;
+import DataStructures.MyListGraph;
 import Domain.Post;
 import Domain.Request;
 import Domain.Thought;
@@ -23,11 +24,11 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.XMLOutputter;
 
 public class UserData {
-    
+
     private Document jdomDocument;
     private Element root;
     private String rute;
-    
+
     public UserData() throws JDOMException, IOException {
         this.rute = FileRutes.USERS_PATH;
         File file = new File(this.rute);
@@ -42,7 +43,7 @@ public class UserData {
             saveXML();
         }//if
     }
-    
+
     private void saveXML() throws FileNotFoundException, IOException {
         XMLOutputter xmlOutputter = new XMLOutputter();
         xmlOutputter.output(this.jdomDocument, new PrintWriter(this.rute));
@@ -70,11 +71,11 @@ public class UserData {
     public boolean saveUser(User user) throws IOException, CloneNotSupportedException {
         //deletes the user to override
         this.root.removeChild(user.getUsername());
-        
+
         Element eUser = new Element(user.getUsername());
         eUser.setAttribute(ElementsXML.PASSWORD, user.getPassword());
         eUser.setAttribute(ElementsXML.NICKNAME, user.getNickname());
-        
+
         Element eFriends = new Element(ElementsXML.FRIENDS);
         for (int i = 1; i <= user.getFriends().getSize(); i++) {
             String temp = (String) user.getFriends().getByPosition(i);
@@ -83,7 +84,7 @@ public class UserData {
             eFriends.addContent(eCurrentFriend);
         }//for
         eUser.addContent(eFriends);
-        
+
         Element eRequests = new Element(ElementsXML.REQUESTS);
         MyLinkedQueue tempRequestsQueue = (MyLinkedQueue) user.getRequests().clone();
         while (!tempRequestsQueue.isEmpty()) {
@@ -116,7 +117,7 @@ public class UserData {
         return true;
     }//saveUser
 
-    public User loadUser(String username) {
+    public User loadUser(String username) throws IOException, CloneNotSupportedException {
         Element eUser = this.root.getChild(username);
         if (eUser == null) {
             return null;
@@ -138,6 +139,7 @@ public class UserData {
         }//if
 
         //loads requests
+  
         Element eRequests = eUser.getChild(ElementsXML.REQUESTS);
         if (eRequests != null) {
             List<Element> requestsList = eRequests.getChildren();
@@ -145,8 +147,8 @@ public class UserData {
                 Element eCurrent = requestsList.get(i);
                 Request tempRequest = new Request(eCurrent.getAttributeValue(ElementsXML.DATE), eCurrent.getAttribute(ElementsXML.REQUEST_FROM).getValue(),
                         user.getUsername());
-                tempRequest.setSentTo(eCurrent.getAttributeValue(ElementsXML.STATE));
-                if (tempRequest.getState() != 1 || tempRequest.getState() != -1) {
+                tempRequest.setState(Integer.parseInt(eCurrent.getAttributeValue(ElementsXML.STATE)));
+                if (tempRequest.getState() == 0) {
                     user.getRequests().insert(tempRequest);
                 }//if
             }//for
@@ -169,7 +171,7 @@ public class UserData {
                 user.getPosts().push(tempPost);
             }//for
         }//if
-
+        saveUser(user);
         return user;
     }//loadProfile
 
@@ -180,59 +182,132 @@ public class UserData {
     public boolean requestAlreadySent(String sentTo, String sentBy) {
         Element user1 = this.root.getChild(sentTo);
         Element user2 = this.root.getChild(sentBy);
-        
+
         if (user1 == null || user2 == null) {
             System.out.println("requestAlreadySent(): One of the users does not exists on XML!");
             return false;
         }//if
         List<Element> requestsListUser1 = user1.getChild(ElementsXML.REQUESTS).getContent();
         List<Element> requestsListUser2 = user2.getChild(ElementsXML.REQUESTS).getContent();
-        
+
         if (requestsListUser1 == null || requestsListUser2 == null) {
             System.out.println("requestAlreadySent(): One of the has not requests on XML!");
             return false;
         }//if
-        
+
         for (Element eCurrentRequest : requestsListUser1) {
             if (eCurrentRequest.getAttributeValue(ElementsXML.REQUEST_FROM).equals(sentBy)) {
                 return true;
             }//if
         }//for
-        
+
         for (Element eCurrentRequest : requestsListUser2) {
             if (eCurrentRequest.getAttributeValue(ElementsXML.REQUEST_FROM).equals(sentTo)) {
                 return true;
             }//if
         }//for
-        
+
         return false;
-        
+
     }//existsUser
 
-    public boolean areFriends(String sentTo, String sentBy) {
-        //otra opcion
-//        return JFWindow.socialWebCore.getUsersGraph().existEdge(sentTo, sentBy);
-        User user1 = loadUser(sentTo);
-        User user2 = loadUser(sentBy);
-        
-        if (user1 == null || user2 == null) {
+    public boolean areFriends(String user1, String user2) throws IOException, CloneNotSupportedException {
+
+        User userI1 = loadUser(user1);
+        User userI2 = loadUser(user2);
+
+        if (userI1 == null || userI2 == null) {
             System.out.println("areFriends(): One of the users does not exists on XML!");
             return false;
         }//if
 
-        for (int i = 1; i <= user1.getFriends().getSize(); i++) {
-            if (user1.getFriends().getByPosition(i).equals(sentBy)) {
+        for (int i = 1; i <= userI1.getFriends().getSize(); i++) {
+            if (userI1.getFriends().getByPosition(i).equals(user2)) {
                 return true;
             }//if
         }//for
 
-        for (int i = 1; i <= user2.getFriends().getSize(); i++) {
-            if (user2.getFriends().getByPosition(i).equals(sentTo)) {
+        for (int i = 1; i <= userI2.getFriends().getSize(); i++) {
+            if (userI2.getFriends().getByPosition(i).equals(user1)) {
                 return true;
             }//if
         }//for
         return false;
     }//existsUser
+
+    public boolean acceptFriendshipRequest(String sentTo, String sentBy) throws IOException, CloneNotSupportedException {
+
+        User userSentTo = loadUser(sentTo);
+        User userSentBy = loadUser(sentBy);
+
+        if (userSentTo == null || userSentBy == null) {
+            System.out.println("acceptFriendshipRequest(): user does not exists on XML!");
+            return false;
+        }//if
+
+        MyLinkedQueue tempQueue = new MyLinkedQueue();
+        while (!userSentTo.getRequests().isEmpty()) {
+            Request currentRequest = (Request) userSentTo.getRequests().delete();
+            if (currentRequest.getSentBy().equals(sentBy)) {
+                currentRequest.setState(1);
+            }//if
+            tempQueue.insert(currentRequest);
+        }//while
+        userSentTo.setRequests(tempQueue);
+        userSentTo.getFriends().addEnd(sentBy);
+        userSentBy.getFriends().addEnd(sentTo);
+        saveUser(userSentTo);
+        saveUser(userSentBy);
+        JFWindow.socialWebCore.setUsersGraph(JFWindow.socialWebCore.getUserBusiness().loadGraph());
+//        JFWindow.socialWebCore.getUsersGraph().addEdge(sentTo, sentBy);
+//        JFWindow.socialWebCore.getGraphData().saveGraph(JFWindow.socialWebCore.getUsersGraph());
+        return true;
+    }//acceptFriendshipRequest
+    
+    
+    public boolean deleteFriendshipRequest(String sentTo, String sentBy) throws IOException, CloneNotSupportedException {
+        User userSentTo = loadUser(sentTo);
+        User userSentBy = loadUser(sentBy);
+
+        if (userSentTo == null || userSentBy == null) {
+            System.out.println("deleteFriendshipRequest(): user does not exists on XML!");
+            return false;
+        }//if
+
+        MyLinkedQueue tempQueue = new MyLinkedQueue();
+        while (!userSentTo.getRequests().isEmpty()) {
+            Request currentRequest = (Request) userSentTo.getRequests().delete();
+            if (currentRequest.getSentBy().equals(sentBy)) {
+                currentRequest.setState(-1);
+            }//if
+            tempQueue.insert(currentRequest);
+        }//while
+        userSentTo.setRequests(tempQueue);
+        saveUser(userSentTo);
+        saveUser(userSentBy);
+        return true;
+    }//deleteFriendshipRequest
+
+    public MyListGraph loadGraph() {
+        MyListGraph graph = new MyListGraph();
+
+        List<Element> vertexesList = this.root.getChildren();
+
+        for (Element eVertex : vertexesList) {
+            graph.addVertex(eVertex.getName());
+        }//for
+
+        for (Element eVertex : vertexesList) {
+            List<Element> eEdges = eVertex.getChild(ElementsXML.FRIENDS).getContent();
+            for (Element eEdge : eEdges) {
+                if (!graph.existEdge(eVertex.getName(), eEdge.getAttributeValue(ElementsXML.USERNAME))) {
+                    graph.addEdge(eVertex.getName(), eEdge.getAttributeValue(ElementsXML.USERNAME));
+                }//if
+            }//for
+        }//for
+
+        return graph;
+    }//loadGraph
 
     public MyLinkedStack loadAllPost() {
         MyLinkedStack allPosts = new MyLinkedStack();
@@ -250,7 +325,7 @@ public class UserData {
         post1.addThought("Post 1 Thought 08");
         post1.addThought("Post 1 Thought 09");
         post1.addThought("Post 1 Thought 10");
-        
+
         Post post2 = new Post();
         post2.addThought("Post 2 Thought 01");
         post2.addThought("Post 2 Thought 02");
@@ -262,7 +337,7 @@ public class UserData {
         post2.addThought("Post 2 Thought 08");
         post2.addThought("Post 2 Thought 09");
         post2.addThought("Post 2 Thought 10");
-        
+
         Post post3 = new Post();
         post3.addThought("Post 3 Thought 01");
         post3.addThought("Post 3 Thought 02");
@@ -274,11 +349,11 @@ public class UserData {
         post3.addThought("Post 3 Thought 08");
         post3.addThought("Post 3 Thought 09");
         post3.addThought("Post 3 Thought 10");
-        
+
         allPosts.push(post3);
         allPosts.push(post2);
         allPosts.push(post1);
-        
+
         return allPosts;
 
 //                System.out.println("Name loadAllPosts: " + JFWindow.userSesion.getLoggedUser().getProfile().getName());
@@ -347,7 +422,6 @@ public class UserData {
 //        return user;
 //
 //    }//loadProfile
-    
     public ArrayList<User> getFriendsRequestXML(String username) {
         ArrayList<User> userFriendsRequest = new ArrayList<>();
         Element eUser = this.root.getChild(username);

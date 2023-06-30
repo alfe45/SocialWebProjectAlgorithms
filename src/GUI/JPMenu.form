@@ -264,25 +264,23 @@
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jScrollPane1" alignment="0" min="-2" pref="654" max="-2" attributes="0"/>
-                                  <Component id="jbtnAceptRequest" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
-                                  <Component id="jbtnDeleteRequest" alignment="0" min="-2" pref="143" max="-2" attributes="0"/>
+                                  <Component id="jScrollPane1" min="-2" pref="654" max="-2" attributes="0"/>
+                                  <Component id="jbtnAceptRequest" min="-2" pref="143" max="-2" attributes="0"/>
+                                  <Component id="jbtnDeleteRequest" min="-2" pref="143" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="26" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="jScrollPane1" min="-2" pref="175" max="-2" attributes="0"/>
-                              <EmptySpace pref="180" max="32767" attributes="0"/>
+                              <EmptySpace min="180" pref="180" max="-2" attributes="0"/>
                               <Component id="jbtnAceptRequest" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Component id="jbtnDeleteRequest" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>

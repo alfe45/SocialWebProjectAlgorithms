@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Graph><Vertexes><Vertex from="Alex"><Edge to="Ana" /><Edge to="Ana" /><Edge to="Ana" /><Edge to="Ana" /></Vertex><Vertex from="Ana"><Edge to="Alex" /><Edge to="Alex" /><Edge to="Alex" /><Edge to="Alex" /></Vertex><Vertex from="Kenneth" /><Vertex from="Kevin" /><Vertex from="Nelson" /></Vertexes></Graph>
+<Graph><Vertexes /></Graph>

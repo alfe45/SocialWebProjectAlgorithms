@@ -2,6 +2,7 @@ package Business;
 
 import Data.UserData;
 import DataStructures.MyLinkedStack;
+import DataStructures.MyListGraph;
 import Domain.User;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,11 +47,24 @@ public class UserBusiness {
         return this.userData.requestAlreadySent(sentTo, sentBy);
     }//existsUser
     
-    public boolean areFriends(String sentTo, String sentBy) {
-        return this.userData.areFriends(sentTo, sentBy);
+    public boolean areFriends(String user1, String user2) {
+        return this.userData.areFriends(user1, user2);
     }//existsUser
 
     public ArrayList<User> getFriendsRequestXML(String username) {
         return this.userData.getFriendsRequestXML(username);
     }
+    
+    public boolean acceptFriendshipRequest(String sentTo, String sentBy) throws IOException, CloneNotSupportedException {
+        return this.userData.acceptFriendshipRequest(sentTo, sentBy);
+    }//acceptFriendshipRequest
+    
+    public boolean deleteFriendshipRequest(String sentTo, String sentBy) throws IOException, CloneNotSupportedException {
+        return this.userData.deleteFriendshipRequest(sentTo, sentBy);
+    }//deleteFriendshipRequest
+  
+    public MyListGraph loadGraph() {
+        return this.userData.loadGraph();
+    }//loadGraph
+    
 }//class
