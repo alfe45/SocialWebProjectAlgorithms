@@ -17,16 +17,21 @@ import org.jdom.JDOMException;
  * @author Usuario
  */
 public class JFBotones extends javax.swing.JFrame {
+
     private int i;
     private int e;
     private MyCicularDoublyLinkedList myCicularDoublyLinkedList;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     /**
      * Creates new form JFBotones
      */
     public JFBotones() {
         myCicularDoublyLinkedList = new MyCicularDoublyLinkedList();
-        this.i =0;
+        this.i = 0;
         this.e = 0;
         initComponents();
 =======
@@ -61,6 +66,7 @@ public class JFBotones extends javax.swing.JFrame {
         jbtnDown = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
         jbtnPrevious.setText("Previous");
         jbtnPrevious.addActionListener(new java.awt.event.ActionListener() {
@@ -68,6 +74,8 @@ public class JFBotones extends javax.swing.JFrame {
                 jbtnPreviousActionPerformed(evt);
             }
         });
+        getContentPane().add(jbtnPrevious);
+        jbtnPrevious.setBounds(103, 163, 74, 22);
 
         jbtnNext.setText("Next");
         jbtnNext.addActionListener(new java.awt.event.ActionListener() {
@@ -75,10 +83,15 @@ public class JFBotones extends javax.swing.JFrame {
                 jbtnNextActionPerformed(evt);
             }
         });
+        getContentPane().add(jbtnNext);
+        jbtnNext.setBounds(423, 163, 72, 22);
 
         jtxArea.setColumns(20);
         jtxArea.setRows(5);
         jScrollPane1.setViewportView(jtxArea);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(183, 123, 234, 86);
 
         jbtnUp.setText("Up");
         jbtnUp.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +99,8 @@ public class JFBotones extends javax.swing.JFrame {
                 jbtnUpActionPerformed(evt);
             }
         });
+        getContentPane().add(jbtnUp);
+        jbtnUp.setBounds(258, 83, 72, 22);
 
         jbtnDown.setText("Down");
         jbtnDown.addActionListener(new java.awt.event.ActionListener() {
@@ -93,89 +108,67 @@ public class JFBotones extends javax.swing.JFrame {
                 jbtnDownActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(103, 103, 103)
-                .addComponent(jbtnPrevious)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtnNext)
-                .addGap(112, 112, 112))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(253, 253, 253)
-                        .addComponent(jbtnDown))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(258, 258, 258)
-                        .addComponent(jbtnUp)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnPrevious)
-                    .addComponent(jbtnNext))
-                .addGap(147, 147, 147))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(jbtnUp)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbtnDown)
-                .addContainerGap(83, Short.MAX_VALUE))
-        );
+        getContentPane().add(jbtnDown);
+        jbtnDown.setBounds(253, 227, 72, 22);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPreviousActionPerformed
         // TODO add your handling code here:
-        if(i-1==-1){
+        if (i - 1 == -1) {
             this.i = 5;
-        }else{
+        } else {
             this.i -= 1;
         }
-        this.jtxArea.setText(i+"");
+        this.jtxArea.setText(i + "");
     }//GEN-LAST:event_jbtnPreviousActionPerformed
 
     private void jbtnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnNextActionPerformed
         // TODO add your handling code here:
+<<<<<<< Updated upstream
         if(this.i+1==myCicularDoublyLinkedList.getSize()){
             this.i=0;
         }else{
+=======
+        if (this.i + 1 == 6) {
+            this.i = 0;
+        } else {
+>>>>>>> Stashed changes
             this.i++;
         }
-        this.jtxArea.setText(i+"");
+        this.jtxArea.setText(i + "");
     }//GEN-LAST:event_jbtnNextActionPerformed
 
     private void jbtnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpActionPerformed
         // TODO add your handling code here:
+<<<<<<< Updated upstream
         if(this.e+1>this.myCicularDoublyLinkedList.getSize()){
+=======
+        if (this.e + 1 > 5) {
+>>>>>>> Stashed changes
             this.e = 0;
-        }else{
+        } else {
             this.e++;
         }
-        this.jtxArea.setText(e+"");
+        this.jtxArea.setText(e + "");
     }//GEN-LAST:event_jbtnUpActionPerformed
 
     private void jbtnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDownActionPerformed
         // TODO add your handling code here:
+<<<<<<< Updated upstream
          if(this.e-1<0){
             this.e = this.myCicularDoublyLinkedList.getSize();
         }else{
+=======
+        if (this.e - 1 < 0) {
+            this.e = 5;
+        } else {
+>>>>>>> Stashed changes
             this.e--;
         }
-        this.jtxArea.setText(e+"");
-       
+        this.jtxArea.setText(e + "");
+
     }//GEN-LAST:event_jbtnDownActionPerformed
 
     /**

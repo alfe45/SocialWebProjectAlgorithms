@@ -10,7 +10,7 @@ public class JFWindow extends javax.swing.JFrame {
 
     public static UserBusiness userBusiness;
     protected static UserSesion userSesion;
-
+    
     public JFWindow() throws JDOMException, IOException, CloneNotSupportedException {
         initComponents();
         JFWindow.userBusiness = new UserBusiness();
